@@ -1,0 +1,697 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Billy Sorrells — Comedian, Actor, Entertainer</title>
+<meta name="description" content="Billy Sorrells — The Sexiest Man in Comedy. Comedian, Actor, Writer, Producer. Wild N Out veteran. Book now.">
+<meta property="og:title" content="Billy Sorrells — The Sexiest Man in Comedy">
+<meta property="og:description" content="Comedian. Actor. Writer. Producer. Catch the Dirty, Sexy, Funny Tour 2026.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#c9a84c;
+  --gold-dim:rgba(201,168,76,.15);
+  --red:#d63031;
+  --bg:#050505;
+  --bg2:#0c0c0c;
+  --bg3:#111;
+  --card:#141414;
+  --card-h:#1a1a1a;
+  --border:rgba(255,255,255,.06);
+  --t1:#f5f5f7;
+  --t2:#a1a1a6;
+  --t3:#6e6e73;
+  --heading:'Bebas Neue',sans-serif;
+  --body:'DM Sans',sans-serif;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--t1);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+::selection{background:var(--gold);color:#000}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 24px}
+.sec{padding:clamp(80px,12vw,140px) 0}
+.label{font-family:var(--body);font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.heading{font-family:var(--heading);font-size:clamp(2.4rem,6vw,4.5rem);line-height:.95;letter-spacing:.02em;text-transform:uppercase}
+.heading-sm{font-family:var(--heading);font-size:clamp(1.6rem,3.5vw,2.4rem);line-height:1;letter-spacing:.02em;text-transform:uppercase}
+.sub{font-size:1.05rem;color:var(--t2);max-width:520px;margin-top:16px;font-weight:300;line-height:1.7}
+.divider{width:100%;height:1px;background:var(--border)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 36px;font-family:var(--body);font-size:.82rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;transition:all .4s var(--ease);position:relative;overflow:hidden}
+.btn-fill{background:var(--t1);color:#000}
+.btn-fill:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 12px 40px rgba(201,168,76,.25)}
+.btn-ghost{background:transparent;color:var(--t1);border:1px solid rgba(255,255,255,.2)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-ticket{background:var(--red);color:#fff;padding:10px 24px;font-size:.72rem}
+.btn-ticket:hover{filter:brightness(1.15);transform:translateY(-1px)}
+
+.r{opacity:0;transform:translateY(50px);transition:opacity .8s var(--ease),transform .8s var(--ease)}.r.v{opacity:1;transform:none}
+.r1{transition-delay:.08s}.r2{transition-delay:.16s}.r3{transition-delay:.24s}.r4{transition-delay:.32s}.r5{transition-delay:.4s}
+
+nav{position:fixed;top:0;left:0;width:100%;z-index:100;padding:20px 0;transition:all .4s var(--ease)}
+nav.s{background:rgba(5,5,5,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:12px 0;border-bottom:1px solid var(--border)}
+.nav-in{display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:var(--heading);font-size:1.6rem;letter-spacing:.06em;color:var(--t1)}
+.logo em{font-style:normal;color:var(--gold)}
+.nav-links{display:flex;gap:36px;align-items:center;list-style:none}
+.nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--t2);transition:color .3s}
+.nav-links a:hover{color:var(--t1)}
+
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px;z-index:101}
+.ham i{display:block;width:22px;height:1.5px;background:var(--t1);transition:all .3s var(--ease)}
+.ham.on i:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.ham.on i:nth-child(2){opacity:0}
+.ham.on i:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mob{position:fixed;inset:0;background:rgba(5,5,5,.97);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);z-index:99;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:32px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+.mob.on{opacity:1;pointer-events:all}
+.mob a{font-family:var(--heading);font-size:2.4rem;letter-spacing:.06em;text-transform:uppercase;color:var(--t1);transition:color .3s}
+.mob a:hover{color:var(--gold)}
+
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding-bottom:clamp(60px,10vw,120px);overflow:hidden}
+.hero-media{position:absolute;inset:0;z-index:0}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(5,5,5,.6) 40%,rgba(5,5,5,.3) 100%);z-index:1}
+.hero-c{position:relative;z-index:2;max-width:680px}
+.hero-badge{display:inline-block;font-size:.65rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:8px 18px;margin-bottom:28px;backdrop-filter:blur(4px);animation:fadeUp .8s var(--ease) both}
+.hero h1{font-family:var(--heading);font-size:clamp(4rem,11vw,8rem);line-height:.88;letter-spacing:.02em;text-transform:uppercase;animation:fadeUp .8s .12s var(--ease) both}
+.hero h1 .gl{background:linear-gradient(135deg,var(--gold),#e8d48b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(.95rem,1.8vw,1.15rem);color:var(--t2);font-weight:300;margin:20px 0 8px;animation:fadeUp .8s .22s var(--ease) both}
+.hero-cred{font-size:.85rem;color:var(--t3);margin-bottom:40px;animation:fadeUp .8s .3s var(--ease) both}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;animation:fadeUp .8s .38s var(--ease) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+
+.mq-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 0;background:var(--bg2);overflow:hidden}
+.mq{display:flex;gap:80px;animation:mq 35s linear infinite;width:max-content}
+.mq span{font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--t3);white-space:nowrap}
+.mq .dt{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--gold);margin:0 28px;vertical-align:middle}
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.photo-stack{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.photo-stack img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(.15);transition:filter .5s var(--ease)}
+.photo-stack img:hover{filter:grayscale(0)}
+.photo-stack img:first-child{grid-row:1/3;aspect-ratio:2/3}
+.about-text .sub{max-width:100%}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px;padding-top:40px;border-top:1px solid var(--border)}
+.stat h4{font-family:var(--heading);font-size:2.2rem;letter-spacing:.02em;color:var(--gold)}
+.stat p{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-top:2px}
+
+.tour-list{display:flex;flex-direction:column}
+.tour-row{display:grid;grid-template-columns:90px 1fr auto;align-items:center;gap:24px;padding:24px 0;border-bottom:1px solid var(--border);transition:background .3s}
+.tour-row:hover{background:rgba(255,255,255,.02)}
+.tour-dt{font-family:var(--heading);font-size:1.1rem;letter-spacing:.04em;color:var(--gold)}
+.tour-venue h3{font-family:var(--heading);font-size:1.2rem;letter-spacing:.04em;text-transform:uppercase}
+.tour-venue p{font-size:.82rem;color:var(--t3);margin-top:2px}
+
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.proj{background:var(--card);border:1px solid var(--border);padding:36px 28px;transition:all .5s var(--ease);position:relative}
+.proj::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--red));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.proj:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.1);background:var(--card-h)}
+.proj:hover::after{transform:scaleX(1)}
+.proj .tag{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.proj h3{font-family:var(--heading);font-size:1.5rem;letter-spacing:.04em;margin-bottom:10px}
+.proj p{font-size:.88rem;color:var(--t2);line-height:1.7}
+
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
+.vid-card{background:var(--card);border:1px solid var(--border);overflow:hidden;transition:all .4s var(--ease)}
+.vid-card:hover{border-color:rgba(255,255,255,.1);transform:translateY(-3px)}
+.vid-embed{position:relative;padding-bottom:56.25%;height:0}
+.vid-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.vid-card h3{font-family:var(--heading);font-size:.95rem;letter-spacing:.06em;padding:16px 20px}
+
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.gallery img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(.2);transition:all .5s var(--ease)}
+.gallery img:hover{filter:grayscale(0);transform:scale(1.03)}
+
+.cred-cols{columns:2;column-gap:48px}
+.cred-item{break-inside:avoid;padding:18px 0;border-bottom:1px solid var(--border)}
+.cred-item h4{font-family:var(--heading);font-size:1rem;letter-spacing:.06em;text-transform:uppercase}
+.cred-item p{font-size:.8rem;color:var(--t3);margin-top:3px}
+
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.contact-info h3{font-family:var(--heading);font-size:1.5rem;letter-spacing:.04em;color:var(--gold);margin-bottom:28px}
+.c-detail{margin-bottom:24px}
+.c-detail .c-label{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--t3);margin-bottom:4px}
+.c-detail a,.c-detail p{font-size:.95rem;color:var(--t1);transition:color .3s}
+.c-detail a:hover{color:var(--gold)}
+.socials{display:flex;gap:16px;margin-top:36px}
+.socials a{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);font-size:.75rem;font-weight:700;color:var(--t2);transition:all .3s var(--ease)}
+.socials a:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.c-form{display:flex;flex-direction:column;gap:14px}
+.c-form input,.c-form textarea{width:100%;padding:16px 18px;background:var(--card);border:1px solid var(--border);color:var(--t1);font-family:var(--body);font-size:.88rem;outline:none;transition:border .3s}
+.c-form input:focus,.c-form textarea:focus{border-color:var(--gold)}
+.c-form textarea{min-height:140px;resize:vertical}
+
+footer{border-top:1px solid var(--border);padding:40px 0;background:var(--bg)}
+.foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.foot-in p{font-size:.78rem;color:var(--t3)}
+.foot-in a{color:var(--gold)}
+
+@media(max-width:900px){
+  .nav-links{display:none}
+  .ham{display:flex}
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .contact-grid{grid-template-columns:1fr;gap:40px}
+  .cred-cols{columns:1}
+  .gallery{grid-template-columns:repeat(2,1fr)}
+  .tour-row{grid-template-columns:70px 1fr;gap:12px}
+  .tour-row .btn-ticket{grid-column:1/-1;text-align:center}
+}
+@media(max-width:600px){
+  .hero-btns{flex-direction:column}
+  .hero-btns .btn{width:100%;text-align:center}
+  .vid-grid{grid-template-columns:1fr}
+  .proj-grid{grid-template-columns:1fr}
+  .tour-row{grid-template-columns:1fr;gap:6px}
+  .stats{grid-template-columns:repeat(3,1fr);gap:8px}
+  .stat h4{font-size:1.6rem}
+  .photo-stack{grid-template-columns:1fr 1fr;gap:8px}
+}
+</style>
+
+<!-- SPECIALS CAROUSEL STYLES -->
+<style>
+.kw{display:inline-block;padding:1px 9px 2px;border-radius:100px;font-weight:700;font-size:.92em;line-height:1.6}
+.kw-gold{background:#d4a62a;color:#000}
+.kw-red{background:#e50914;color:#fff}
+.kw-orange{background:#f5622d;color:#fff}
+.kw-blue{background:#0ea5e9;color:#fff}
+.kw-white{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.badge-row{display:flex;flex-wrap:wrap;gap:8px}
+.metric-badge{display:inline-flex;align-items:center;border-radius:4px;overflow:hidden;font-size:11px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.08)}
+.metric-badge__label{background:#222;color:#999;padding:4px 8px}
+.metric-badge__value{padding:4px 8px;color:#fff}
+.mb-gold .metric-badge__value{background:#9a6f00}
+.mb-red  .metric-badge__value{background:#b91c1c}
+.mb-blue .metric-badge__value{background:#0369a1}
+.mb-green.metric-badge .metric-badge__value{background:#15803d}
+.mb-orange.metric-badge .metric-badge__value{background:#c2410c}
+.spec-hero{position:relative;height:min(92vh,700px);display:flex;align-items:flex-end;overflow:hidden}
+.spec-hero__bg{position:absolute;inset:0;background-image:url('https://www.comedydynamics.com/wp-content/uploads/2024/06/BillySorrells_ToxicAF_Premier_2000X3000-copy-scaled.jpg');background-size:cover;background-position:center 18%;filter:brightness(.5);transform:scale(1.03);transition:transform 10s ease;will-change:transform}
+.spec-hero:hover .spec-hero__bg{transform:scale(1.06)}
+.spec-hero__overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(8,8,8,.95) 0%,rgba(8,8,8,.55) 50%,transparent 72%),linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,.7) 35%,transparent 65%),radial-gradient(ellipse at 80% 10%,rgba(0,0,0,.5) 0%,transparent 55%)}
+.spec-hero__content{position:relative;z-index:2;max-width:580px;padding:0 5% 80px}
+.spec-hero__eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#d4a62a;margin-bottom:16px}
+.spec-hero__eyebrow::before{content:'';display:block;width:32px;height:2px;background:#d4a62a;border-radius:2px;flex-shrink:0}
+.spec-hero__title{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,8vw,100px);line-height:.88;letter-spacing:.025em;margin-bottom:10px}
+.spec-hero__title .accent{color:#d4a62a}
+.spec-hero__desc{font-size:clamp(13px,1.5vw,15px);font-weight:400;color:#d0d0d0;line-height:1.7;margin-bottom:22px;max-width:440px}
+.spec-hero__metrics{margin-bottom:28px}
+.spec-hero__actions{display:flex;gap:12px;flex-wrap:wrap}
+.spec-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:6px;font-size:13px;font-weight:700;letter-spacing:.03em;text-decoration:none;transition:transform .35s,box-shadow .35s,background .35s;white-space:nowrap;border:none;cursor:pointer}
+.spec-btn-primary{background:#fff;color:#000}
+.spec-btn-primary:hover{background:#f0c44b;transform:translateY(-2px);box-shadow:0 10px 30px rgba(212,166,42,.4)}
+.spec-btn-secondary{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px)}
+.spec-btn-secondary:hover{background:rgba(255,255,255,.18);transform:translateY(-2px)}
+.specials-section{padding:0 5%;margin-bottom:56px}
+.specials-section--first{margin-top:-28px;position:relative;z-index:3}
+.specials-hdr{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.specials-hdr__title{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,2.6vw,27px);letter-spacing:.08em;color:#fff;white-space:nowrap}
+.specials-hdr__sub{font-size:11px;font-weight:700;color:#d4a62a;letter-spacing:.14em;white-space:nowrap}
+.specials-hdr__rule{flex:1;height:1px;background:linear-gradient(to right,rgba(212,166,42,.35),transparent);min-width:20px}
+.carousel-wrap{position:relative}
+.carousel{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:18px;cursor:grab;user-select:none;padding-top:12px;margin-top:-12px}
+.carousel:active{cursor:grabbing}
+.carousel::-webkit-scrollbar{display:none}
+.carousel-arrow{position:absolute;top:calc(50% - 9px);transform:translateY(-50%);z-index:10;width:42px;height:42px;border-radius:50%;background:rgba(15,15,15,.92);border:1px solid rgba(255,255,255,.13);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .35s;backdrop-filter:blur(6px);box-shadow:0 4px 20px rgba(0,0,0,.7);line-height:1}
+.carousel-arrow:hover{background:#d4a62a;color:#000;border-color:#d4a62a;box-shadow:0 0 0 4px rgba(212,166,42,.2)}
+.carousel-arrow--prev{left:-18px}
+.carousel-arrow--next{right:-18px}
+@media(max-width:640px){.carousel-arrow{display:none}}
+.spec-card{flex:0 0 280px;height:158px;border-radius:10px;scroll-snap-align:start;position:relative;overflow:visible;transition:transform .35s;z-index:1;cursor:pointer}
+.spec-card:hover{transform:scale(1.13) translateY(-10px);z-index:20}
+.spec-card__img-wrap{width:100%;height:100%;border-radius:10px;overflow:hidden;position:relative}
+.spec-card__img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.spec-card:hover .spec-card__img{transform:scale(1.06)}
+.spec-card__img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 55%);border-radius:10px}
+.spec-card__bottom{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;z-index:2}
+.spec-card__title{font-size:11px;font-weight:700;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.9);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .35s}
+.spec-card:hover .spec-card__title{opacity:0}
+.spec-card__hover{position:absolute;left:0;right:0;bottom:-88px;background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-top:none;border-radius:0 0 10px 10px;padding:10px 13px 12px;opacity:0;transform:translateY(-6px);transition:opacity .35s,transform .35s;z-index:3;pointer-events:none}
+.spec-card:hover .spec-card__hover{opacity:1;transform:translateY(0);pointer-events:auto}
+.spec-card__hover-title{font-size:12px;font-weight:800;margin-bottom:4px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spec-card__hover-meta{display:flex;gap:8px;align-items:center;margin-bottom:9px;flex-wrap:wrap}
+.spec-card__hover-runtime,.spec-card__hover-views{font-size:10px;color:#999}
+.spec-card__watch-btn{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;padding:8px;border-radius:5px;font-size:11px;font-weight:800;letter-spacing:.04em;text-decoration:none;transition:filter .2s,transform .15s}
+.spec-card__watch-btn:hover{filter:brightness(1.2);transform:scale(1.02)}
+.wbtn-yt{background:#FF0000;color:#fff}
+.wbtn-amz{background:#00A8E1;color:#fff}
+.wbtn-tubi{background:#FA5225;color:#fff}
+.wbtn-apple{background:#2d2d2d;color:#fff;border:1px solid rgba(255,255,255,.15)}
+.spec-card__badge{position:absolute;top:8px;right:8px;z-index:3;border-radius:4px;padding:3px 7px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;pointer-events:none}
+.cb-yt{background:rgba(255,0,0,.82);color:#fff}
+.cb-amz{background:rgba(0,168,225,.9);color:#fff}
+.cb-tubi{background:rgba(250,82,37,.9);color:#fff}
+.cb-new{background:#d4a62a;color:#000;font-weight:900}
+.spec-card--featured{flex:0 0 300px;height:169px}
+.flow-bar{padding:32px 5%;background:linear-gradient(135deg,rgba(17,17,17,.8),rgba(26,26,26,.5));border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);margin-bottom:52px}
+.flow-bar__label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#555;margin-bottom:16px}
+.flow-bar__steps{display:flex;align-items:center;gap:10px;flex-wrap:wrap;overflow-x:auto}
+.flow-step{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.flow-step__pill{padding:6px 16px;background:#1a1a1a;border:1px solid rgba(255,255,255,.08);border-radius:100px;font-size:12px;font-weight:600;color:#999;transition:all .2s}
+.flow-step__pill:hover{border-color:#d4a62a;color:#d4a62a}
+.flow-step__pill--active{background:rgba(212,166,42,.15);border-color:#d4a62a;color:#d4a62a;font-weight:700}
+.flow-arrow{color:#555;font-size:14px}
+.platform-sect{padding:0 5%;margin-bottom:60px}
+.platform-grid{display:flex;gap:12px;flex-wrap:wrap}
+.platform-pill{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:100px;background:#1a1a1a;border:1px solid rgba(255,255,255,.07);text-decoration:none;color:#fff;font-size:13px;font-weight:600;transition:all .35s}
+.platform-pill:hover{border-color:#d4a62a;color:#f0c44b;background:rgba(212,166,42,.15);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,166,42,.18)}
+.platform-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.platform-free-tag{font-size:9px;font-weight:800;letter-spacing:.08em;background:rgba(34,197,94,.2);color:#4ade80;border:1px solid rgba(74,222,128,.3);padding:1px 6px;border-radius:4px;text-transform:uppercase}
+#specials{background:var(--bg);padding-bottom:20px}
+</style></head>
+<body>
+
+<nav id="nav">
+<div class="wrap nav-in">
+  <a href="#hero" class="logo">Billy<em>.</em></a>
+  <ul class="nav-links">
+    <li><a href="#tour">Tour</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#specials">Specials</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#tour" class="btn btn-fill" style="padding:10px 24px;font-size:.7rem">Get Tickets</a></li>
+  </ul>
+  <button class="ham" id="ham" aria-label="Menu"><i></i><i></i><i></i></button>
+</div>
+</nav>
+<div class="mob" id="mob">
+  <a href="#tour" onclick="closeMob()">Tour</a>
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#projects" onclick="closeMob()">Projects</a>
+  <a href="#videos" onclick="closeMob()">Videos</a>
+  <a href="#specials" onclick="closeMob()">Specials</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+  <a href="#tour" class="btn btn-fill" onclick="closeMob()" style="margin-top:16px">Get Tickets</a>
+</div>
+
+<section class="hero" id="hero">
+  <div class="hero-media">
+    <img src="img/hero.jpg" alt="Billy Sorrells" loading="eager">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="wrap hero-c">
+    <div class="hero-badge">The Sexiest Man in Comedy</div>
+    <h1>Billy<br><span class="gl">Sorrells</span></h1>
+    <p class="hero-sub">Comedian &bull; Actor &bull; Writer &bull; Producer</p>
+    <p class="hero-cred">Wild N Out &bull; Toxic AF &bull; Houston Vice &bull; BSE LLC</p>
+    <div class="hero-btns">
+      <a href="#tour" class="btn btn-fill">Tour Dates</a>
+      <a href="#contact" class="btn btn-ghost">Book Billy</a>
+    </div>
+  </div>
+</section>
+
+<div class="mq-wrap">
+<div class="mq" id="mq">
+  <span>Dirty, Sexy, Funny Tour 2026 <span class="dt"></span> Wild N Out Veteran <span class="dt"></span> 110K+ YouTube Subscribers <span class="dt"></span> Toxic AF Special <span class="dt"></span> Houston Vice <span class="dt"></span> King of Katy Texas <span class="dt"></span> BSE LLC</span>
+  <span>Dirty, Sexy, Funny Tour 2026 <span class="dt"></span> Wild N Out Veteran <span class="dt"></span> 110K+ YouTube Subscribers <span class="dt"></span> Toxic AF Special <span class="dt"></span> Houston Vice <span class="dt"></span> King of Katy Texas <span class="dt"></span> BSE LLC</span>
+</div>
+</div>
+
+<section class="sec" id="tour" style="background:var(--bg)">
+<div class="wrap">
+  <div class="r"><p class="label">On the Road</p></div>
+  <div class="r r1"><h2 class="heading">Dirty, Sexy, Funny<br>Tour 2026</h2></div>
+  <div class="tour-list" style="margin-top:48px">
+    <div class="tour-row r r1">
+      <div class="tour-dt">Apr 26</div>
+      <div class="tour-venue"><h3>Hyena Comedy Club</h3><p>Fort Worth, TX</p></div>
+      <a href="https://www.hyenacomedyclub.com" target="_blank" rel="noopener" class="btn btn-ticket">Tickets</a>
+    </div>
+    <div class="tour-row r r2">
+      <div class="tour-dt">May 3</div>
+      <div class="tour-venue"><h3>Punch Line Comedy</h3><p>Houston, TX</p></div>
+      <a href="https://www.punchlinecomedyclub.com" target="_blank" rel="noopener" class="btn btn-ticket">Tickets</a>
+    </div>
+    <div class="tour-row r r1">
+      <div class="tour-dt">May 24</div>
+      <div class="tour-venue"><h3>Mic Drop Comedy</h3><p>Plano, TX</p></div>
+      <a href="https://buytickets.at/billysorrells/2144975" target="_blank" rel="noopener" class="btn btn-ticket">Tickets</a>
+    </div>
+    <div class="tour-row r r2">
+      <div class="tour-dt">Jun 10</div>
+      <div class="tour-venue"><h3>Mic Drop Comedy</h3><p>Chandler, AZ</p></div>
+      <a href="https://buytickets.at/billysorrells/2144976" target="_blank" rel="noopener" class="btn btn-ticket">Tickets</a>
+    </div>
+    <div class="tour-row r r1">
+      <div class="tour-dt">Jun 14</div>
+      <div class="tour-venue"><h3>Mic Drop &mdash; Father's Day</h3><p>Plano, TX</p></div>
+      <a href="https://buytickets.at/billysorrells/2144977" target="_blank" rel="noopener" class="btn btn-ticket">Tickets</a>
+    </div>
+    <div class="tour-row r r2">
+      <div class="tour-dt">Jun 26</div>
+      <div class="tour-venue"><h3>Howlin' Wolf &mdash; 2 Shows</h3><p>New Orleans, LA</p></div>
+      <a href="https://buytickets.at/billysorrells/2144974" target="_blank" rel="noopener" class="btn btn-ticket">Tickets</a>
+    </div>
+    <div class="tour-row r r1">
+      <div class="tour-dt">Jul 26</div>
+      <div class="tour-venue"><h3>Upstage Comedy Festival</h3><p>Location TBA</p></div>
+      <span class="btn btn-ghost" style="padding:10px 24px;font-size:.72rem;opacity:.4;cursor:default">Coming Soon</span>
+    </div>
+  </div>
+  <p class="r" style="text-align:center;margin-top:48px;color:var(--t3);font-size:.88rem">More dates dropping soon. Follow <a href="https://instagram.com/billysorrells" target="_blank" rel="noopener" style="color:var(--gold)">@billysorrells</a> for announcements.</p>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section class="sec" id="about" style="background:var(--bg2)">
+<div class="wrap">
+  <div class="about-grid">
+    <div class="photo-stack r">
+      <img src="img/about1.jpg" alt="Billy Sorrells portrait" loading="lazy">
+      <img src="img/about2.jpg" alt="Billy Sorrells headshot" loading="lazy">
+      <img src="img/about3.jpg" alt="Billy Sorrells photo" loading="lazy">
+    </div>
+    <div class="about-text">
+      <div class="r"><p class="label">The Man</p></div>
+      <div class="r r1"><h2 class="heading">About Billy</h2></div>
+      <div class="r r2"><h3 class="heading-sm" style="color:var(--gold);margin:24px 0 20px">"The Sexiest Man in Comedy"</h3></div>
+      <div class="r r3">
+        <p class="sub">Billy Sorrells is a force in entertainment&mdash;a comedian, actor, writer, and producer who has built an empire from the stage to the screen. A veteran of MTV's Wild N Out (Seasons 8 &amp; 14+), Billy's razor-sharp wit and undeniable charisma have made him one of the most sought-after entertainers in the game.</p>
+      </div>
+      <div class="r r4">
+        <p class="sub" style="margin-top:16px">With over 110,000 YouTube subscribers, 17M+ views, and a comedy special <em>Toxic AF</em> streaming everywhere, Billy brings the energy whether he's headlining sold-out shows, producing original content, or developing his slate of TV and film projects through BSE LLC.</p>
+      </div>
+      <div class="r r5">
+        <p class="sub" style="margin-top:16px">From Katy, Texas to stages across the country, Billy Sorrells doesn't just do comedy&mdash;he commands it.</p>
+      </div>
+      <div class="stats r r5">
+        <div class="stat"><h4>110K+</h4><p>YouTube Subs</p></div>
+        <div class="stat"><h4>17M+</h4><p>Total Views</p></div>
+        <div class="stat"><h4>Wild N Out</h4><p>MTV Veteran</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section style="background:var(--bg)">
+  <div class="gallery r">
+    <img src="img/gal1.jpg" alt="Billy Sorrells" loading="lazy">
+    <img src="img/gal2.jpg" alt="Billy Sorrells" loading="lazy">
+    <img src="img/gal3.jpg" alt="Billy Sorrells" loading="lazy">
+    <img src="img/gal4.jpg" alt="Billy Sorrells" loading="lazy">
+  </div>
+</section>
+
+<section class="sec" id="projects" style="background:var(--bg2)">
+<div class="wrap">
+  <div class="r"><p class="label">In Development</p></div>
+  <div class="r r1"><h2 class="heading">Projects</h2></div>
+  <div class="proj-grid" style="margin-top:48px">
+    <div class="proj r r1">
+      <div class="tag">TV Series</div>
+      <h3>Houston Vice</h3>
+      <p>A gritty, comedic drama set in the streets and stages of Houston. Created, written, and produced by Billy Sorrells. Currently in development.</p>
+    </div>
+    <div class="proj r r2">
+      <div class="tag">Feature / Series</div>
+      <h3>King of Katy Texas</h3>
+      <p>Billy's semi-autobiographical project capturing the hustle, humor, and heart of growing up in Katy, TX. A love letter to where it all started.</p>
+    </div>
+    <div class="proj r r3">
+      <div class="tag">Film / Series</div>
+      <h3>The Undertakers</h3>
+      <p>A dark comedy ensemble project that blends the absurd with the profound. Details under wraps&mdash;but it's going to be something special.</p>
+    </div>
+    <div class="proj r r4">
+      <div class="tag">Stand-Up Special</div>
+      <h3>Coming Soon</h3>
+      <p>Billy's next stand-up special is in the works. Raw, unfiltered, unapologetically funny. The Dirty, Sexy, Funny Tour is the road to the taping.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="sec" id="videos" style="background:var(--bg)">
+<div class="wrap">
+  <div class="r"><p class="label">Watch</p></div>
+  <div class="r r1"><h2 class="heading">Latest Videos</h2></div>
+  <div class="vid-grid" style="margin-top:48px">
+    <div class="vid-card r r1">
+      <div class="vid-embed">
+        <iframe src="https://www.youtube.com/embed?listType=playlist&list=UU-DvK4AnhcHoSaDtn4AgnpA&index=0" title="Billy Sorrells - Latest Video" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <h3>Latest Upload</h3>
+    </div>
+    <div class="vid-card r r2">
+      <div class="vid-embed">
+        <iframe src="https://www.youtube.com/embed?listType=playlist&list=UU-DvK4AnhcHoSaDtn4AgnpA&index=1" title="Billy Sorrells - Recent" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <h3>Recent Upload</h3>
+    </div>
+    <div class="vid-card r r3">
+      <div class="vid-embed">
+        <iframe src="https://www.youtube.com/embed?listType=playlist&list=UU-DvK4AnhcHoSaDtn4AgnpA&index=2" title="Billy Sorrells - Popular" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <h3>From the Channel</h3>
+    </div>
+  </div>
+  <div class="r" style="text-align:center;margin-top:48px">
+    <a href="https://youtube.com/billysorrells" target="_blank" rel="noopener" class="btn btn-ghost">Subscribe on YouTube</a>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SPECIALS SECTION -->
+<div id="specials">
+  <section class="spec-hero">
+    <div class="spec-hero__bg"></div>
+    <div class="spec-hero__overlay"></div>
+    <div class="spec-hero__content">
+      <div class="spec-hero__eyebrow">Latest Special</div>
+      <h2 class="spec-hero__title">Toxic<br><span class="accent">AF</span></h2>
+      <p class="spec-hero__desc"><span class="kw kw-red">Wild N Out</span> star Billy Sorrells gets brutally real about divorce, raising <span class="kw kw-gold">5 kids</span>, and why he is the world most self-aware <span class="kw kw-orange">toxic bachelor</span> at 40.</p>
+      <div class="spec-hero__metrics">
+        <div class="badge-row">
+          <span class="metric-badge mb-gold"><span class="metric-badge__label">release</span><span class="metric-badge__value">Aug 2024</span></span>
+          <span class="metric-badge mb-blue"><span class="metric-badge__label">runtime</span><span class="metric-badge__value">54 min</span></span>
+          <span class="metric-badge mb-green"><span class="metric-badge__label">platforms</span><span class="metric-badge__value">Amazon - Tubi - Apple TV</span></span>
+          <span class="metric-badge mb-orange"><span class="metric-badge__label">IMDB</span><span class="metric-badge__value">6.3 / 10</span></span>
+        </div>
+      </div>
+      <div class="spec-hero__actions">
+        <a class="spec-btn spec-btn-primary" href="https://www.amazon.com/Billy-Sorrells-Toxic-Brian-Volk-Weiss/dp/B0D83M26Q5" target="_blank" rel="noopener">Watch on Amazon</a>
+        <a class="spec-btn spec-btn-secondary" href="https://tubitv.com/movies/100040603/billy-sorrells-toxic-af" target="_blank" rel="noopener">Watch Free on Tubi</a>
+      </div>
+    </div>
+  </section>
+  <div class="flow-bar">
+    <div class="flow-bar__label">Billy catalog from first drop to latest</div>
+    <div class="flow-bar__steps">
+      <div class="flow-step"><span class="flow-step__pill">Raised By Wolves</span><span class="flow-arrow">to</span></div>
+      <div class="flow-step"><span class="flow-step__pill">Dirty Sexy Funny</span><span class="flow-arrow">to</span></div>
+      <div class="flow-step"><span class="flow-step__pill">The Last of My Kind</span><span class="flow-arrow">to</span></div>
+      <div class="flow-step"><span class="flow-step__pill">HIGH and LOW</span><span class="flow-arrow">to</span></div>
+      <div class="flow-step"><span class="flow-step__pill">AT RISK</span><span class="flow-arrow">to</span></div>
+      <div class="flow-step"><span class="flow-step__pill">For the Love of the Game</span><span class="flow-arrow">to</span></div>
+      <div class="flow-step"><span class="flow-step__pill">Live in Dallas 2023</span><span class="flow-arrow">to</span></div>
+      <div class="flow-step"><span class="flow-step__pill flow-step__pill--active">Toxic AF New</span></div>
+    </div>
+  </div>
+  <div class="specials-section specials-section--first">
+    <div class="specials-hdr">
+      <h2 class="specials-hdr__title">Stand-Up Specials</h2>
+      <span class="specials-hdr__sub">8 FULL SHOWS</span>
+      <div class="specials-hdr__rule"></div>
+      <span class="metric-badge mb-gold" style="flex-shrink:0"><span class="metric-badge__label">total views</span><span class="metric-badge__value">2M+</span></span>
+    </div>
+    <div class="carousel-wrap">
+      <button class="carousel-arrow carousel-arrow--prev" onclick="scrollCar('specials-car',-1)" aria-label="Scroll left">&#8249;</button>
+      <button class="carousel-arrow carousel-arrow--next" onclick="scrollCar('specials-car', 1)" aria-label="Scroll right">&#8250;</button>
+      <div class="carousel" id="specials-car">
+        <div class="spec-card spec-card--featured">
+          <div class="spec-card__img-wrap"><img class="spec-card__img" src="https://www.comedydynamics.com/wp-content/uploads/2024/06/BillySorrells_ToxicAF_Premier_2000X3000-copy-scaled.jpg" alt="Toxic AF" loading="lazy"></div>
+          <span class="spec-card__badge cb-new">NEW 2024</span>
+          <div class="spec-card__bottom"><div class="spec-card__title">Toxic AF</div></div>
+          <div class="spec-card__hover"><div class="spec-card__hover-title">Billy Sorrells: Toxic AF</div><div class="spec-card__hover-meta"><span class="spec-card__hover-runtime">54 min 2024</span></div><a class="spec-card__watch-btn wbtn-amz" href="https://www.amazon.com/Billy-Sorrells-Toxic-Brian-Volk-Weiss/dp/B0D83M26Q5" target="_blank" rel="noopener">Watch on Amazon Prime</a></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-card__img-wrap"><img class="spec-card__img" src="https://i.ytimg.com/vi/Xw6YoRcv6B0/maxresdefault.jpg" alt="Dirty Sexy Funny" loading="lazy"></div>
+          <span class="spec-card__badge cb-yt">YouTube</span>
+          <div class="spec-card__bottom"><div class="spec-card__title">Dirty Sexy Funny</div></div>
+          <div class="spec-card__hover"><div class="spec-card__hover-title">Dirty Sexy Funny</div><div class="spec-card__hover-meta"><span class="spec-card__hover-runtime">Feature Length</span><span class="spec-card__hover-views">319K views</span></div><a class="spec-card__watch-btn wbtn-yt" href="https://www.youtube.com/watch?v=Xw6YoRcv6B0" target="_blank" rel="noopener">Watch Free on YouTube</a></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-card__img-wrap"><img class="spec-card__img" src="https://i.ytimg.com/vi/7jCfD5smSh8/maxresdefault.jpg" alt="Raised By Wolves" loading="lazy"></div>
+          <span class="spec-card__badge cb-yt">YouTube</span>
+          <div class="spec-card__bottom"><div class="spec-card__title">Raised By Wolves</div></div>
+          <div class="spec-card__hover"><div class="spec-card__hover-title">Raised By Wolves</div><div class="spec-card__hover-meta"><span class="spec-card__hover-runtime">59 min</span><span class="spec-card__hover-views">809K views</span></div><a class="spec-card__watch-btn wbtn-yt" href="https://www.youtube.com/watch?v=7jCfD5smSh8" target="_blank" rel="noopener">Watch Free on YouTube</a></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-card__img-wrap"><img class="spec-card__img" src="https://i.ytimg.com/vi/cMDEL6xI5w0/maxresdefault.jpg" alt="The Last of My Kind" loading="lazy"></div>
+          <span class="spec-card__badge cb-yt">YouTube</span>
+          <div class="spec-card__bottom"><div class="spec-card__title">The Last of My Kind</div></div>
+          <div class="spec-card__hover"><div class="spec-card__hover-title">The Last of My Kind</div><div class="spec-card__hover-meta"><span class="spec-card__hover-runtime">Full Special</span><span class="spec-card__hover-views">269K views</span></div><a class="spec-card__watch-btn wbtn-yt" href="https://www.youtube.com/watch?v=cMDEL6xI5w0" target="_blank" rel="noopener">Watch Free on YouTube</a></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-card__img-wrap"><img class="spec-card__img" src="https://i.ytimg.com/vi/Cd83FonQafM/maxresdefault.jpg" alt="AT RISK" loading="lazy"></div>
+          <span class="spec-card__badge cb-yt">YouTube</span>
+          <div class="spec-card__bottom"><div class="spec-card__title">AT RISK (2020)</div></div>
+          <div class="spec-card__hover"><div class="spec-card__hover-title">AT RISK</div><div class="spec-card__hover-meta"><span class="spec-card__hover-runtime">57 min 2020</span><span class="spec-card__hover-views">200K views</span></div><a class="spec-card__watch-btn wbtn-yt" href="https://www.youtube.com/watch?v=Cd83FonQafM" target="_blank" rel="noopener">Watch Free on YouTube</a></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-card__img-wrap"><img class="spec-card__img" src="https://i.ytimg.com/vi/kk1MwTc00Gk/maxresdefault.jpg" alt="HIGH and LOW" loading="lazy"></div>
+          <span class="spec-card__badge cb-yt">YouTube</span>
+          <div class="spec-card__bottom"><div class="spec-card__title">HIGH and LOW</div></div>
+          <div class="spec-card__hover"><div class="spec-card__hover-title">HIGH and LOW</div><div class="spec-card__hover-meta"><span class="spec-card__hover-runtime">1 hr 3 min</span><span class="spec-card__hover-views">90K views</span></div><a class="spec-card__watch-btn wbtn-yt" href="https://www.youtube.com/watch?v=kk1MwTc00Gk" target="_blank" rel="noopener">Watch Free on YouTube</a></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-card__img-wrap"><img class="spec-card__img" src="https://i.ytimg.com/vi/ZsUWQv7vr9o/maxresdefault.jpg" alt="Live in Dallas 2023" loading="lazy"></div>
+          <span class="spec-card__badge cb-yt">YouTube</span>
+          <div class="spec-card__bottom"><div class="spec-card__title">Live in Dallas 2023</div></div>
+          <div class="spec-card__hover"><div class="spec-card__hover-title">Live in Dallas 2023</div><div class="spec-card__hover-meta"><span class="spec-card__hover-runtime">51 min 2023</span><span class="spec-card__hover-views">17K views</span></div><a class="spec-card__watch-btn wbtn-yt" href="https://www.youtube.com/watch?v=ZsUWQv7vr9o" target="_blank" rel="noopener">Watch Free on YouTube</a></div>
+        </div>
+        <div class="spec-card">
+          <div class="spec-card__img-wrap"><img class="spec-card__img" src="https://i.ytimg.com/vi/-upwDcHnOwk/maxresdefault.jpg" alt="For the Love of the Game" loading="lazy"></div>
+          <span class="spec-card__badge cb-yt">YouTube</span>
+          <div class="spec-card__bottom"><div class="spec-card__title">For the Love of the Game</div></div>
+          <div class="spec-card__hover"><div class="spec-card__hover-title">For the Love of the Game</div><div class="spec-card__hover-meta"><span class="spec-card__hover-runtime">1 hr 17 min 2020</span><span class="spec-card__hover-views">38K views</span></div><a class="spec-card__watch-btn wbtn-yt" href="https://www.youtube.com/watch?v=-upwDcHnOwk" target="_blank" rel="noopener">Watch Free on YouTube</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="platform-sect">
+    <div class="specials-hdr" style="margin-bottom:16px"><h2 class="specials-hdr__title">Stream Toxic AF On</h2><div class="specials-hdr__rule"></div></div>
+    <div class="platform-grid">
+      <a class="platform-pill" href="https://www.amazon.com/Billy-Sorrells-Toxic-Brian-Volk-Weiss/dp/B0D83M26Q5" target="_blank" rel="noopener"><span class="platform-dot" style="background:#00A8E1"></span>Amazon Prime Video</a>
+      <a class="platform-pill" href="https://tubitv.com/movies/100040603/billy-sorrells-toxic-af" target="_blank" rel="noopener"><span class="platform-dot" style="background:#FA5225"></span>Tubi<span class="platform-free-tag">FREE</span></a>
+      <a class="platform-pill" href="https://tv.apple.com/us/movie/billy-sorrells-toxic-af/umc.cmc.3btxuk4iw3hbj9mwwd5f4tbik" target="_blank" rel="noopener"><span class="platform-dot" style="background:#ffffff"></span>Apple TV</a>
+      <a class="platform-pill" href="https://www.youtube.com/@BillySorrells/videos" target="_blank" rel="noopener"><span class="platform-dot" style="background:#FF0000"></span>YouTube<span class="platform-free-tag">FREE</span></a>
+    </div>
+  </div>
+</div>
+<section class="sec" id="press" style="background:var(--bg2)">
+<div class="wrap">
+  <div class="r"><p class="label">Resume</p></div>
+  <div class="r r1"><h2 class="heading">Credits &amp; Press</h2></div>
+  <div class="cred-cols r r2" style="margin-top:48px">
+    <div class="cred-item"><h4>Wild N Out</h4><p>MTV &mdash; Cast Member / Seasons 8, 14+</p></div>
+    <div class="cred-item"><h4>Toxic AF</h4><p>Comedy Special &mdash; Comedy Dynamics, 2024</p></div>
+    <div class="cred-item"><h4>Houston Vice</h4><p>Creator, Writer, Producer &mdash; In Development</p></div>
+    <div class="cred-item"><h4>King of Katy Texas</h4><p>Creator, Writer &mdash; In Development</p></div>
+    <div class="cred-item"><h4>The Undertakers</h4><p>Creator, Producer &mdash; In Development</p></div>
+    <div class="cred-item"><h4>Office Code</h4><p>BET.com &mdash; Creator, Star</p></div>
+    <div class="cred-item"><h4>BET Red Carpet</h4><p>Host &mdash; Various Award Shows</p></div>
+    <div class="cred-item"><h4>Raised By Wolves</h4><p>Debut Comedy Album</p></div>
+    <div class="cred-item"><h4>YouTube</h4><p>110K+ Subscribers &mdash; 17M+ Views</p></div>
+    <div class="cred-item"><h4>BSE LLC</h4><p>Founder &mdash; Entertainment &amp; Production</p></div>
+    <div class="cred-item"><h4>Innovative Artists</h4><p>Talent Representation</p></div>
+    <div class="cred-item"><h4>Dirty, Sexy, Funny Tour</h4><p>National Headlining Tour &mdash; 2026</p></div>
+  </div>
+</div>
+</section>
+
+<section style="background:var(--bg)">
+  <div class="gallery r">
+    <img src="img/gal5.jpg" alt="Billy Sorrells" loading="lazy">
+    <img src="img/gal6.jpg" alt="Billy Sorrells" loading="lazy">
+    <img src="img/gal7.jpg" alt="Billy Sorrells" loading="lazy">
+    <img src="img/gal8.jpg" alt="Billy Sorrells" loading="lazy">
+  </div>
+</section>
+
+<section class="sec" id="contact" style="background:var(--bg2)">
+<div class="wrap">
+  <div class="r"><p class="label">Let's Work</p></div>
+  <div class="r r1"><h2 class="heading">Book Billy</h2></div>
+  <div class="contact-grid" style="margin-top:48px">
+    <div class="contact-info r r2">
+      <h3>Booking &amp; Inquiries</h3>
+      <div class="c-detail">
+        <div class="c-label">Booking Manager</div>
+        <p>Shanequa Branch</p>
+      </div>
+      <div class="c-detail">
+        <div class="c-label">Email</div>
+        <a href="mailto:bookbillysorrells@gmail.com">bookbillysorrells@gmail.com</a>
+      </div>
+      <div class="c-detail">
+        <div class="c-label">Phone</div>
+        <a href="tel:+12108846078">(210) 884-6078</a>
+      </div>
+      <div class="c-detail">
+        <div class="c-label">Available For</div>
+        <p style="color:var(--t2)">Comedy Shows, Corporate Events, Festivals, TV/Film, Brand Partnerships, Speaking Engagements, Podcasts</p>
+      </div>
+      <div class="socials">
+        <a href="https://youtube.com/billysorrells" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube">YT</a>
+        <a href="https://instagram.com/billysorrells" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">IG</a>
+        <a href="https://twitter.com/BillySorrells" target="_blank" rel="noopener" aria-label="Twitter/X" title="X">X</a>
+      </div>
+    </div>
+    <form class="c-form r r3" id="cform" onsubmit="submitForm(event)">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="text" name="subject" placeholder="Subject (e.g., Booking Inquiry, Corporate Event)">
+      <textarea name="message" placeholder="Tell us about your event or project..." required></textarea>
+      <button type="submit" class="btn btn-fill" style="width:100%">Send Message</button>
+    </form>
+  </div>
+</div>
+</section>
+
+<footer>
+<div class="wrap foot-in">
+  <p>&copy; 2026 Billy Sorrells / <a href="#">BSE LLC</a>. All rights reserved.</p>
+  <p style="color:var(--t2)">The Sexiest Man in Comedy</p>
+</div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('s',scrollY>60),{passive:true});
+
+const ham=document.getElementById('ham'),mob=document.getElementById('mob');
+ham.onclick=()=>{ham.classList.toggle('on');mob.classList.toggle('on');document.body.style.overflow=mob.classList.contains('on')?'hidden':''};
+function closeMob(){ham.classList.remove('on');mob.classList.remove('on');document.body.style.overflow=''}
+
+const obs=new IntersectionObserver(e=>e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('v');obs.unobserve(el.target)}}),{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}}));
+
+function submitForm(e){
+  e.preventDefault();const f=e.target;
+  const s=f.subject.value||'Booking Inquiry';
+  const b=`Name: ${f.name.value}%0AEmail: ${f.email.value}%0A%0A${encodeURIComponent(f.message.value)}`;
+  window.location.href=`mailto:bookbillysorrells@gmail.com?subject=${encodeURIComponent(s)}&body=${b}`;
+  f.reset();
+}
+
+/* Specials Carousel */
+function scrollCar(id, dir) {
+  var el = document.getElementById(id);
+  var firstCard = el.querySelector('.spec-card');
+  var cardW = firstCard ? firstCard.offsetWidth + 14 : 294;
+  el.scrollBy({ left: dir * cardW * 2.5, behavior: 'smooth' });
+}
+document.querySelectorAll('.carousel').forEach(function(c) {
+  var down = false, startX, scrollLeft;
+  c.addEventListener('mousedown', function(e) { down = true; startX = e.pageX - c.offsetLeft; scrollLeft = c.scrollLeft; });
+  c.addEventListener('mouseleave', function() { down = false; });
+  c.addEventListener('mouseup', function() { down = false; });
+  c.addEventListener('mousemove', function(e) { if (!down) return; e.preventDefault(); c.scrollLeft = scrollLeft - (e.pageX - c.offsetLeft - startX) * 1.5; });
+  var tx = 0;
+  c.addEventListener('touchstart', function(e) { tx = e.changedTouches[0].clientX; }, { passive: true });
+  c.addEventListener('touchend', function(e) { var d = tx - e.changedTouches[0].clientX; if (Math.abs(d) > 30) c.scrollBy({ left: d * 2.5, behavior: 'smooth' }); }, { passive: true });
+});
+document.querySelectorAll('.spec-card__img').forEach(function(img) {
+  img.addEventListener('error', function() { if (img.src.indexOf('maxresdefault') !== -1) img.src = img.src.replace('maxresdefault', 'hqdefault'); });
+});
+</script>
+</body>
+</html>
