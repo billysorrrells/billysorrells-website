@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOUSTON VICE — Series Command Center</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#06060c;--bg2:#0c0c16;--bg3:#12121e;--bg4:#1a1a2e;
+  --glass:rgba(14,14,24,0.7);--glass-border:rgba(255,255,255,0.06);
+  --pink:#ff2d78;--blue:#00d4ff;--yellow:#ffd000;--green:#00ff88;
+  --purple:#b24dff;--orange:#ff8c00;--red:#ff3344;
+  --text:#e8e8f2;--text2:#9090a8;--text3:#555570;--dim:#2e2e44;
+  --gold:#d4a843;--border:#222238;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 0%,rgba(255,45,120,0.04),transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(0,212,255,0.03),transparent 60%);pointer-events:none;z-index:0}
+
+/* === GLASS SYSTEM === */
+.glass{background:var(--glass);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);border:1px solid var(--glass-border);border-radius:16px}
+.glass-sm{border-radius:10px}
+.glass:hover{border-color:rgba(255,255,255,0.1)}
+
+/* === ANIMATIONS === */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
+@keyframes scanline{0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
+@keyframes breathe{0%,100%{opacity:0.6}50%{opacity:1}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulseRing{0%{transform:scale(1);opacity:0.6}100%{transform:scale(2.2);opacity:0}}
+@keyframes neonFlicker{0%,95%,100%{opacity:1}96%{opacity:0.8}97%{opacity:1}98%{opacity:0.6}}
+
+.anim-up{animation:fadeUp 0.5s ease both}
+.anim-slide{animation:slideIn 0.4s ease both}
+
+/* === HEADER === */
+.header{position:relative;padding:36px 48px 28px;background:linear-gradient(180deg,rgba(255,45,120,0.05),transparent 80%);border-bottom:1px solid var(--border);z-index:10}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pink),var(--blue),var(--yellow),var(--green),var(--pink));background-size:200% 100%;animation:gradientSlide 4s linear infinite}
+@keyframes gradientSlide{0%{background-position:0% 0%}100%{background-position:200% 0%}}
+.header::after{content:'';position:absolute;top:2px;left:0;right:0;height:40px;background:linear-gradient(180deg,rgba(255,45,120,0.08),transparent);pointer-events:none}
+
+.hdr-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:2}
+.hdr-title{font-family:'Bebas Neue',sans-serif;font-size:64px;letter-spacing:8px;line-height:1;color:var(--text);text-shadow:0 0 40px rgba(255,45,120,0.15);animation:neonFlicker 8s infinite}
+.hdr-title span{color:var(--pink)}
+.hdr-sub{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--text3);margin-top:6px}
+.hdr-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,45,120,0.08);border:1px solid rgba(255,45,120,0.2);border-radius:8px;padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--pink);letter-spacing:1.5px;white-space:nowrap;position:relative;overflow:hidden}
+.hdr-badge::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,45,120,0.06),transparent);animation:shimmer 3s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.hdr-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--pink);position:relative}
+.hdr-badge .dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--pink);animation:pulseRing 2s infinite}
+
+.stats{display:flex;gap:28px;margin-top:20px;position:relative;z-index:2}
+.stat{display:flex;flex-direction:column;gap:1px}
+.stat-v{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--blue);line-height:1}
+.stat-l{font-size:9px;text-transform:uppercase;letter-spacing:2.5px;color:var(--text3)}
+
+/* === TABS === */
+.tabs{display:flex;gap:0;padding:0 48px;border-bottom:1px solid var(--border);background:rgba(12,12,22,0.9);backdrop-filter:blur(16px);position:sticky;top:0;z-index:100}
+.tab{padding:14px 22px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.3s;user-select:none;position:relative}
+.tab:hover{color:var(--text2)}
+.tab.active{color:var(--pink);border-bottom-color:var(--pink)}
+.tab.active::after{content:'';position:absolute;bottom:-1px;left:20%;right:20%;height:8px;background:var(--pink);filter:blur(8px);opacity:0.4}
+
+/* === PANELS === */
+.main{padding:32px 48px 80px;position:relative;z-index:1}
+.panel{display:none;animation:fadeUp 0.4s ease both}
+.panel.active{display:block}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;margin-bottom:24px;display:flex;align-items:center;gap:14px}
+.sec-title .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.sec-title .accent{color:var(--pink)}
+
+/* === CHARACTER CARDS === */
+.char-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.char-card{padding:24px;cursor:pointer;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}
+.char-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:16px 0 0 16px;transition:width 0.3s}
+.char-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.5);border-color:rgba(255,255,255,0.12)}
+.char-card:hover::before{width:5px}
+.char-card.expanded{grid-column:1/-1;max-width:100%}
+.char-card[data-role="lead"]::before{background:var(--pink)}
+.char-card[data-role="partner"]::before{background:var(--blue)}
+.char-card[data-role="authority"]::before{background:var(--yellow)}
+.char-card[data-role="informant"]::before{background:var(--green)}
+.char-card[data-role="antagonist"]::before{background:var(--orange)}
+.char-card[data-role="federal"]::before{background:var(--purple)}
+.char-card[data-role="family"]::before{background:var(--gold)}
+
+.c-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.c-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;line-height:1.1}
+.c-alias{font-size:11px;color:var(--text2);font-weight:400;margin-top:2px}
+.c-tag{font-size:8px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:6px;white-space:nowrap}
+.c-tag.lead{background:rgba(255,45,120,0.12);color:var(--pink);border:1px solid rgba(255,45,120,0.2)}
+.c-tag.partner{background:rgba(0,212,255,0.1);color:var(--blue);border:1px solid rgba(0,212,255,0.2)}
+.c-tag.authority{background:rgba(255,208,0,0.1);color:var(--yellow);border:1px solid rgba(255,208,0,0.2)}
+.c-tag.informant{background:rgba(0,255,136,0.1);color:var(--green);border:1px solid rgba(0,255,136,0.2)}
+.c-tag.antagonist{background:rgba(255,140,0,0.1);color:var(--orange);border:1px solid rgba(255,140,0,0.2)}
+.c-tag.federal{background:rgba(178,77,255,0.1);color:var(--purple);border:1px solid rgba(178,77,255,0.2)}
+.c-tag.family{background:rgba(212,168,67,0.1);color:var(--gold);border:1px solid rgba(212,168,67,0.2)}
+.c-meta{font-size:11px;color:var(--text2);margin-bottom:8px;line-height:1.6}
+.c-bio{font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:12px}
+.c-ep-bar{display:flex;gap:4px;margin-top:8px}
+.c-ep-dot{width:28px;height:6px;border-radius:3px;transition:all 0.2s}
+.c-ep-dot.on{background:var(--pink);box-shadow:0 0 8px rgba(255,45,120,0.3)}
+.c-ep-dot.off{background:var(--dim)}
+.c-arc{display:none;font-size:12px;color:var(--text2);line-height:1.7;padding-top:16px;border-top:1px solid var(--border);margin-top:16px}
+.c-arc strong{color:var(--text)}
+.char-card.expanded .c-arc{display:block;animation:fadeUp 0.3s ease both}
+.char-hint{font-size:9px;color:var(--text3);text-align:center;margin-top:12px;letter-spacing:1.5px;text-transform:uppercase}
+
+/* === EPISODES === */
+.ep-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:1200px){.ep-grid{grid-template-columns:repeat(2,1fr)}}
+.ep-card{padding:22px;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);cursor:pointer;position:relative;overflow:hidden}
+.ep-card:hover{transform:translateY(-3px) scale(1.01);box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+.ep-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pink),transparent);opacity:0;transition:opacity 0.3s}
+.ep-card:hover::after{opacity:1}
+.ep-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(255,45,120,0.08);position:absolute;top:8px;right:16px;line-height:1}
+.ep-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;margin-bottom:8px}
+.ep-log{font-size:11px;line-height:1.65;color:var(--text2);margin-bottom:14px}
+.ep-tags{display:flex;flex-wrap:wrap;gap:5px}
+.ep-t{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:4px}
+.ep-t.location{color:var(--blue);border:1px solid rgba(0,212,255,0.15);background:rgba(0,212,255,0.05)}
+.ep-t.action{color:var(--pink);border:1px solid rgba(255,45,120,0.15);background:rgba(255,45,120,0.05)}
+.ep-t.emotional{color:var(--gold);border:1px solid rgba(212,168,67,0.15);background:rgba(212,168,67,0.05)}
+
+/* EP Detail Expand */
+.ep-detail{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);font-size:11px;color:var(--text2);line-height:1.6}
+.ep-card.expanded .ep-detail{display:block;animation:fadeUp 0.3s ease both}
+.ep-card.expanded{grid-column:1/-1}
+
+/* === PRESENCE GRID === */
+.ptable{width:100%;border-collapse:collapse;font-size:12px}
+.ptable thead th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);padding:12px 8px;text-align:center;border-bottom:1px solid var(--border);position:sticky;top:46px;background:var(--bg);z-index:10}
+.ptable thead th:first-child{text-align:left;min-width:160px}
+.ptable tbody tr{border-bottom:1px solid rgba(34,34,56,0.4);transition:all 0.2s}
+.ptable tbody tr:hover{background:rgba(255,255,255,0.015)}
+.ptable td{padding:10px 8px;text-align:center;vertical-align:middle}
+.ptable td:first-child{text-align:left;font-weight:600;white-space:nowrap;font-size:12px}
+.pdot{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;font-size:9px;font-weight:700;transition:all 0.2s;cursor:default}
+.pdot:hover{transform:scale(1.15)}
+.pdot.major{background:rgba(255,45,120,0.2);border:1px solid rgba(255,45,120,0.4);color:var(--pink)}
+.pdot.minor{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.25);color:var(--blue)}
+.pdot.mentioned{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:var(--text3)}
+.pdot.none{background:transparent;border:1px solid rgba(255,255,255,0.02)}
+.plegend{display:flex;gap:24px;margin-top:18px;font-size:10px;color:var(--text3)}
+.plegend span{display:flex;align-items:center;gap:7px}
+.pleg{width:14px;height:14px;border-radius:4px;display:inline-block}
+
+/* === SCENE TIMELINE === */
+.stl{position:relative;padding-left:44px}
+.stl::before{content:'';position:absolute;left:16px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--pink),var(--blue),var(--yellow),var(--green),var(--purple),var(--pink));border-radius:2px}
+.snode{position:relative;margin-bottom:16px;padding:18px 22px;transition:all 0.3s;cursor:pointer}
+.snode:hover{transform:translateX(4px);border-color:rgba(255,255,255,0.12)}
+.snode::before{content:'';position:absolute;left:-36px;top:22px;width:12px;height:12px;border-radius:50%;border:2px solid var(--bg);transition:all 0.3s;z-index:2}
+.snode:hover::before{transform:scale(1.3);box-shadow:0 0 12px currentColor}
+.snode:nth-child(1)::before,.snode:nth-child(4)::before,.snode:nth-child(8)::before,.snode:nth-child(11)::before{background:var(--pink);color:var(--pink)}
+.snode:nth-child(2)::before,.snode:nth-child(5)::before,.snode:nth-child(9)::before,.snode:nth-child(12)::before{background:var(--blue);color:var(--blue)}
+.snode:nth-child(3)::before,.snode:nth-child(6)::before,.snode:nth-child(10)::before,.snode:nth-child(13)::before{background:var(--yellow);color:var(--yellow)}
+.snode:nth-child(7)::before{background:var(--green);color:var(--green)}
+.s-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.s-num{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pink);letter-spacing:1.5px}
+.s-time{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px}
+.s-loc{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1.5px;margin-bottom:4px}
+.s-desc{font-size:11px;color:var(--text2);line-height:1.55}
+.s-chars{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+.s-ct{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:4px;background:rgba(255,45,120,0.08);color:var(--pink);border:1px solid rgba(255,45,120,0.15)}
+
+/* === LOCATIONS === */
+.loc-wrap{display:grid;grid-template-columns:1fr 360px;gap:20px;min-height:620px}
+@media(max-width:1100px){.loc-wrap{grid-template-columns:1fr}}
+.loc-map{position:relative;overflow:hidden;min-height:600px}
+.loc-map-label{position:absolute;top:14px;left:18px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text3);z-index:5;text-transform:uppercase}
+.loc-grid-bg{position:absolute;inset:0;background:linear-gradient(rgba(34,34,56,0.15) 1px,transparent 1px),linear-gradient(90deg,rgba(34,34,56,0.15) 1px,transparent 1px);background-size:36px 36px}
+.loc-zone{position:absolute;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.05);pointer-events:none;z-index:1}
+.loc-hwy{position:absolute;z-index:2;pointer-events:none}
+.loc-pin{position:absolute;width:12px;height:12px;border-radius:50%;cursor:pointer;transition:all 0.3s;z-index:10}
+.loc-pin::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);animation:pulseRing 3s infinite}
+.loc-pin:hover,.loc-pin.active{transform:scale(1.6);z-index:20}
+.loc-pin.active{box-shadow:0 0 20px currentColor}
+.loc-pin-name{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:7px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;color:var(--text2);pointer-events:none;opacity:0;transition:opacity 0.2s}
+.loc-pin:hover .loc-pin-name,.loc-pin.active .loc-pin-name{opacity:1}
+
+.loc-side{display:flex;flex-direction:column;gap:10px;max-height:620px;overflow-y:auto;padding-right:4px}
+.loc-side::-webkit-scrollbar{width:3px}
+.loc-side::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.loc-item{padding:14px 16px;cursor:pointer;transition:all 0.25s}
+.loc-item:hover,.loc-item.active{border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.02)}
+.loc-item.active{border-left:3px solid var(--pink)}
+.li-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;margin-bottom:2px}
+.li-type{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:5px}
+.li-desc{font-size:10px;color:var(--text2);line-height:1.5}
+.li-eps{font-size:9px;color:var(--text3);margin-top:5px;font-family:'JetBrains Mono',monospace}
+
+/* === FORMAT === */
+.fmt-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:900px){.fmt-grid{grid-template-columns:1fr}}
+.fmt-card{padding:24px}
+.fmt-card h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:14px}
+.fmt-card h3 span{color:var(--pink)}
+.fmt-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(34,34,56,0.4);font-size:12px}
+.fmt-row:last-child{border:none}
+.fmt-row .l{color:var(--text3)}
+.fmt-row .v{color:var(--text);font-weight:500}
+
+.phone{width:200px;height:380px;border:2px solid var(--text3);border-radius:26px;margin:0 auto;position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(255,45,120,0.06),rgba(0,212,255,0.06))}
+.phone-notch{width:70px;height:18px;background:var(--bg);border-radius:0 0 10px 10px;margin:0 auto}
+.phone-inner{padding:14px;text-align:center}
+.phone-title{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--pink);letter-spacing:2px;margin:14px 0 6px}
+.phone-ep{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--text3)}
+.phone-time{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--text);margin:16px 0}
+.phone-bar{height:3px;background:linear-gradient(90deg,var(--pink) 60%,var(--dim) 60%);border-radius:2px;margin:8px 0}
+.phone-ctrl{display:flex;justify-content:center;gap:20px;margin-top:10px;font-size:14px;color:var(--text3)}
+.phone-spec{margin-top:16px;font-size:8px;color:var(--text3);letter-spacing:1.5px;line-height:1.8}
+
+.plat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.plat{background:rgba(255,255,255,0.015);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;transition:all 0.2s}
+.plat:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-2px)}
+.plat-name{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;margin-bottom:6px}
+.plat-spec{font-size:10px;color:var(--text3);line-height:1.8}
+
+/* === DIRECTOR === */
+.dir-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:1000px){.dir-grid{grid-template-columns:1fr}}
+.dir-card{padding:24px}
+.dir-card.full{grid-column:1/-1}
+.dir-card h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:14px}
+.dir-card h3 span{color:var(--pink)}
+
+.swatches{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.swatch{width:44px;height:44px;border-radius:8px;position:relative;cursor:pointer;transition:all 0.2s}
+.swatch:hover{transform:scale(1.15);z-index:2}
+.swatch .sw-label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:7px;font-family:'JetBrains Mono',monospace;color:var(--text3);white-space:nowrap;opacity:0;transition:opacity 0.2s}
+.swatch:hover .sw-label{opacity:1}
+
+.tone-bar{display:flex;height:32px;border-radius:6px;overflow:hidden;margin-bottom:6px}
+.tone-seg{display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(0,0,0,0.6);transition:flex 0.4s}
+
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.shot{background:rgba(255,255,255,0.015);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;transition:all 0.25s;cursor:default}
+.shot:hover{border-color:rgba(255,45,120,0.2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.shot-ico{font-size:24px;margin-bottom:6px;display:block}
+.shot-nm{font-size:10px;font-weight:700;letter-spacing:0.5px;margin-bottom:3px}
+.shot-d{font-size:9px;color:var(--text3);line-height:1.4}
+
+.crew-r{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(34,34,56,0.4);font-size:12px}
+.crew-r:last-child{border:none}
+.crew-role{color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:1.5px}
+.crew-tag{font-size:9px;font-weight:700;padding:3px 10px;border-radius:5px;letter-spacing:1px}
+.crew-tag.c{background:rgba(255,45,120,0.12);color:var(--pink)}
+.crew-tag.i{background:rgba(255,208,0,0.1);color:var(--yellow)}
+.crew-tag.s{background:rgba(0,212,255,0.08);color:var(--blue)}
+
+.eq-tag{display:inline-block;font-size:9px;padding:5px 11px;margin:3px;border-radius:5px;background:rgba(255,255,255,0.02);border:1px solid var(--border);color:var(--text2);transition:all 0.2s}
+.eq-tag:hover{border-color:rgba(255,45,120,0.2);color:var(--pink)}
+.eq-section{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin:12px 0 6px}
+
+.block-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:1000px){.block-grid{grid-template-columns:repeat(2,1fr)}}
+.block{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:18px;border-top:3px solid var(--pink);transition:all 0.25s}
+.block:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.block-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px}
+.block-eps{font-family:'JetBrains Mono',monospace;font-size:11px;margin:5px 0}
+.block-days{font-size:10px;color:var(--text3);margin-bottom:4px}
+.block-locs{font-size:10px;color:var(--text2);line-height:1.5;margin-bottom:6px}
+.block-note{font-size:9px;color:var(--text3);font-style:italic;line-height:1.4}
+
+/* === FILTER BAR === */
+.filter-bar{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.filter-btn{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all 0.2s;user-select:none}
+.filter-btn:hover{border-color:rgba(255,255,255,0.1);color:var(--text2)}
+.filter-btn.active{background:rgba(255,45,120,0.1);border-color:rgba(255,45,120,0.3);color:var(--pink)}
+
+/* === SCANLINE EFFECT === */
+.scanline{position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.02) 2px,rgba(0,0,0,0.02) 4px);opacity:0.3}
+
+/* === REAL LOCATIONS === */
+.rl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:1100px){.rl-grid{grid-template-columns:1fr}}
+.rl-card{padding:0;overflow:hidden;transition:all 0.3s}
+.rl-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+.rl-img{width:100%;height:200px;background-size:cover;background-position:center;position:relative;border-radius:10px 10px 0 0}
+.rl-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(6,6,12,0.95))}
+.rl-img-label{position:absolute;bottom:12px;left:16px;z-index:2}
+.rl-img-label .rl-name{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;line-height:1.1}
+.rl-img-label .rl-type{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pink)}
+.rl-body{padding:16px 18px 18px}
+.rl-addr{font-size:12px;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.rl-addr .pin-icon{color:var(--pink);font-size:14px}
+.rl-coords{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:8px}
+.rl-desc{font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:10px}
+.rl-scene-use{font-size:10px;color:var(--text3);line-height:1.5}
+.rl-links{display:flex;gap:8px;margin-top:10px}
+.rl-link{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:5px;background:rgba(255,45,120,0.08);border:1px solid rgba(255,45,120,0.2);color:var(--pink);text-decoration:none;transition:all 0.2s}
+.rl-link:hover{background:rgba(255,45,120,0.15);border-color:rgba(255,45,120,0.4)}
+.rl-link.blue{background:rgba(0,212,255,0.06);border-color:rgba(0,212,255,0.2);color:var(--blue)}
+.rl-link.blue:hover{background:rgba(0,212,255,0.12)}
+
+/* === VILLAIN NETWORK === */
+.vn-hero{padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
+.vn-hero::before{content:'';position:absolute;top:0;right:0;width:300px;height:300px;background:radial-gradient(circle,rgba(255,140,0,0.08),transparent 70%);pointer-events:none}
+.vn-hero h2{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:3px;margin-bottom:6px}
+.vn-hero h2 span{color:var(--orange)}
+.vn-hero-sub{font-size:12px;color:var(--text2);line-height:1.7;max-width:700px}
+
+.vn-pyramid{display:grid;grid-template-columns:1fr;gap:0;margin-bottom:24px}
+.vn-tier{padding:20px 24px;border-left:3px solid var(--orange);position:relative;transition:all 0.2s}
+.vn-tier:hover{background:rgba(255,255,255,0.015)}
+.vn-tier-level{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:4px}
+.vn-tier-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;margin-bottom:4px}
+.vn-tier-desc{font-size:11px;color:var(--text2);line-height:1.6}
+.vn-tier-chars{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.vn-tier-char{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:4px}
+
+.vn-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:1000px){.vn-grid{grid-template-columns:1fr}}
+.vn-card{padding:22px;position:relative;overflow:hidden}
+.vn-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:10px 0 0 10px}
+.vn-card h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:10px}
+.vn-card h3 span{color:var(--orange)}
+
+.vn-arc-step{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(34,34,56,0.4)}
+.vn-arc-step:last-child{border:none}
+.vn-arc-ep{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--pink);min-width:28px;padding-top:2px}
+.vn-arc-text{font-size:11px;color:var(--text2);line-height:1.5}
+
+.vn-real{font-size:11px;color:var(--text2);line-height:1.7}
+.vn-real strong{color:var(--text)}
+.vn-real-tag{display:inline-block;font-size:9px;padding:3px 8px;border-radius:4px;background:rgba(255,51,68,0.1);border:1px solid rgba(255,51,68,0.2);color:var(--red);margin:2px;font-weight:600;letter-spacing:0.5px}
+
+/* === SAVE THE CAT === */
+.stc-hero{padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
+.stc-hero::before{content:'';position:absolute;top:0;left:0;width:400px;height:400px;background:radial-gradient(circle,rgba(0,255,136,0.06),transparent 70%);pointer-events:none}
+.stc-hero h2{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:3px;margin-bottom:6px}
+.stc-hero h2 span{color:var(--green)}
+.stc-hero-sub{font-size:12px;color:var(--text2);line-height:1.7;max-width:800px}
+.stc-genre-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.stc-genre-tag{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:6px;border:1px solid var(--border);color:var(--text3);transition:all 0.2s}
+.stc-genre-tag.active{background:rgba(0,255,136,0.1);border-color:rgba(0,255,136,0.3);color:var(--green)}
+
+.stc-progress{position:relative;height:24px;background:var(--bg3);border-radius:12px;margin:24px 0 8px;overflow:hidden;border:1px solid var(--border)}
+.stc-progress-fill{height:100%;border-radius:12px;position:relative;transition:width 0.4s}
+.stc-progress-markers{position:absolute;inset:0;display:flex;pointer-events:none}
+.stc-progress-mark{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.1)}
+.stc-act-labels{display:flex;margin-bottom:24px;font-size:9px;letter-spacing:2px;text-transform:uppercase}
+.stc-act-label{text-align:center;color:var(--text3);padding:4px 0}
+.stc-act-label.act1{width:25%;color:var(--blue)}
+.stc-act-label.act2a{width:25%;color:var(--yellow)}
+.stc-act-label.act2b{width:25%;color:var(--orange)}
+.stc-act-label.act3{width:25%;color:var(--pink)}
+
+.stc-timeline{position:relative}
+.stc-beat{display:grid;grid-template-columns:80px 56px 1fr;gap:16px;padding:16px 20px;margin-bottom:8px;transition:all 0.3s;cursor:pointer;position:relative}
+.stc-beat:hover{transform:translateX(4px);border-color:rgba(255,255,255,0.12)}
+.stc-beat::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:10px 0 0 10px}
+.stc-beat.act1::before{background:var(--blue)}
+.stc-beat.act2a::before{background:var(--yellow)}
+.stc-beat.act2b::before{background:var(--orange)}
+.stc-beat.act3::before{background:var(--pink)}
+.stc-beat-pct{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);padding-top:2px}
+.stc-beat-ep{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--pink);padding-top:2px}
+.stc-beat-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;line-height:1.1;margin-bottom:4px}
+.stc-beat-def{font-size:10px;color:var(--text3);margin-bottom:6px;font-style:italic}
+.stc-beat-map{font-size:11px;color:var(--text2);line-height:1.6}
+.stc-beat-map strong{color:var(--text)}
+.stc-beat-fix{display:none;font-size:11px;color:var(--green);line-height:1.6;padding-top:10px;border-top:1px solid var(--border);margin-top:10px}
+.stc-beat-fix strong{color:var(--text)}
+.stc-beat.expanded .stc-beat-fix{display:block;animation:fadeUp 0.3s ease both}
+.stc-beat.has-fix .stc-beat-name::after{content:' \u26A0';font-size:12px;color:var(--yellow)}
+
+.stc-section-label{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;color:var(--text3);padding:12px 0 8px;border-bottom:1px solid var(--border);margin-bottom:8px;margin-top:16px}
+
+.stc-summary{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+@media(max-width:1000px){.stc-summary{grid-template-columns:1fr}}
+.stc-sum-card{padding:22px}
+.stc-sum-card h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:12px}
+.stc-sum-card h3 span{color:var(--green)}
+.stc-check{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(34,34,56,0.4);font-size:11px;color:var(--text2);line-height:1.5}
+.stc-check:last-child{border:none}
+.stc-check-icon{font-size:14px;min-width:18px;padding-top:1px}
+.stc-check-icon.pass{color:var(--green)}
+.stc-check-icon.fix{color:var(--yellow)}
+.stc-check-icon.add{color:var(--pink)}
+
+/* === STORY ARC & DIRECTOR VISION === */
+.arc-canvas{position:relative;width:100%;height:320px;margin:20px 0 10px;overflow:visible}
+.arc-svg{width:100%;height:100%}
+.arc-gridline{stroke:var(--border);stroke-width:0.5}
+.arc-label{font-family:'JetBrains Mono',monospace;font-size:8px;fill:var(--text3);letter-spacing:1px}
+.arc-ep-label{font-family:'Bebas Neue',sans-serif;font-size:14px;fill:var(--text2);letter-spacing:1.5px}
+.arc-ep-zone{fill:rgba(255,255,255,0.01);stroke:var(--border);stroke-dasharray:4 4}
+.arc-beat-dot{r:5;cursor:pointer;transition:r 0.2s}
+.arc-beat-dot:hover{r:8}
+.arc-tooltip{position:absolute;padding:10px 14px;background:rgba(10,10,20,0.95);border:1px solid rgba(255,45,120,0.3);border-radius:8px;font-size:10px;color:var(--text);pointer-events:none;z-index:50;max-width:260px;display:none;backdrop-filter:blur(12px)}
+.arc-tooltip .tt-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;color:var(--pink)}
+.arc-tooltip .tt-ep{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
+.arc-legend{display:flex;gap:20px;justify-content:center;margin:8px 0 24px;flex-wrap:wrap}
+.arc-legend-item{display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3)}
+.arc-legend-swatch{width:20px;height:3px;border-radius:2px}
+
+.dv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+@media(max-width:1200px){.dv-grid{grid-template-columns:1fr}}
+.dv-card{padding:24px;position:relative;overflow:hidden;transition:all 0.3s}
+.dv-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+.dv-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;border-radius:16px 16px 0 0}
+.dv-card.fuqua::before{background:linear-gradient(90deg,#ff8c00,#cc6600)}
+.dv-card.mann::before{background:linear-gradient(90deg,#00d4ff,#0066aa)}
+.dv-card.bruck::before{background:linear-gradient(90deg,#ffd000,#cc9900)}
+.dv-card h3{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;margin-bottom:4px}
+.dv-card .dv-sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.dv-card.fuqua .dv-sub{color:var(--orange)}
+.dv-card.mann .dv-sub{color:var(--blue)}
+.dv-card.bruck .dv-sub{color:var(--yellow)}
+.dv-tech{display:flex;flex-direction:column;gap:10px}
+.dv-tech-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid rgba(34,34,56,0.4);font-size:11px;line-height:1.5}
+.dv-tech-row:last-child{border:none}
+.dv-tech-label{min-width:80px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding-top:2px}
+.dv-card.fuqua .dv-tech-label{color:var(--orange)}
+.dv-card.mann .dv-tech-label{color:var(--blue)}
+.dv-card.bruck .dv-tech-label{color:var(--yellow)}
+.dv-tech-val{color:var(--text2)}
+.dv-scene{margin-top:14px;padding:14px;background:rgba(255,255,255,0.015);border:1px solid var(--border);border-radius:8px}
+.dv-scene-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.dv-card.fuqua .dv-scene-title{color:var(--orange)}
+.dv-card.mann .dv-scene-title{color:var(--blue)}
+.dv-card.bruck .dv-scene-title{color:var(--yellow)}
+.dv-scene-desc{font-size:11px;color:var(--text2);line-height:1.6}
+.dv-scene-desc strong{color:var(--text)}
+
+.dv-compare{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:24px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+@media(max-width:1200px){.dv-compare{grid-template-columns:1fr}}
+.dv-compare-col{padding:18px}
+.dv-compare-col:not(:last-child){border-right:1px solid var(--border)}
+@media(max-width:1200px){.dv-compare-col:not(:last-child){border-right:none;border-bottom:1px solid var(--border)}}
+.dv-compare-head{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;margin-bottom:10px;text-align:center}
+.dv-compare-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(34,34,56,0.3);font-size:10px}
+.dv-compare-row:last-child{border:none}
+.dv-compare-row .cl{color:var(--text3)}
+.dv-compare-row .cv{color:var(--text2);text-align:right;max-width:60%}
+
+/* === WRITING STYLE TAB === */
+.ws-hero{padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
+.ws-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow))}
+.ws-hero h3{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;margin-bottom:8px}
+.ws-hero h3 span{color:var(--red)}
+.ws-hero p{font-size:12px;color:var(--text2);line-height:1.7;max-width:800px}
+
+.ws-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-bottom:20px}
+.ws-card{padding:22px;position:relative;overflow:hidden;transition:all 0.3s}
+.ws-card:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(0,0,0,0.4)}
+.ws-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:16px 0 0 16px}
+.ws-card.sheridan::before{background:var(--red)}
+.ws-card.fuqua-s::before{background:var(--orange)}
+.ws-card.mann-s::before{background:var(--blue)}
+.ws-card.bruck-s::before{background:var(--yellow)}
+.ws-card h4{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;margin-bottom:4px}
+.ws-card .ws-sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.ws-card.sheridan .ws-sub{color:var(--red)}
+.ws-card.fuqua-s .ws-sub{color:var(--orange)}
+.ws-card.mann-s .ws-sub{color:var(--blue)}
+.ws-card.bruck-s .ws-sub{color:var(--yellow)}
+.ws-card .ws-rule{font-size:11px;color:var(--text2);line-height:1.65;margin-bottom:8px;padding-left:12px;border-left:2px solid var(--border)}
+.ws-card .ws-example{font-size:10px;color:var(--text3);line-height:1.5;font-family:'JetBrains Mono',monospace;padding:10px;border-radius:8px;background:rgba(0,0,0,0.3);margin-top:8px}
+.ws-card .ws-example em{color:var(--pink);font-style:normal}
+
+.ws-compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px}
+@media(max-width:900px){.ws-compare{grid-template-columns:1fr}}
+.ws-compare-col{padding:20px}
+.ws-compare-col:first-child{border-right:1px solid var(--border)}
+@media(max-width:900px){.ws-compare-col:first-child{border-right:none;border-bottom:1px solid var(--border)}}
+.ws-compare-head{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;margin-bottom:12px;text-align:center}
+.ws-compare-head.bad{color:var(--red)}
+.ws-compare-head.good{color:var(--green)}
+.ws-compare-line{font-size:11px;color:var(--text2);line-height:1.65;padding:8px 0;border-bottom:1px solid rgba(34,34,56,0.3)}
+.ws-compare-line:last-child{border:none}
+.ws-compare-line code{font-family:'JetBrains Mono',monospace;font-size:10px;background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px}
+
+.ws-ep-map{padding:24px;margin-bottom:20px}
+.ws-ep-map h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:14px}
+.ws-ep-map h3 span{color:var(--red)}
+.ws-ep-row{display:grid;grid-template-columns:80px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid rgba(34,34,56,0.3);align-items:start}
+.ws-ep-row:last-child{border:none}
+.ws-ep-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--pink)}
+.ws-ep-text{font-size:11px;color:var(--text2);line-height:1.6}
+.ws-ep-text strong{color:var(--text)}
+
+/* === SCRIPTS TAB === */
+.scr-nav{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.scr-btn{padding:10px 18px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;border:1px solid var(--border);border-radius:10px;background:var(--glass);color:var(--text3);cursor:pointer;transition:all 0.3s;backdrop-filter:blur(12px);position:relative;overflow:hidden}
+.scr-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.15);transform:translateY(-2px)}
+.scr-btn.active{color:var(--pink);border-color:rgba(255,45,120,0.3);background:rgba(255,45,120,0.06)}
+.scr-btn.active::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:2px;background:var(--pink);filter:blur(4px)}
+.scr-btn .scr-ep{font-size:10px;color:var(--text3);display:block;font-family:'Inter',sans-serif;letter-spacing:1px;font-weight:400;margin-top:2px}
+.scr-viewer{padding:28px;max-height:70vh;overflow-y:auto;scroll-behavior:smooth}
+.scr-viewer::-webkit-scrollbar{width:6px}
+.scr-viewer::-webkit-scrollbar-track{background:transparent}
+.scr-viewer::-webkit-scrollbar-thumb{background:rgba(255,45,120,0.2);border-radius:3px}
+.scr-viewer::-webkit-scrollbar-thumb:hover{background:rgba(255,45,120,0.4)}
+.scr-viewer h1,.scr-viewer h2,.scr-viewer h3{font-family:'Bebas Neue',sans-serif;letter-spacing:2px}
+.scr-viewer h1{font-size:28px;color:var(--pink);margin-bottom:4px}
+.scr-viewer h2{font-size:22px;color:var(--text);margin:20px 0 8px;border-bottom:1px solid var(--border);padding-bottom:6px}
+.scr-viewer h3{font-size:16px;color:var(--blue);margin:16px 0 6px;letter-spacing:1.5px}
+.scr-viewer p{font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:10px}
+.scr-viewer strong{color:var(--text)}
+.scr-viewer em{color:var(--text2);font-style:italic}
+.scr-viewer hr{border:none;border-top:1px solid var(--border);margin:16px 0}
+.scr-viewer table{width:100%;border-collapse:collapse;font-size:11px;margin:16px 0}
+.scr-viewer th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);padding:8px;text-align:left;border-bottom:1px solid var(--border)}
+.scr-viewer td{padding:8px;color:var(--text2);border-bottom:1px solid rgba(34,34,56,0.3);vertical-align:top}
+.scr-stats{display:flex;gap:24px;margin-bottom:16px;flex-wrap:wrap}
+.scr-stat{display:flex;flex-direction:column;gap:1px}
+.scr-stat-v{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--blue)}
+.scr-stat-l{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--text3)}
+.scr-status{display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:6px;margin-bottom:16px}
+.scr-status.complete{color:var(--green);background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.2)}
+.scr-status .sdot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:breathe 2s infinite}
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="hdr-row">
+    <div>
+      <div class="hdr-title">HOUSTON <span>VICE</span></div>
+      <div class="hdr-sub">Series Command Center &mdash; Season 1</div>
+      <div style="margin-top: 16px; font-size: 11px; letter-spacing: 1px; color: var(--text2); line-height: 1.6;">
+        <strong style="color: var(--pink);">Directed by Mr. Boomtown</strong><br>
+        <strong style="color: var(--blue);">Starring Billy Sorrells + Kendrick "KD" Smith</strong><br>
+        <strong style="color: var(--yellow);">Story and Original Screenplay by Billy Sorrells</strong>
+      </div>
+    </div>
+    <div class="hdr-badge">
+      <div class="dot"></div>
+      MICRO-DRAMA VERTICAL &bull; 9:16 &bull; 8 EPISODES
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-v">8</div><div class="stat-l">Episodes</div></div>
+    <div class="stat"><div class="stat-v">8-10 MIN</div><div class="stat-l">Runtime</div></div>
+    <div class="stat"><div class="stat-v">7</div><div class="stat-l">Characters</div></div>
+    <div class="stat"><div class="stat-v">9:16</div><div class="stat-l">Aspect</div></div>
+    <div class="stat"><div class="stat-v">18</div><div class="stat-l">Locations</div></div>
+    <div class="stat"><div class="stat-v">~72 MIN</div><div class="stat-l">Total S1</div></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="tabBar">
+  <div class="tab active" data-p="characters">Characters</div>
+  <div class="tab" data-p="episodes">Episodes</div>
+  <div class="tab" data-p="presence">Presence</div>
+  <div class="tab" data-p="pilot">Pilot Scenes</div>
+  <div class="tab" data-p="locations">Locations</div>
+  <div class="tab" data-p="reallocs">Real Addresses</div>
+  <div class="tab" data-p="villains">Villains &amp; Network</div>
+  <div class="tab" data-p="stc">Save the Cat</div>
+  <div class="tab" data-p="format">Vertical Format</div>
+  <div class="tab" data-p="director">Director</div>
+  <div class="tab" data-p="storyarc">Story Arc</div>
+  <div class="tab" data-p="writestyle">Writing Style</div>
+  <div class="tab" data-p="scripts">Scripts</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- CHARACTERS -->
+<div class="panel active" id="characters">
+  <div class="filter-bar" id="charFilter"></div>
+  <div class="char-grid" id="charGrid"></div>
+  <div class="char-hint">Click any card to expand full season arc</div>
+</div>
+
+<!-- EPISODES -->
+<div class="panel" id="episodes">
+  <div class="sec-title"><span class="accent">Season 1</span> Episode Grid <span class="line"></span></div>
+  <div class="ep-grid" id="epGrid"></div>
+</div>
+
+<!-- PRESENCE -->
+<div class="panel" id="presence">
+  <div class="sec-title">Episode <span class="accent">Presence</span> Map <span class="line"></span></div>
+  <div style="overflow-x:auto"><table class="ptable" id="ptable"></table></div>
+  <div class="plegend">
+    <span><div class="pleg" style="background:rgba(255,45,120,0.2);border:1px solid rgba(255,45,120,0.4)"></div> Major</span>
+    <span><div class="pleg" style="background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.25)"></div> Supporting</span>
+    <span><div class="pleg" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)"></div> Mentioned</span>
+    <span><div class="pleg" style="background:transparent;border:1px solid rgba(255,255,255,0.02)"></div> Absent</span>
+  </div>
+</div>
+
+<!-- PILOT SCENES -->
+<div class="panel" id="pilot">
+  <div class="sec-title">E1 "<span class="accent">Third Ward</span>" Scene Timeline <span class="line"></span></div>
+  <div class="stl" id="stl"></div>
+</div>
+
+<!-- LOCATIONS -->
+<div class="panel" id="locations">
+  <div class="sec-title">Houston <span class="accent">Filming</span> Locations <span class="line"></span></div>
+  <div class="loc-wrap">
+    <div class="loc-map glass" id="locMap">
+      <div class="loc-map-label">Houston TX &mdash; Production Map</div>
+      <div class="loc-grid-bg"></div>
+      <div class="loc-hwy" style="top:42%;left:0;right:0;height:2px;background:rgba(255,208,0,0.08);transform:rotate(-2deg)"></div>
+      <div class="loc-hwy" style="top:0;bottom:0;left:55%;width:2px;background:rgba(255,208,0,0.05)"></div>
+      <div class="loc-hwy" style="top:20%;left:10%;width:180px;height:2px;background:rgba(255,208,0,0.05);transform:rotate(35deg)"></div>
+      <div class="loc-zone" style="top:18%;left:16%;font-size:10px">HEIGHTS</div>
+      <div class="loc-zone" style="top:28%;left:11%">MONTROSE</div>
+      <div class="loc-zone" style="top:32%;left:40%;font-size:9px">MIDTOWN</div>
+      <div class="loc-zone" style="top:22%;left:38%;font-size:11px">DOWNTOWN</div>
+      <div class="loc-zone" style="top:38%;left:54%;font-size:10px">EADO</div>
+      <div class="loc-zone" style="top:14%;left:60%">RIVER OAKS</div>
+      <div class="loc-zone" style="top:52%;left:33%;font-size:12px">THIRD WARD</div>
+      <div class="loc-zone" style="top:68%;left:28%">SUNNYSIDE</div>
+      <div class="loc-zone" style="top:24%;left:76%">GREENSPOINT</div>
+      <div class="loc-zone" style="top:60%;left:70%;font-size:9px">PORT OF HOUSTON</div>
+      <div class="loc-zone" style="top:50%;left:80%;font-size:8px">PASADENA</div>
+    </div>
+    <div class="loc-side" id="locSide"></div>
+  </div>
+</div>
+
+<!-- REAL ADDRESSES -->
+<div class="panel" id="reallocs">
+  <div class="sec-title">Real Houston <span class="accent">Addresses</span> &amp; Coordinates <span class="line"></span></div>
+  <div class="rl-grid" id="rlGrid"></div>
+</div>
+
+<!-- VILLAINS & NETWORK -->
+<div class="panel" id="villains">
+  <div class="vn-hero glass">
+    <h2>The <span>Power Network</span></h2>
+    <div class="vn-hero-sub">The antagonist structure of HOUSTON VICE mirrors real Houston power dynamics: cartel money flowing through the Port, laundered through real estate development, protected by corrupt officers inside HPD. This isn't one villain — it's a system. Dom Cruz is the visible face. The Businessman is the money. The Protected Officer is the shield. And the cartel is the engine underneath it all.</div>
+  </div>
+
+  <div class="sec-title" style="margin-top:8px">Power <span class="accent">Pyramid</span> <span class="line"></span></div>
+  <div class="glass glass-sm vn-pyramid" id="vnPyramid"></div>
+
+  <div class="sec-title">Antagonist <span class="accent">Profiles</span> &amp; Arc <span class="line"></span></div>
+  <div class="vn-grid" id="vnGrid"></div>
+
+  <div class="sec-title" style="margin-top:24px">Real-World <span class="accent">Intelligence</span> <span class="line"></span></div>
+  <div class="vn-grid" id="vnRealGrid"></div>
+</div>
+
+<!-- SAVE THE CAT -->
+<div class="panel" id="stc">
+  <div class="stc-hero glass">
+    <h2>Save the Cat! <span>Beat Sheet</span></h2>
+    <div class="stc-hero-sub">Blake Snyder's 15-beat structure mapped to HOUSTON VICE Season 1. Each beat is placed at the correct percentage across 8 episodes (~72 minutes total runtime). STC Genre: <strong>Whydunit</strong> (crime investigation revealing dark truth) crossed with <strong>Buddy Love</strong> (Marcus and KD's partnership tested to breaking point) and <strong>Institutionalized</strong> (HPD as the institution that corrupts from within).</div>
+    <div class="stc-genre-tags">
+      <span class="stc-genre-tag active">Whydunit</span>
+      <span class="stc-genre-tag active">Buddy Love</span>
+      <span class="stc-genre-tag active">Institutionalized</span>
+      <span class="stc-genre-tag">Dude with a Problem</span>
+      <span class="stc-genre-tag">Golden Fleece</span>
+      <span class="stc-genre-tag">Monster in the House</span>
+      <span class="stc-genre-tag">Rites of Passage</span>
+      <span class="stc-genre-tag">Superhero</span>
+      <span class="stc-genre-tag">Fool Triumphant</span>
+      <span class="stc-genre-tag">Out of the Bottle</span>
+    </div>
+  </div>
+
+  <!-- Act Progress Bar -->
+  <div class="stc-progress">
+    <div class="stc-progress-fill" style="width:100%;background:linear-gradient(90deg,var(--blue) 0%,var(--blue) 25%,var(--yellow) 25%,var(--yellow) 50%,var(--orange) 50%,var(--orange) 75%,var(--pink) 75%,var(--pink) 100%);opacity:0.2"></div>
+    <div class="stc-progress-mark" style="left:25%"></div>
+    <div class="stc-progress-mark" style="left:50%"></div>
+    <div class="stc-progress-mark" style="left:75%"></div>
+  </div>
+  <div class="stc-act-labels">
+    <div class="stc-act-label act1">Act 1 (0-25%) &bull; E1-E2</div>
+    <div class="stc-act-label act2a">Act 2A (25-50%) &bull; E3-E4</div>
+    <div class="stc-act-label act2b">Act 2B (50-75%) &bull; E5-E6</div>
+    <div class="stc-act-label act3">Act 3 (75-100%) &bull; E7-E8</div>
+  </div>
+
+  <!-- Beat Timeline -->
+  <div class="sec-title">15-Beat <span class="accent">Timeline</span> <span class="line"></span></div>
+  <div class="stc-timeline" id="stcTimeline"></div>
+
+  <!-- Summary Cards -->
+  <div class="stc-summary" id="stcSummary"></div>
+</div>
+
+<!-- FORMAT -->
+<div class="panel" id="format">
+  <div class="sec-title">Micro-Drama <span class="accent">Vertical</span> Specs <span class="line"></span></div>
+  <div class="fmt-grid">
+    <div>
+      <div class="glass fmt-card" style="margin-bottom:14px">
+        <h3>Production <span>Format</span></h3>
+        <div class="fmt-row"><span class="l">Aspect Ratio</span><span class="v">9:16 (Vertical)</span></div>
+        <div class="fmt-row"><span class="l">Resolution</span><span class="v">1080 x 1920</span></div>
+        <div class="fmt-row"><span class="l">Runtime / Episode</span><span class="v">8-10 minutes</span></div>
+        <div class="fmt-row"><span class="l">Season Length</span><span class="v">8 episodes</span></div>
+        <div class="fmt-row"><span class="l">Total Runtime</span><span class="v">~72 minutes</span></div>
+        <div class="fmt-row"><span class="l">Genre</span><span class="v">Drama / Crime / Thriller</span></div>
+        <div class="fmt-row"><span class="l">Target Demo</span><span class="v">18-34</span></div>
+        <div class="fmt-row"><span class="l">Capture</span><span class="v">Vertical-native (not cropped)</span></div>
+      </div>
+      <div class="glass fmt-card">
+        <h3>Camera & <span>Framing</span></h3>
+        <div class="fmt-row"><span class="l">Composition</span><span class="v">Vertical close-ups, tight 2-shots</span></div>
+        <div class="fmt-row"><span class="l">Wides</span><span class="v">Vertical skyline / corridor</span></div>
+        <div class="fmt-row"><span class="l">Action</span><span class="v">Handheld, claustrophobic</span></div>
+        <div class="fmt-row"><span class="l">Dialogue</span><span class="v">Slow push-ins, stacked frame</span></div>
+        <div class="fmt-row"><span class="l">Lighting</span><span class="v">Practical neon, high contrast</span></div>
+        <div class="fmt-row"><span class="l">Color</span><span class="v">Neon pink/blue, desat day</span></div>
+      </div>
+    </div>
+    <div>
+      <div style="text-align:center;margin-bottom:20px">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-inner">
+            <div class="phone-title">HOUSTON VICE</div>
+            <div class="phone-ep">S1 &bull; E1 "Third Ward"</div>
+            <div class="phone-time">8:47</div>
+            <div class="phone-bar"></div>
+            <div class="phone-ctrl"><span>&#9664;&#9664;</span><span style="font-size:20px">&#9654;</span><span>&#9654;&#9654;</span></div>
+            <div class="phone-spec">VERTICAL NATIVE<br>1080 &times; 1920<br>9:16</div>
+          </div>
+        </div>
+      </div>
+      <div class="glass fmt-card" style="margin-bottom:14px">
+        <h3>Platform <span>Distribution</span></h3>
+        <div class="plat-grid">
+          <div class="plat"><div class="plat-name" style="color:var(--pink)">TikTok</div><div class="plat-spec">Up to 10 min<br>Native vertical<br>Series feature</div></div>
+          <div class="plat"><div class="plat-name" style="color:var(--blue)">YouTube</div><div class="plat-spec">Shorts + Long<br>9:16 feed<br>Premiere drops</div></div>
+          <div class="plat"><div class="plat-name" style="color:var(--yellow)">Instagram</div><div class="plat-spec">Reels (15 min)<br>Native vertical<br>Story teasers</div></div>
+        </div>
+      </div>
+      <div class="glass fmt-card">
+        <h3>Why <span>Vertical</span></h3>
+        <div class="fmt-row"><span class="l">Engagement</span><span class="v">3x longer watch time</span></div>
+        <div class="fmt-row"><span class="l">Shareability</span><span class="v">Native to platforms</span></div>
+        <div class="fmt-row"><span class="l">Discovery</span><span class="v">Algorithm-friendly</span></div>
+        <div class="fmt-row"><span class="l">Cost</span><span class="v">Lower barrier, higher output</span></div>
+        <div class="fmt-row"><span class="l">Audience</span><span class="v">Mobile-first 18-34</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIRECTOR -->
+<div class="panel" id="director">
+  <div class="sec-title">Director's <span class="accent">Production</span> Layout <span class="line"></span></div>
+  <div class="dir-grid">
+    <div class="glass dir-card">
+      <h3>Color <span>Palette</span></h3>
+      <div class="swatches" id="swatches"></div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.7">
+        <strong style="color:var(--text)">Day:</strong> Desaturated, heat-soaked, washed out. Amber push.<br>
+        <strong style="color:var(--text)">Night:</strong> Neon-saturated. Pink/blue dominant. Deep shadows.<br>
+        <strong style="color:var(--text)">Port:</strong> Industrial gray-steel. Cold blue security.<br>
+        <strong style="color:var(--text)">River Oaks:</strong> Warm gold. Understated luxury.
+      </div>
+    </div>
+    <div class="glass dir-card">
+      <h3>Episode <span>Tone Map</span></h3>
+      <div id="toneMap"></div>
+    </div>
+    <div class="glass dir-card full">
+      <h3>Vertical <span>Shot Language</span></h3>
+      <div class="shots" id="shotList"></div>
+    </div>
+    <div class="glass dir-card">
+      <h3>Key <span>Crew</span></h3>
+      <div id="crewList"></div>
+    </div>
+    <div class="glass dir-card">
+      <h3>Production <span>Equipment</span></h3>
+      <div class="eq-section">Camera Package</div>
+      <span class="eq-tag">Sony FX3 (9:16)</span><span class="eq-tag">BMPCC 6K</span><span class="eq-tag">iPhone 15 Pro (BTS)</span><span class="eq-tag">DJI RS3 Pro</span><span class="eq-tag">Vertical cage rig</span>
+      <div class="eq-section">Lenses</div>
+      <span class="eq-tag">24mm f/1.4</span><span class="eq-tag">35mm f/1.4</span><span class="eq-tag">50mm f/1.2</span><span class="eq-tag">85mm f/1.4</span>
+      <div class="eq-section">Lighting</div>
+      <span class="eq-tag">Aputure 600d</span><span class="eq-tag">Nanlite Pavotube</span><span class="eq-tag">Astera Titan Tubes</span><span class="eq-tag">LED neon flex</span><span class="eq-tag">Practical neon signs</span>
+      <div class="eq-section">Audio</div>
+      <span class="eq-tag">Sennheiser MKH 416</span><span class="eq-tag">DPA 6060 lavs</span><span class="eq-tag">Sound Devices MixPre-6</span>
+    </div>
+    <div class="glass dir-card full">
+      <h3>Shooting <span>Block Strategy</span></h3>
+      <div class="block-grid" id="blockGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- STORY ARC & DIRECTOR VISION -->
+<div class="panel" id="storyarc">
+  <div class="sec-title">Story Arc <span class="accent">&amp; Director Vision</span> <span class="line"></span></div>
+
+  <!-- EMOTIONAL ARC GRAPH -->
+  <div class="glass" style="padding:24px;margin-bottom:20px">
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:6px">Season 1 <span style="color:var(--pink)">Emotional Arc</span></h3>
+    <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Save the Cat beat placement mapped across 8 episodes — tension, action, emotion, and investigation levels.</div>
+    <div class="arc-canvas" id="arcCanvas">
+      <svg class="arc-svg" id="arcSvg" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="arc-tooltip" id="arcTooltip"></div>
+    </div>
+    <div class="arc-legend">
+      <div class="arc-legend-item"><div class="arc-legend-swatch" style="background:var(--pink)"></div>Tension</div>
+      <div class="arc-legend-item"><div class="arc-legend-swatch" style="background:var(--orange)"></div>Action</div>
+      <div class="arc-legend-item"><div class="arc-legend-swatch" style="background:var(--blue)"></div>Emotion</div>
+      <div class="arc-legend-item"><div class="arc-legend-swatch" style="background:var(--green)"></div>Investigation</div>
+      <div class="arc-legend-item"><div class="arc-legend-swatch" style="background:var(--yellow);height:1px"></div>STC Beats</div>
+    </div>
+  </div>
+
+  <!-- DIRECTOR VISION CARDS -->
+  <div class="dv-grid" id="dvGrid"></div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="glass" style="padding:24px;margin-top:20px">
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:14px">Director <span style="color:var(--pink)">Comparison Matrix</span></h3>
+    <div class="dv-compare" id="dvCompare"></div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<div class="panel" id="scripts">
+  <div class="sec-title">Season 1 <span class="accent">Scripts</span> <span class="line"></span></div>
+  <div class="scr-status complete"><span class="sdot"></span> All 8 Episodes Complete</div>
+  <div class="scr-stats">
+    <div class="scr-stat"><div class="scr-stat-v">8</div><div class="scr-stat-l">Episodes</div></div>
+    <div class="scr-stat"><div class="scr-stat-v">5,348</div><div class="scr-stat-l">Total Lines</div></div>
+    <div class="scr-stat"><div class="scr-stat-v">93</div><div class="scr-stat-l">Scenes</div></div>
+    <div class="scr-stat"><div class="scr-stat-v">~72 MIN</div><div class="scr-stat-l">Est. Runtime</div></div>
+  </div>
+  <div class="scr-nav" id="scrNav"></div>
+  <div class="scr-viewer glass" id="scrViewer">
+    <div style="text-align:center;padding:60px 20px;color:var(--text3)">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;color:var(--text)">Select an Episode</div>
+      <div style="font-size:12px;margin-top:8px">Click any episode above to read the full script</div>
+    </div>
+  </div>
+</div>
+
+<!-- WRITING STYLE -->
+<div class="panel" id="writestyle">
+  <div class="sec-title">Writing Style <span class="accent">Bible</span> <span class="line"></span></div>
+
+  <div class="ws-hero glass">
+    <h3>Taylor Sheridan <span>x</span> HOUSTON VICE</h3>
+    <p>Core writing methodology extracted from SICARIO and mapped to HOUSTON VICE's vertical micro-drama format. Every technique below is verified against the source screenplay. Combined with Fuqua/Mann/Bruckheimer director vision to create a unified production style guide.</p>
+  </div>
+
+  <div id="wsCards"></div>
+  <div id="wsCompare"></div>
+  <div id="wsEpMap"></div>
+</div>
+
+</div><!-- end main -->
+
+<script>
+// ========== DATA ==========
+const chars=[
+  {name:"Marcus Cole",alias:"Billy Sorrells",role:"lead",tag:"Lead",age:45,bg:"Third Ward. 15-year HPD Vice.",bio:"Quiet intensity. Knows every hustler, preacher, and deacon in Third Ward. Meticulous detective who code-switches between the streets and the station. Divorced, 12-year-old daughter Maya. His methods are 'flexible.'",arc:"<strong>Season 1:</strong> Case collides with his past. Someone he protected once is now high up in the cartel operation. Navigates between loyalty to the neighborhood and his oath. By season's end, realizes the neighborhood can't be protected anymore \u2014 only the people in it.",eps:[1,1,1,1,1,1,1,1]},
+  {name:"Derek 'KD' Kendrick "KD" Smith",alias:"KD",role:"partner",tag:"Partner",age:38,bg:"Pasadena. Army vet. 5 years with Marcus.",bio:"Compact, muscled, military bearing. Watches more than he speaks. Combat-trained. Acts as Marcus's anchor. People underestimate him because he's quiet. By the time they realize he's dangerous, it's too late.",arc:"<strong>Season 1:</strong> Partnership tested when Marcus goes illegal. Must choose loyalty to Marcus or his own code. Tempted by private security offer. Being solid might mean walking a line nobody else can see.",eps:[1,1,1,1,1,1,1,1]},
+  {name:"Captain Ray Dorsey",alias:"Raymond Dorsey",role:"authority",tag:"Authority",age:52,bg:"Career cop. East End. Made captain.",bio:"Gruff but fair. Covers for Marcus and KD as long as he can. Not corrupt exactly, but pragmatic. Knows about HPD's institutional rot. Trapped between protecting his detective and protecting his career.",arc:"<strong>Function:</strong> Tether to institutional reality. Forced to choose between the system and his people by Season 1's end.",eps:[1,1,0,1,1,1,0,1]},
+  {name:"James 'Jax' Richardson",alias:"Jax",role:"informant",tag:"Informant",age:34,bg:"Third Ward hustler turned informant.",bio:"Charming, street-smart, morally flexible. Likes Marcus enough to stay loyal but isn't blind. Caught between the street and the law.",arc:"<strong>Season 1:</strong> By midseason, positioned as a casualty. Episode 6 \u2014 body in a bayou. His death sends Marcus off the rails.",eps:[1,1,0,1,1,1,0,0]},
+  {name:"Dominic 'Dom' Cruz",alias:"Dom",role:"antagonist",tag:"Antagonist",age:48,bg:"Cartel-connected fixer. Port + real estate.",bio:"Cultured, dangerous, composed. Legitimate fronts. People inside HPD on payroll. Knows Marcus from years ago \u2014 history more complicated than enemies.",arc:"<strong>Season 1:</strong> Central antagonist. Protection from inside HPD. Episode 7: explains his perspective \u2014 old Houston was dead, he's building the new one. Forces the choice.",eps:[1,0,1,1,1,0,1,1]},
+  {name:"Valerie Torres",alias:"DEA Liaison",role:"federal",tag:"Federal",age:41,bg:"Federal agent. Ambitious, by-the-book.",bio:"Federal resources but federal agendas. Frustrated with institutional roadblocks. Gap between local and federal law enforcement.",arc:"<strong>Season 1:</strong> Enters Episode 4. By finale, arrives with news: feds moving on Dom and the protected officer. Either ally or obstacle.",eps:[0,0,0,1,1,0,0,1]},
+  {name:"Maya Cole",alias:"Marcus's Daughter",role:"family",tag:"Family",age:12,bg:"Lives in Sunnyside with Keisha.",bio:"Smart, observant, angry at her father. Aware of unfairness. The reason Marcus still believes in something.",arc:"<strong>Season 1:</strong> Emotional bookends. Pilot: photograph of Maya becomes the threat. Finale: Marcus explains he might not keep his promise. She holds his hand.",eps:[1,0,0,0,0,0,0,1]}
+];
+
+const eps=[
+  {n:1,t:"Third Ward",log:"Routine bust at the Port goes wrong. Human trafficking. Marcus's family becomes a target.",tags:[{t:"Port",c:"location"},{t:"Third Ward",c:"location"},{t:"Cold Open",c:"action"},{t:"Family",c:"emotional"}],detail:"Cold open on the Port. Container search reveals 30 kilos + trafficking victim. Security stands them down. Dorsey pulls the case. Marcus meets Jax at the taqueria. Maya pickup. KD at boxing gym. Second missing girl discovered. Jax panics. Photo of Maya \u2014 cliffhanger."},
+  {n:2,t:"Point of Entry",log:"Port investigation. Port authority corruption. HPD protection. KD's security offer.",tags:[{t:"Port",c:"location"},{t:"HPD",c:"location"},{t:"Cover-Up",c:"action"}],detail:"Marcus and KD at the Port at night. Nervous port authority officer. Shut down by unknown captain claiming federal jurisdiction. Jax nervous about protection. Kline repeats the private sector offer to KD."},
+  {n:3,t:"Old Money",log:"Marcus connects the operation to Dom Cruz. River Oaks elite meets drug money.",tags:[{t:"River Oaks",c:"location"},{t:"Montrose",c:"location"},{t:"History",c:"emotional"}],detail:"Marcus digs into Third Ward history. Dom Cruz \u2014 someone Marcus protected once \u2014 now legitimate businessman. Meeting at upscale Montrose restaurant. Dom denies involvement. KD traces real estate development across gentrifying neighborhoods."},
+  {n:4,t:"Midtown",log:"Controlled buy gone south. Nightclub shooting. Cover blown. 48-hour clock.",tags:[{t:"Midtown",c:"location"},{t:"Shootout",c:"action"},{t:"DEA Enters",c:"action"}],detail:"Controlled buy with Torres (DEA) in Midtown nightclub. Third party shows up. Shooting. Marcus and KD fight out. Someone blew their cover. Dorsey getting heat. Jax terrified \u2014 cartel knows their names. 48 hours."},
+  {n:5,t:"The Network",log:"Racing the clock. Streets + money trail. A name inside HPD. Someone clean.",tags:[{t:"Citywide",c:"location"},{t:"Montage",c:"action"},{t:"Crisis",c:"emotional"}],detail:"Investigation montage. Marcus works street connections. KD follows money through shell corps and property records. Torres works federal angles. Marcus crisis of faith \u2014 system working as designed to protect power. They find the name."},
+  {n:6,t:"Third Ward (Reprise)",log:"Jax killed. Body in bayou. Marcus benched. KD torn.",tags:[{t:"Third Ward",c:"location"},{t:"Bayou",c:"location"},{t:"Jax Dies",c:"action"},{t:"Partnership",c:"emotional"}],detail:"Jax tries to leave town. Cartel faster. Body in a bayou. Marcus devastated. Confronts the protected officer. Dorsey pulls them both. Marcus benched. KD sits in the car alone."},
+  {n:7,t:"Point Break",log:"Off-book investigation. Dom confrontation at development site. KD shoots.",tags:[{t:"Third Ward",c:"location"},{t:"Off-Book",c:"action"},{t:"Confrontation",c:"action"},{t:"Moral",c:"emotional"}],detail:"Marcus investigates on his own. KD follows \u2014 loyalty over badge. Confrontation with Dom at Third Ward dev site. Dom's perspective: old Houston dead, building new. Standoff. KD shoots first. They escape but they've crossed the line."},
+  {n:8,t:"The Slab",log:"Federal prosecution. Choose code over badge. Open ending.",tags:[{t:"HPD HQ",c:"location"},{t:"Federal",c:"action"},{t:"Maya",c:"emotional"},{t:"Open End",c:"emotional"}],detail:"Dorsey calls them in. Torres arrives \u2014 feds moving on Dom and protected officer. But Marcus and KD face prosecution for off-book actions. Cooperate or refuse. Marcus visits Maya. KD at the boxing gym. Final image: driving through Third Ward at dusk. Cranes. Slabs still rolling."}
+];
+
+const presence=[
+  {name:"Marcus Cole",p:[3,3,3,3,3,3,3,3]},
+  {name:"KD Kendrick "KD" Smith",p:[3,3,2,3,3,2,3,3]},
+  {name:"Capt. Dorsey",p:[3,3,1,3,2,3,1,3]},
+  {name:"Jax Richardson",p:[3,2,0,2,2,3,0,0]},
+  {name:"Dom Cruz",p:[2,0,3,1,2,0,3,3]},
+  {name:"Valerie Torres",p:[0,0,0,3,2,0,0,3]},
+  {name:"Maya Cole",p:[3,0,0,0,0,0,0,3]},
+  {name:"Keisha Cole",p:[2,0,0,0,0,0,0,1]},
+  {name:"Rosa (Taqueria)",p:[2,1,0,0,0,0,0,0]},
+  {name:"Marcus Kline",p:[2,0,0,0,0,0,0,1]},
+  {name:"Lucia (Victim)",p:[1,1,0,0,1,0,0,0]},
+  {name:"Port Auth. Officer",p:[3,2,0,0,0,0,0,0]},
+  {name:"Businessman",p:[2,0,1,0,0,0,0,0]}
+];
+
+const scenes=[
+  {n:1,loc:"Port of Houston \u2014 Loading Dock",time:"Night",ch:["Marcus","KD","Port Authority"],d:"Cold open. Container: 30 kilos + trafficking victim. Security stands them down. 'Federal' takes over."},
+  {n:2,loc:"Houston Streets \u2014 Third Ward",time:"Dawn",ch:["Marcus","KD"],d:"Silent drive. Gentrification. Marcus suspects HPD coordination. KD: report to Dorsey."},
+  {n:3,loc:"HPD Vice Bullpen",time:"Morning",ch:["Marcus","KD","Dorsey"],d:"Pulled off the case. Federal jurisdiction. 'Don't dig deeper.' Warning heavier than policy."},
+  {n:4,loc:"La Real Taqueria \u2014 Third Ward",time:"Morning",ch:["Marcus","Jax","Rosa"],d:"Girl wasn't supposed to be there. 'Someone picked her up. Not police. Not federal.' Jax is scared."},
+  {n:5,loc:"Marcus's Car",time:"Day",ch:["Marcus"],d:"Driving through changing Third Ward. Pulls up to ex-wife's house. Waits for Maya."},
+  {n:6,loc:"Keisha's House \u2014 Sunnyside",time:"Afternoon",ch:["Marcus","Maya","Keisha"],d:"Maya off bus. Stiff hug. Missed conference. 'Can you come to my recital?' He promises. She doesn't believe."},
+  {n:7,loc:"Boxing Gym \u2014 Montrose",time:"Evening",ch:["KD","Kline"],d:"Heavy bag. Kline offers $60K security job. Client: Dominic Cruz. KD declines. Temptation registers."},
+  {n:8,loc:"HPD Vice Bullpen",time:"Night",ch:["Marcus","KD"],d:"Off-book. Port import patterns. Second missing girl: Lucia. 'What kind of cops we want to be.'"},
+  {n:9,loc:"Houston Streets Montage",time:"Night",ch:[],d:"Midtown club. Third Ward church. River Oaks gates. Three economies colliding."},
+  {n:10,loc:"River Oaks Restaurant",time:"Night",ch:["Dom","Businessman"],d:"Dom introduced. Third Ward dev plans. Port proceeding. 'Marcus Cole requires monitoring.'"},
+  {n:11,loc:"Marcus's Apartment",time:"Night",ch:["Marcus"],d:"Lucia's file. Jax calls panicked. 'Don't bring the badge.' Someone knows."},
+  {n:12,loc:"Industrial Area \u2014 Port",time:"Night",ch:["Marcus","Jax"],d:"Hector's body in bayou. Warning. 'Good cop doesn't mean dead cop.' Jax disappears."},
+  {n:13,loc:"Marcus's Apartment",time:"Late Night",ch:["Marcus"],d:"CLIFFHANGER. Someone's been inside. Envelope: photo of Maya at school. Today. No note needed."}
+];
+
+const locs=[
+  {name:"Port of Houston",type:"Key Action",x:72,y:62,color:"var(--pink)",desc:"Container port. Night shoots. Cranes, cargo, industrial. Trafficking gateway.",eps:"E1, E2, E7",sc:"Cold open, investigation, Jax meeting"},
+  {name:"Third Ward",type:"Core Neighborhood",x:38,y:54,color:"var(--pink)",desc:"Marcus's home. Row houses, closing corner stores, new construction. The soul.",eps:"E1, E3, E6, E7, E8",sc:"Taqueria, apartment, gentrification, Dom confrontation"},
+  {name:"La Real Taqueria",type:"Recurring Interior",x:35,y:50,color:"var(--green)",desc:"30-year mom-and-pop. Rosa's place. Marcus/Jax intelligence meetings.",eps:"E1, E2",sc:"Informant scenes"},
+  {name:"HPD Vice Bullpen",type:"Standing Set",x:45,y:28,color:"var(--blue)",desc:"Whiteboards, case files, glass captain's office. Institutional heart.",eps:"E1-E8",sc:"Dorsey scenes, investigations"},
+  {name:"Montrose Boxing Gym",type:"Recurring Interior",x:18,y:32,color:"var(--blue)",desc:"Converted warehouse. KD's space. Kline's security offer.",eps:"E1, E4, E8",sc:"Training, temptation, finale"},
+  {name:"River Oaks Restaurant",type:"Antagonist Location",x:22,y:18,color:"var(--orange)",desc:"Upscale. Soft lighting, expensive wine. Dom meets the money.",eps:"E1, E3",sc:"Dom/Businessman, Marcus/Dom confrontation"},
+  {name:"Midtown Nightclub",type:"Action Set Piece",x:44,y:35,color:"var(--purple)",desc:"Neon. Crowded. The controlled buy that goes south.",eps:"E4",sc:"Shootout, cover blown"},
+  {name:"Sunnyside \u2014 Keisha's",type:"Emotional Anchor",x:32,y:70,color:"var(--gold)",desc:"Modest house. Maya lives here. Where Marcus waits in the car.",eps:"E1, E8",sc:"Maya pickup, finale goodbye"},
+  {name:"Marcus's Apartment",type:"Standing Set",x:40,y:48,color:"var(--pink)",desc:"Sparse one-bedroom. Photos of Maya. Threat photo delivered here.",eps:"E1, E5, E6",sc:"Research, Jax call, threat"},
+  {name:"I-10 Corridor",type:"Transitional",x:8,y:42,color:"var(--yellow)",desc:"Highway spine. Trafficking route. Trucks, rest stops, constant motion.",eps:"E2, E5",sc:"Route investigation, montage"},
+  {name:"EaDo Warehouses",type:"Secondary",x:52,y:40,color:"var(--blue)",desc:"Industrial. HUE murals. Freight tracks. Surveillance locations.",eps:"E2, E5",sc:"Surveillance, street work"},
+  {name:"Greenspoint",type:"Investigation",x:58,y:22,color:"var(--text2)",desc:"Working-class. Apartment complexes. Part of trafficking network trace.",eps:"E5",sc:"Network mapping"},
+  {name:"Bayou Crime Scene",type:"Critical",x:55,y:58,color:"var(--red)",desc:"Body in water. Jax's endpoint. Dark, isolated, horrific.",eps:"E6",sc:"Jax found, turning point"},
+  {name:"Dev Site \u2014 Third Ward",type:"Climax",x:42,y:56,color:"var(--orange)",desc:"Construction site. Old Houston demolished. Dom confrontation.",eps:"E7",sc:"Climax standoff, KD shoots"}
+];
+
+// ========== RENDER ==========
+
+// Tabs
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.p).classList.add('active');
+  });
+});
+
+// Characters
+function renderChars(filter='all'){
+  const grid=document.getElementById('charGrid');
+  const filtered=filter==='all'?chars:chars.filter(c=>c.role===filter);
+  grid.innerHTML=filtered.map((c,i)=>`
+    <div class="char-card glass glass-sm anim-up" data-role="${c.role}" style="animation-delay:${i*0.06}s" onclick="this.classList.toggle('expanded')">
+      <div class="c-head">
+        <div><div class="c-name">${c.name}</div><div class="c-alias">${c.alias}</div></div>
+        <div class="c-tag ${c.role}">${c.tag}</div>
+      </div>
+      <div class="c-meta">Age ${c.age} &bull; ${c.bg}</div>
+      <div class="c-bio">${c.bio}</div>
+      <div class="c-ep-bar">${c.eps.map((e,j)=>`<div class="c-ep-dot ${e?'on':'off'}" title="E${j+1}"></div>`).join('')}</div>
+      <div class="c-arc">${c.arc}</div>
+    </div>
+  `).join('');
+}
+
+// Character filter
+const roles=['all','lead','partner','authority','informant','antagonist','federal','family'];
+document.getElementById('charFilter').innerHTML=roles.map(r=>`<div class="filter-btn ${r==='all'?'active':''}" data-filter="${r}">${r==='all'?'All':r}</div>`).join('');
+document.querySelectorAll('.filter-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    renderChars(b.dataset.filter);
+  });
+});
+
+// Episodes
+document.getElementById('epGrid').innerHTML=eps.map((e,i)=>`
+  <div class="ep-card glass glass-sm anim-up" style="animation-delay:${i*0.06}s" onclick="this.classList.toggle('expanded')">
+    <div class="ep-num">${String(e.n).padStart(2,'0')}</div>
+    <div class="ep-title">"${e.t}"</div>
+    <div class="ep-log">${e.log}</div>
+    <div class="ep-tags">${e.tags.map(t=>`<span class="ep-t ${t.c}">${t.t}</span>`).join('')}</div>
+    <div class="ep-detail">${e.detail}</div>
+  </div>
+`).join('');
+
+// Presence
+(function(){
+  const dc=['none','mentioned','minor','major'];
+  const dl=['','M','S','&#9679;'];
+  const h=`<thead><tr><th>Character</th>${eps.map(e=>`<th>E${e.n}</th>`).join('')}<th>Total</th></tr></thead>`;
+  const b=presence.map(c=>{
+    const t=c.p.reduce((a,v)=>a+(v>0?1:0),0);
+    return`<tr><td>${c.name}</td>${c.p.map(v=>`<td><div class="pdot ${dc[v]}">${dl[v]}</div></td>`).join('')}<td style="color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:10px">${t}/8</td></tr>`;
+  }).join('');
+  document.getElementById('ptable').innerHTML=h+'<tbody>'+b+'</tbody>';
+})();
+
+// Scenes
+document.getElementById('stl').innerHTML=scenes.map((s,i)=>`
+  <div class="snode glass glass-sm anim-slide" style="animation-delay:${i*0.05}s">
+    <div class="s-head"><div class="s-num">SCENE ${s.n}</div><div class="s-time">${s.time}</div></div>
+    <div class="s-loc">${s.loc}</div>
+    <div class="s-desc">${s.d}</div>
+    <div class="s-chars">${s.ch.map(c=>`<span class="s-ct">${c}</span>`).join('')}</div>
+  </div>
+`).join('');
+
+// Locations
+(function(){
+  const map=document.getElementById('locMap');
+  const side=document.getElementById('locSide');
+  locs.forEach((l,i)=>{
+    const pin=document.createElement('div');
+    pin.className='loc-pin';
+    pin.style.cssText=`left:${l.x}%;top:${l.y}%;background:${l.color};color:${l.color}`;
+    pin.dataset.idx=i;
+    pin.innerHTML=`<span class="loc-pin-name">${l.name}</span>`;
+    pin.onclick=()=>selLoc(i);
+    map.appendChild(pin);
+  });
+  side.innerHTML=locs.map((l,i)=>`
+    <div class="loc-item glass glass-sm" data-idx="${i}" onclick="selLoc(${i})">
+      <div class="li-name">${l.name}</div>
+      <div class="li-type">${l.type}</div>
+      <div class="li-desc">${l.desc}</div>
+      <div class="li-eps">${l.eps} &bull; ${l.sc}</div>
+    </div>
+  `).join('');
+})();
+function selLoc(i){
+  document.querySelectorAll('.loc-pin').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.loc-item').forEach(p=>p.classList.remove('active'));
+  const pin=document.querySelector(`.loc-pin[data-idx="${i}"]`);
+  const item=document.querySelector(`.loc-item[data-idx="${i}"]`);
+  if(pin)pin.classList.add('active');
+  if(item){item.classList.add('active');item.scrollIntoView({behavior:'smooth',block:'nearest'});}
+}
+
+// Director: Swatches
+document.getElementById('swatches').innerHTML=[
+  {c:'linear-gradient(135deg,#ff2d78,#cc1155)',l:'NEON PINK'},
+  {c:'linear-gradient(135deg,#00d4ff,#0099cc)',l:'NEON BLUE'},
+  {c:'linear-gradient(135deg,#ffd000,#cc9900)',l:'NEON GOLD'},
+  {c:'linear-gradient(135deg,#0a0a1a,#1a1a2e)',l:'DEEP DARK'},
+  {c:'linear-gradient(135deg,#ff8c00,#cc6600)',l:'HEAT'},
+  {c:'linear-gradient(135deg,#2a4a3a,#1a2e28)',l:'BAYOU'},
+  {c:'linear-gradient(135deg,#888899,#555566)',l:'STEEL'},
+  {c:'linear-gradient(135deg,#d4a843,#a08030)',l:'OLD MONEY'}
+].map(s=>`<div class="swatch" style="background:${s.c}"><span class="sw-label">${s.l}</span></div>`).join('');
+
+// Director: Tone
+document.getElementById('toneMap').innerHTML=[
+  {e:1,a:30,t:25,em:25,i:20},{e:2,a:15,t:35,em:15,i:35},{e:3,a:10,t:30,em:25,i:35},{e:4,a:45,t:30,em:10,i:15},
+  {e:5,a:10,t:25,em:25,i:40},{e:6,a:20,t:20,em:45,i:15},{e:7,a:40,t:30,em:20,i:10},{e:8,a:15,t:20,em:45,i:20}
+].map(t=>`
+  <div style="margin-bottom:5px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:3px">E${t.e}</div>
+    <div class="tone-bar">
+      <div class="tone-seg" style="flex:${t.a};background:var(--pink)">ACT</div>
+      <div class="tone-seg" style="flex:${t.t};background:var(--orange)">TENS</div>
+      <div class="tone-seg" style="flex:${t.em};background:var(--blue);color:rgba(255,255,255,0.8)">EMO</div>
+      <div class="tone-seg" style="flex:${t.i};background:var(--green);color:rgba(0,0,0,0.5)">INV</div>
+    </div>
+  </div>
+`).join('');
+
+// Director: Shots
+document.getElementById('shotList').innerHTML=[
+  {i:"\u25FB",n:"Vertical Wide",d:"Skyline, corridors, alleys. Characters dwarfed."},
+  {i:"\u25C9",n:"Tight Close-Up",d:"Eyes, hands. Maximum emotional impact."},
+  {i:"\u25A0\u25A0",n:"Stacked Two-Shot",d:"Characters above/below. Power dynamics."},
+  {i:"\u2195",n:"Vertical Pan",d:"Up/down through space. Floor to sky reveal."},
+  {i:"\u21BB",n:"Handheld Action",d:"Claustrophobic. Chases, shootout."},
+  {i:"\u279E",n:"Slow Push-In",d:"Conversations. Intimacy builds with tension."},
+  {i:"\u25D1",n:"Overhead / God Shot",d:"Looking down. How small against the system."},
+  {i:"\u25FC",n:"Silhouette Frame",d:"Doorways, neon, windows. Natural frames."},
+  {i:"\u21BA",n:"Mirror / Reflection",d:"Wet streets, glass. Houston reflects itself."}
+].map(s=>`<div class="shot"><span class="shot-ico">${s.i}</span><div class="shot-nm">${s.n}</div><div class="shot-d">${s.d}</div></div>`).join('');
+
+// Director: Crew
+document.getElementById('crewList').innerHTML=[
+  {r:"Director",t:"c",l:"LEAD"},{r:"Director of Photography",t:"c",l:"LEAD"},{r:"1st AD",t:"c",l:"LEAD"},{r:"Sound Mixer",t:"c",l:"LEAD"},
+  {r:"Gaffer / Key Grip",t:"i",l:"KEY"},{r:"Production Designer",t:"i",l:"KEY"},{r:"Wardrobe Stylist",t:"i",l:"KEY"},{r:"Location Manager",t:"i",l:"KEY"},
+  {r:"Script Supervisor",t:"s",l:"SUPPORT"},{r:"AC / Focus Puller",t:"s",l:"SUPPORT"},{r:"Colorist (Post)",t:"s",l:"SUPPORT"},{r:"Editor (Post)",t:"s",l:"SUPPORT"}
+].map(c=>`<div class="crew-r"><span class="crew-role">${c.r}</span><span class="crew-tag ${c.t}">${c.l}</span></div>`).join('');
+
+// Director: Blocks
+document.getElementById('blockGrid').innerHTML=[
+  {n:"Block A",c:"var(--pink)",e:"E1 + E6",d:"4-5 days",l:"Third Ward, Taqueria, Marcus Apt, Bayou",note:"Third Ward heavy. Bookend episodes share locations."},
+  {n:"Block B",c:"var(--blue)",e:"E2 + E3",d:"4 days",l:"Port, River Oaks, HPD Bullpen",note:"Investigation block. Port night shoots."},
+  {n:"Block C",c:"var(--purple)",e:"E4 + E5",d:"4-5 days",l:"Midtown Club, HPD, Citywide",note:"Action-heavy. Nightclub shootout. Montage."},
+  {n:"Block D",c:"var(--orange)",e:"E7 + E8",d:"4-5 days",l:"Dev Site, HPD HQ, Boxing Gym",note:"Climax + finale. Dom confrontation. Resolution."}
+].map(b=>`
+  <div class="block" style="border-top-color:${b.c}">
+    <div class="block-name" style="color:${b.c}">${b.n}</div>
+    <div class="block-eps" style="color:var(--text)">${b.e}</div>
+    <div class="block-days">${b.d}</div>
+    <div class="block-locs">${b.l}</div>
+    <div class="block-note">${b.note}</div>
+  </div>
+`).join('');
+
+// ========== REAL LOCATIONS DATA ==========
+const realLocs=[
+  {name:"Port of Houston \u2014 Barbours Cut Terminal",type:"Key Action Location",addr:"600 E Barbours Cut Blvd, La Porte, TX 77571",lat:"29.6821",lng:"-94.9925",
+   img:"https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&h=400&fit=crop",
+   desc:"Busiest inland port in the U.S. Container cranes, cargo ships, 24/7 industrial ops. Entry point for international cargo AND human trafficking. 27 miles from downtown Houston. Night shoots here capture the industrial scale \u2014 security lights, massive vessels, container stacks.",
+   scene:"E1 cold open bust, E2 night investigation, E12 Jax meeting near industrial warehouses",
+   maps:"https://www.google.com/maps/place/29.6821,-94.9925"},
+  {name:"Emancipation Park \u2014 Third Ward",type:"Core Neighborhood Hub",addr:"3018 Emancipation Ave, Houston, TX 77004",lat:"29.7344",lng:"-95.3588",
+   img:"https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=400&fit=crop",
+   desc:"Oldest park in Houston (1872). Heart of Third Ward. Renamed from Dowling St to Emancipation Ave in 2017. Historic landmark. This is where Marcus grew up \u2014 the park, the row houses, the churches. Now surrounded by new construction and gentrification.",
+   scene:"Establishing shots, Marcus walking through the neighborhood, gentrification B-roll, community scenes",
+   maps:"https://www.google.com/maps/place/29.7344,-95.3588"},
+  {name:"Project Row Houses",type:"Third Ward Cultural Anchor",addr:"2521 Holman St, Houston, TX 77004",lat:"29.7282",lng:"-95.3546",
+   img:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=400&fit=crop",
+   desc:"22 historic shotgun-style row houses converted into art installations and community space. Founded 1993. Visual shorthand for what Third Ward WAS before gentrification. The architecture tells the story of displacement.",
+   scene:"Background visuals, Marcus driving past, gentrification contrast shots (new construction next to historic homes)",
+   maps:"https://www.google.com/maps/place/29.7282,-95.3546"},
+  {name:"HPD Headquarters \u2014 Edward A. Thomas Building",type:"Standing Set Reference",addr:"1200 Travis St, Houston, TX 77002",lat:"29.7523",lng:"-95.3621",
+   img:"https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&h=400&fit=crop",
+   desc:"28-story building in Downtown Houston. Real HPD HQ. The Vice bullpen in the show is modeled on this building's detective floors \u2014 whiteboards, glass captain's office, coffee-stained desks, fluorescent lighting.",
+   scene:"E1-E8 HPD bullpen scenes, Dorsey's office, Marcus getting benched (E6), finale confrontation (E8)",
+   maps:"https://www.google.com/maps/place/29.7523,-95.3621"},
+  {name:"La Griglia \u2014 River Oaks Restaurant",type:"Antagonist Location Reference",addr:"2817 W Dallas St, Houston, TX 77019",lat:"29.7527",lng:"-95.3968",
+   img:"https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=800&h=400&fit=crop",
+   desc:"Upscale Italian in River Oaks/Montrose for 30+ years. Soft lighting, wine lists, old money energy. Reference for Dom Cruz's restaurant scenes \u2014 where power brokers meet over expensive food and talk about 'rejuvenation' while erasing neighborhoods.",
+   scene:"E1 Dom/Businessman meeting, E3 Marcus/Dom confrontation \u2014 the kind of place where money whispers",
+   maps:"https://www.google.com/maps/place/29.7527,-95.3968"},
+  {name:"Midtown Nightclub District \u2014 Main Street",type:"Action Set Piece Area",addr:"2301 Main St, Houston, TX 77002 (The Encore / Midtown strip)",lat:"29.7406",lng:"-95.3810",
+   img:"https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800&h=400&fit=crop",
+   desc:"Neon-lit, crowded, dangerous after dark. Thursday night energy. Shot Bar, Dogwood, Electric Feelgood, Barbarella, Unicorn Disco all within walking distance. This is the controlled buy location \u2014 E4's nightclub shootout.",
+   scene:"E4 controlled buy goes south, neon nightclub interiors, crowded exterior shots, parking lot surveillance",
+   maps:"https://www.google.com/maps/place/29.7406,-95.3810"},
+  {name:"EaDo \u2014 Navigation Blvd Warehouse District",type:"Secondary / Surveillance",addr:"Navigation Blvd & N Delano St, Houston, TX 77003",lat:"29.7518",lng:"-95.3448",
+   img:"https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800&h=400&fit=crop",
+   desc:"Industrial warehouses, HUE Mural Festival street art, freight train tracks, graffiti-covered buildings. Real working-class Houston mixed with artist culture. Perfect for surveillance scenes and clandestine meetings.",
+   scene:"E2 & E5 surveillance locations, street investigation, warehouse interiors",
+   maps:"https://www.google.com/maps/place/29.7518,-95.3448"},
+  {name:"Sunnyside \u2014 Residential Area",type:"Emotional Anchor / Maya's Home",addr:"Sunnyside neighborhood, Houston, TX 77033 (bounded by IH-610 / Sims Bayou / MLK Blvd / Hwy 288)",lat:"29.6769",lng:"-95.3364",
+   img:"https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&h=400&fit=crop",
+   desc:"Oldest African-American community in southern Houston, platted 1912. Modest residential streets. Where Marcus's ex-wife Keisha and daughter Maya live. The school bus stop, the front porch, the new fence \u2014 all Sunnyside texture.",
+   scene:"E1 Maya pickup from school, E8 finale goodbye between Marcus and Maya",
+   maps:"https://www.google.com/maps/place/29.6769,-95.3364"},
+  {name:"Montrose \u2014 Boxing Gym Area",type:"Recurring Character Location",addr:"Montrose area near Westheimer Rd, Houston, TX 77006 (EaDo Boxing Club at 712 Sampson St for reference)",lat:"29.7424",lng:"-95.3941",
+   img:"https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=800&h=400&fit=crop",
+   desc:"Montrose: historic queer neighborhood, tree-lined, being colonized by wealth. The boxing gym is KD's space \u2014 converted warehouse, heavy bags, industrial floor. Where Kline makes the $60K security offer.",
+   scene:"E1 KD training, E4 between-action decompression, E8 finale \u2014 KD boxing while weighing his future",
+   maps:"https://www.google.com/maps/place/29.7424,-95.3941"},
+  {name:"I-10 Corridor \u2014 Katy to Beaumont",type:"Trafficking Route",addr:"Interstate 10, Houston TX (Katy Freeway through East TX to Beaumont)",lat:"29.7805",lng:"-95.4378",
+   img:"https://images.unsplash.com/photo-1545459720-aac8509eb02c?w=800&h=400&fit=crop",
+   desc:"Primary drug trafficking corridor. DEA confirms 'I-10 drug corridor is a smuggling fact.' Meth, cocaine, fentanyl, marijuana transported via tractor trailers, passenger cars, Greyhound buses. The spine connecting cartel supply to U.S. distribution.",
+   scene:"E2 & E5 trafficking route investigation, driving montage, truck stop surveillance, highway night shots",
+   maps:"https://www.google.com/maps/place/29.7805,-95.4378"},
+  {name:"Greenspoint \u2014 'Gunspoint'",type:"Investigation Location",addr:"Greenspoint area near I-45 & N Sam Houston Pkwy, Houston, TX 77060",lat:"29.9470",lng:"-95.4178",
+   img:"https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&h=400&fit=crop",
+   desc:"Nicknamed 'Gunspoint' after frequent robberies and the murder of Deputy Roxyann Allee. Goldman Sachs bought 24 apartment complexes here in 1998. Working-class, diverse, economic struggle visible. Part of the trafficking network trace.",
+   scene:"E5 network mapping investigation, apartment complex exteriors, the visible diversity and struggle of Houston",
+   maps:"https://www.google.com/maps/place/29.9470,-95.4178"},
+  {name:"Buffalo Bayou \u2014 Crime Scene",type:"Critical Dramatic Location",addr:"Buffalo Bayou near Commerce St, Houston, TX 77002 (between Fannin & N Main)",lat:"29.7628",lng:"-95.3635",
+   img:"https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&h=400&fit=crop",
+   desc:"200+ bodies recovered from Houston's 2,500 miles of bayous since 2017. 16 found in Buffalo Bayou alone. Dark, winding, isolated. Difficult to exit once in. Real-world horror that mirrors Jax's fate in the show.",
+   scene:"E6 \u2014 Jax's body found in a bayou. The turning point. Dark, isolated, the message is clear.",
+   maps:"https://www.google.com/maps/place/29.7628,-95.3635"},
+  {name:"River Oaks \u2014 Old Money District",type:"Power / Wealth Visual",addr:"River Oaks Blvd area, Houston, TX 77019 (River Oaks Country Club at 1600 River Oaks Blvd)",lat:"29.7558",lng:"-95.4174",
+   img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=400&fit=crop",
+   desc:"Quiet, tree-lined, mansions behind gates. Country clubs, expensive restaurants. The visible accumulation of wealth. Where old money partners with cartel cash. You don't see the power \u2014 everybody already knows it's there.",
+   scene:"E3 exterior driving shots past gates, establishing shots for the Businessman's world",
+   maps:"https://www.google.com/maps/place/29.7558,-95.4174"},
+  {name:"Third Ward Development Site",type:"Climax Location",addr:"Third Ward area near Wheeler St & Ennis St, Houston, TX 77004 (active development zone)",lat:"29.7265",lng:"-95.3565",
+   img:"https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=400&fit=crop",
+   desc:"Active construction zone in gentrifying Third Ward. Old Houston being demolished for new. This is where Marcus and KD confront Dom \u2014 literally standing on the bones of the old neighborhood while the new one rises around them.",
+   scene:"E7 climax \u2014 Dom confrontation, standoff at the development site, KD shoots first, they escape",
+   maps:"https://www.google.com/maps/place/29.7265,-95.3565"}
+];
+
+function renderRealLocs(){
+  document.getElementById('rlGrid').innerHTML=realLocs.map((r,i)=>`
+    <div class="rl-card glass glass-sm anim-up" style="animation-delay:${i*0.05}s">
+      <div class="rl-img" style="background-image:url('${r.img}')">
+        <div class="rl-img-label">
+          <div class="rl-type">${r.type}</div>
+          <div class="rl-name">${r.name}</div>
+        </div>
+      </div>
+      <div class="rl-body">
+        <div class="rl-addr"><span class="pin-icon">\u{1F4CD}</span> ${r.addr}</div>
+        <div class="rl-coords">${r.lat}, ${r.lng}</div>
+        <div class="rl-desc">${r.desc}</div>
+        <div class="rl-scene-use"><strong style="color:var(--text)">Scene Use:</strong> ${r.scene}</div>
+        <div class="rl-links">
+          <a class="rl-link" href="${r.maps}" target="_blank" rel="noopener">Google Maps</a>
+          <a class="rl-link blue" href="https://www.google.com/maps/@${r.lat},${r.lng},500m/data=!3m1!1e3" target="_blank" rel="noopener">Satellite View</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ========== VILLAIN NETWORK DATA ==========
+function renderVillainPyramid(){
+  const tiers=[
+    {level:"Tier 1 \u2014 Invisible",name:"Mexican Cartel Structure (Sinaloa / CJNG / Gulf)",
+     desc:"The engine underneath everything. Product supply, trafficking routes, international connections. Never seen directly in Season 1 \u2014 only felt through consequences. The cartel operates through franchised cells, not direct command. Dom is their autonomous Houston operator.",
+     chars:[{n:"Unseen Cartel Leadership",c:"background:rgba(255,51,68,0.1);border:1px solid rgba(255,51,68,0.2);color:var(--red)"}]},
+    {level:"Tier 2 \u2014 Protected",name:"The Businessman (River Oaks Oil Money)",
+     desc:"Old Houston money. Oil wealth partnered with cartel cash through real estate investment and development. Provides legitimacy, political cover, and access to Houston's elite. Meets Dom at upscale restaurants. Talks about 'rejuvenation' while signing displacement orders.",
+     chars:[{n:"The Businessman",c:"background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);color:var(--gold)"}]},
+    {level:"Tier 3 \u2014 The Fixer",name:"Dominic 'Dom' Cruz",
+     desc:"The visible face of the operation. Import/export fronts, real estate development in Third Ward. Has people inside HPD. Connected to cartel structure but operates autonomously. Knows Marcus from years ago. Cultured, dangerous, composed. Could be a legitimate businessman if you only saw the surface.",
+     chars:[{n:"Dom Cruz",c:"background:rgba(255,140,0,0.1);border:1px solid rgba(255,140,0,0.2);color:var(--orange)"},{n:"Dom's Security Team",c:"background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--text3)"}]},
+    {level:"Tier 4 \u2014 Inside Man",name:"Protected HPD Officer (Name Revealed E5)",
+     desc:"Someone inside HPD actively protecting the operation. High enough rank to shut down investigations, redirect resources, claim federal jurisdiction. Not a puppet \u2014 a partner who wants the same thing Dom wants: efficient development, no obstacles. The shock reveal of Season 1.",
+     chars:[{n:"Protected Officer (???)",c:"background:rgba(255,45,120,0.1);border:1px solid rgba(255,45,120,0.2);color:var(--pink)"},{n:"Port Authority Contacts",c:"background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--text3)"}]},
+    {level:"Tier 4B \u2014 Street King",name:"Albert 'Sauce' Maddox (Sauce Walka)",
+     desc:"Cartel street-level enforcer and distribution king. Runs the Exotic Pop Store as a front for distribution. Houston trap king aesthetic \u2014 dripping in ice, grills, exotic cars. Flamboyant but LETHAL. Laughs before violence. The bridge between Dom's corporate empire and the street-level chaos. Unpredictable. Makes everything feel like a party until someone's bleeding.",
+     chars:[{n:"Sauce Maddox",c:"background:rgba(255,45,120,0.15);border:1px solid rgba(255,45,120,0.3);color:var(--pink)"},{n:"Exotic Pop Store (Front)",c:"background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.15);color:var(--green)"}]},
+    {level:"Tier 4C \u2014 OG Power",name:"Brad 'Face' Jordan (Scarface)",
+     desc:"Third Ward power broker. Former drug lord gone 'legitimate.' Runs car washes and detail shops (money laundering). Marcus grew up respecting him \u2014 neighborhood royalty. Philosophical. Quotes scripture. Talks about Third Ward like a father. But his empire is built on the same blood as everyone else's. Dom's Third Ward connection.",
+     chars:[{n:"Face Jordan",c:"background:rgba(212,168,67,0.15);border:1px solid rgba(212,168,67,0.3);color:var(--gold)"},{n:"Car Wash Network",c:"background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--text3)"}]},
+    {level:"Tier 4D \u2014 The Ghost",name:"Joseph 'Zero' McVey (Z-Ro)",
+     desc:"Enforcer's enforcer. The man Dom sends when Sauce can't handle it. Former military (dishonorably discharged). Works alone. Doesn't talk much. When Zero shows up, someone dies. Pain is his currency. Grew up in foster care. The system broke him before the cartel recruited him. He doesn't enjoy killing \u2014 he just doesn't feel anything about it.",
+     chars:[{n:"Zero McVey",c:"background:rgba(85,85,112,0.3);border:1px solid rgba(85,85,112,0.5);color:var(--text2)"}]},
+    {level:"Tier 5 \u2014 Street Level",name:"Operations & Enforcement",
+     desc:"Port workers paid to look the other way. Security teams that aren't rent-a-cops. Street-level distribution networks. Informants who know too much. The people who get killed when the operation needs to send a message. Hector. And eventually, Jax. Kehlin Farooq runs the Exotic Pop Store front \u2014 possibly unaware of what moves through the back room.",
+     chars:[{n:"Port Authority Officer",c:"background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.15);color:var(--blue)"},{n:"Kehlin Farooq (Exotic Pop)",c:"background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.15);color:var(--green)"},{n:"Hector (Killed)",c:"background:rgba(255,51,68,0.1);border:1px solid rgba(255,51,68,0.2);color:var(--red)"},{n:"Jax (Killed E6)",c:"background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.15);color:var(--green)"}]}
+  ];
+  document.getElementById('vnPyramid').innerHTML=tiers.map(t=>`
+    <div class="vn-tier">
+      <div class="vn-tier-level">${t.level}</div>
+      <div class="vn-tier-name">${t.name}</div>
+      <div class="vn-tier-desc">${t.desc}</div>
+      <div class="vn-tier-chars">${t.chars.map(c=>`<span class="vn-tier-char" style="${c.c}">${c.n}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+function renderVillainProfiles(){
+  const profiles=[
+    {title:"Dom Cruz \u2014 <span>The Fixer</span>",border:"var(--orange)",content:`
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:14px">Age 48. Cartel-connected. Import/export + real estate fronts. Has history with Marcus \u2014 someone Marcus protected once. Now buying up Third Ward block by block. Calm, cultured, genuinely believes he's building something better.</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:8px">Arc Through Season 1</div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E1</div><div class="vn-arc-text">Introduced via restaurant scene with Businessman. Texts about "the Marcus Cole situation."</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E3</div><div class="vn-arc-text">Marcus traces the operation to Dom. They meet face-to-face. History between them carries weight.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E4</div><div class="vn-arc-text">Dom's security involved in the Midtown nightclub incident. Cover blown \u2014 someone inside Dom's org leaked.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E5</div><div class="vn-arc-text">Network mapping reveals Dom's legitimate business as the laundering front. Property records, shell corps.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E7</div><div class="vn-arc-text"><strong>CONFRONTATION.</strong> Dev site in Third Ward. Dom explains: "The neighborhood was dying. I'm building the new one." Standoff. KD shoots.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E8</div><div class="vn-arc-text">Feds move on Dom. Federal prosecution. But Dom's higher connections may walk.</div></div>
+    `},
+    {title:"The Businessman \u2014 <span>Old Money</span>",border:"var(--gold)",content:`
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:14px">Age 50s. Oil money. Old Houston establishment. Partners with Dom on real estate development \u2014 cartel cash laundered through legitimate property acquisition. Speaks in euphemisms. "It's not gentrification. It's rejuvenation."</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Function</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.6">Represents the invisible power layer. The kind of wealth that doesn't need to be seen. Appears in E1 (restaurant with Dom) and E3 (referenced). His existence proves this isn't just a drug operation \u2014 it's Houston's economic machinery working as designed. He may walk even if Dom falls. That's the point.</div>
+    `},
+    {title:"Protected HPD Officer \u2014 <span>The Shield</span>",border:"var(--pink)",content:`
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:14px">Identity unknown until E5. High-ranking. Has been shutting down investigations, redirecting cases, claiming federal jurisdiction. Not a puppet \u2014 a partner who believes in "efficient development." Possibly someone Marcus and KD thought was clean.</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--pink);margin-bottom:8px">Arc Through Season 1</div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E1</div><div class="vn-arc-text">First hint: "HPD called down about a delay" at the Port. The operation has inside help.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E2</div><div class="vn-arc-text">Unknown captain claims "federal jurisdiction." Dorsey warns Marcus: "Don't dig deeper."</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E4</div><div class="vn-arc-text">Heat from above to pull Marcus and KD off. The pressure is institutional.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E5</div><div class="vn-arc-text"><strong>NAME REVEALED.</strong> Someone they thought was clean. The shock.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E6</div><div class="vn-arc-text">Marcus confronts the protected officer directly. Gets benched immediately.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E8</div><div class="vn-arc-text">Feds move on the officer simultaneously with Dom. Federal prosecution.</div></div>
+    `},
+    {title:"Marcus Kline \u2014 <span>Gray Zone</span>",border:"var(--purple)",content:`
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:14px">Age 52. KD's ex-Army mentor. Private security consultant. Moral compass somewhere to the right of honest. Offers KD a $60K job working for... Dominic Cruz. The question: does Kline know who Dom really is? Or is he just facilitating?</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--purple);margin-bottom:8px">Function</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.6">The temptation character. Represents the private sector pipeline that absorbs disillusioned cops and soldiers. "Real work. No politics." He's not evil \u2014 he's pragmatic. And that pragmatism is more dangerous than villainy because it's <em>reasonable</em>. Sets up KD's Season 2 arc.</div>
+    `},
+    {title:"Albert 'Sauce' Maddox \u2014 <span>The Street King</span> <span style='font-size:9px;color:var(--text3);margin-left:6px'>(SAUCE WALKA)</span>",border:"var(--pink)",content:`
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:14px">Early 40s. Houston trap king turned cartel enforcer. Runs the Exotic Pop Store as a distribution front. Dripping in ice, grills, exotic cars \u2014 the most dangerous middleman in Houston. The bridge between Dom Cruz's corporate operation and the street-level chaos. Flamboyant but LETHAL. Laughs before violence. Speaks in Houston slang. Makes everything feel like a party until someone's bleeding.</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--pink);margin-bottom:8px">Arc Through Season 1</div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E1</div><div class="vn-arc-text">First appearance at Exotic Pop Store \u2014 walks past Marcus and KD in the back. Magnetic energy. Later reports to Dom at River Oaks.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E3</div><div class="vn-arc-text">Becomes a visible street presence. Connected to property enforcement. His men send the message at Rosa's taqueria.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E4</div><div class="vn-arc-text">Sauce's distribution network is the target of the Midtown Vault raid. His people are in the club.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E6</div><div class="vn-arc-text">Sauce's men threaten Rosa directly. He's escalating because the operation is threatened.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E8</div><div class="vn-arc-text"><strong>WAREHOUSE BATTLE.</strong> Sauce is in the final Harrisburg confrontation. Goes down fighting.</div></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--pink);margin:12px 0 6px">Michael Bay Vision</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.6">Slow-motion walking away from a burning car. Candy-painted Escalade on swangers. Gold grills catching neon light. Every scene with Sauce should feel like a music video crossed with a cartel execution.</div>
+    `},
+    {title:"Brad 'Face' Jordan \u2014 <span>The OG</span> <span style='font-size:9px;color:var(--text3);margin-left:6px'>(SCARFACE)</span>",border:"var(--gold)",content:`
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:14px">Third Ward power broker. Former drug lord gone "legitimate." Runs a chain of car washes and detail shops (money laundering). Marcus grew up respecting him \u2014 he's neighborhood royalty. Gator boots. Clean. Moves slow because he doesn't need to hurry. Philosophical. Quotes scripture. Talks about Third Ward like a father. But his empire is built on the same blood as everyone else's.</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Arc Through Season 1</div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E1</div><div class="vn-arc-text">Brief appearance at Rosa's taqueria. Nods at Marcus. Old neighborhood respect. Seeds planted.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E3</div><div class="vn-arc-text">Marcus discovers Face's car wash network connects to Dom's property empire.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E5</div><div class="vn-arc-text"><strong>REVEALED</strong> as Dom's Third Ward connection. The man who makes gentrification work at street level.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E6-8</div><div class="vn-arc-text">Moral complexity. Face genuinely believes he's saving Third Ward. Makes Marcus question everything.</div></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin:12px 0 6px">Michael Bay Vision</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.6">Shot in shadow with just his gold chain catching light. Car wash scenes lit like a Mann nocturnal \u2014 water and neon reflecting off wet chrome. Old school Houston royalty energy.</div>
+    `},
+    {title:"Joseph 'Zero' McVey \u2014 <span>The Ghost</span> <span style='font-size:9px;color:var(--text3);margin-left:6px'>(Z-RO)</span>",border:"var(--text3)",content:`
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:14px">Enforcer's enforcer. The man Dom sends when Sauce can't handle it. Former military (dishonorably discharged). Works alone. Doesn't talk much. When Zero shows up, someone dies. Black everything. No flash. Pain is his currency. Grew up in foster care. The system broke him before the cartel recruited him. He doesn't enjoy killing \u2014 he just doesn't feel anything about it.</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin-bottom:8px">Arc Through Season 1</div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E5</div><div class="vn-arc-text">First appearance. Name mentioned in hushed tones. "Dom sent Zero." Everyone's face changes.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E6</div><div class="vn-arc-text">Zero is responsible for Jax's execution. Professional. Single shot. No torture. Just business.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E7</div><div class="vn-arc-text">Zero hunts Marcus and KD after the basement extraction. The Terminator of the series.</div></div>
+      <div class="vn-arc-step"><div class="vn-arc-ep">E8</div><div class="vn-arc-text"><strong>WAREHOUSE FINALE.</strong> Zero vs. KD. Military vs. military. The fight the audience has been waiting for.</div></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin:12px 0 6px">Michael Bay Vision</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.6">The frame gets DARKER when Zero enters. No music. Just footsteps. Bay would shoot him arriving like the Terminator \u2014 silhouette in a doorway, backlighting through dust particles, every other character retreating from the frame.</div>
+    `},
+    {title:"Kehlin Farooq \u2014 <span>Comic Relief</span>",border:"var(--green)",content:`
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:14px">Himself. Owner/operator of the Exotic Pop Store. When Marcus comes investigating the store as a Sauce Walka front, Kehlin is behind the counter, completely innocent, completely confused. The ultimate tension break in a thriller.</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:8px">Key Scene</div>
+      <div style="font-size:13px;color:var(--green);font-style:italic;line-height:1.6;margin-bottom:8px">"Brother, we sell cream soda. This is a \u2014 we are NOT selling dope, brother."</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.6">Hands up, genuinely bewildered. The whole frame shifts from thriller to comedy for 30 seconds. Bay would shoot this as a wide shot with Kehlin small in the colorful frame, surrounded by exotic sodas, while Marcus looms with a badge. Pure gold.</div>
+    `}
+  ];
+
+  document.getElementById('vnGrid').innerHTML=profiles.map(p=>`
+    <div class="vn-card glass glass-sm" style="--border-accent:${p.border}">
+      <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:${p.border};border-radius:10px 0 0 10px"></div>
+      <h3>${p.title}</h3>
+      ${p.content}
+    </div>
+  `).join('');
+}
+
+function renderVillainReal(){
+  document.getElementById('vnRealGrid').innerHTML=`
+    <div class="vn-card glass glass-sm">
+      <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red);border-radius:10px 0 0 10px"></div>
+      <h3>Real Cartel <span>Landscape</span></h3>
+      <div class="vn-real">
+        <strong>Houston is a major transshipment hub</strong> for multiple cartels operating simultaneously:<br><br>
+        <span class="vn-real-tag">Sinaloa Cartel</span> Split into Los Mayos (Zambada) and Los Chapitos (Guzm\u00e1n sons). Loose federation of tens of thousands. Not a monolith \u2014 a franchise.<br><br>
+        <span class="vn-real-tag">CJNG</span> Controls Mexican ports. Franchise-style cells. Operates in 40+ countries. Ruthless, militarized, expansionist. Generates hundreds of millions annually.<br><br>
+        <span class="vn-real-tag">Gulf Cartel</span> No longer unified. Los Metros and Los Escorpiones factions. Primary drug AND human smuggling into Texas.<br><br>
+        <strong>I-10 is the spine.</strong> DEA confirms: "I-10 drug corridor is a smuggling fact." Meth, cocaine, fentanyl, marijuana via tractor trailers, passenger cars, buses. Beaumont is both a coastal corridor city AND sits on I-10.
+      </div>
+    </div>
+    <div class="vn-card glass glass-sm">
+      <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red);border-radius:10px 0 0 10px"></div>
+      <h3>Real HPD <span>Context</span></h3>
+      <div class="vn-real">
+        <span class="vn-real-tag">Harding Street Raid (2019)</span> Officer Gerald Goines used falsified informant tips to obtain a no-knock warrant. Two civilians killed. Exposed corrupt overtime schemes across HPD.<br><br>
+        <span class="vn-real-tag">264,000 Cases Suspended (2024)</span> HPD revealed 264,000+ cases suspended due to "lack of personnel" \u2014 including 4,000+ sexual assaults. Chief Troy Finner resigned.<br><br>
+        <span class="vn-real-tag">Bayou Bodies (2025-26)</span> 200+ bodies recovered from Houston's 2,500 miles of bayous since 2017. 34 in 2025 alone. 16 in Buffalo Bayou. Jax's fate mirrors real Houston horror.<br><br>
+        <span class="vn-real-tag">Port Trafficking</span> Port of Houston is a major human trafficking entry point. Victims often from Latin America. I-10 primary trafficking route. This is the real crime that HOUSTON VICE dramatizes.<br><br>
+        <strong>Trust between community and HPD is at historic lows.</strong> That's the world Marcus operates in.
+      </div>
+    </div>
+  `;
+}
+
+// ========== SAVE THE CAT DATA ==========
+const stcBeats=[
+  {pct:"0-1%",ep:"E1",act:"act1",name:"Opening Image",
+   def:"A snapshot of the protagonist's world BEFORE the journey. Sets tone, mood, and what's broken.",
+   map:"<strong>Port of Houston \u2014 Night.</strong> Marcus and KD move through shadows between stacked containers. Industrial scale. They don't speak \u2014 years of partnership means they don't need to. The warrant. The pry bar. The cocaine. Then: the girl. Alive, terrified. This is Marcus's world: dangerous, procedural, and about to crack open. The visual language says everything \u2014 two men dwarfed by a system bigger than any badge.",
+   fix:""},
+  {pct:"~5%",ep:"E1",act:"act1",name:"Theme Stated",
+   def:"Someone (usually not the hero) states the story's deeper truth. The hero doesn't understand it yet.",
+   map:"<strong>Port Authority Officer:</strong> 'Whatever you're doing, it's being handled differently than you think.' This is the theme of the entire series \u2014 the system works differently than Marcus believes. He thinks he's investigating a crime. He's actually investigating the machine that makes crime possible. The theme is restated by Dorsey: 'I can't protect you if you do.'",
+   fix:"<strong>STRENGTHEN:</strong> Add a line from KD in the car ride home that more directly states the theme. Something like: 'Maybe the system isn't broken, Marcus. Maybe it's working exactly the way it was built.' Marcus doesn't respond. That's the theme \u2014 and he's not ready to hear it yet."},
+  {pct:"1-10%",ep:"E1",act:"act1",name:"Set-Up",
+   def:"Introduce the hero, their world, their flaws, their relationships. Plant seeds for everything that pays off later.",
+   map:"<strong>E1 plants every seed:</strong> Marcus/KD partnership (tactical, silent, years-deep). Marcus's divorce and Maya (emotional anchor). Jax as informant (street intelligence + vulnerability). Rosa and the taqueria (Third Ward as home). KD at the boxing gym with Kline (temptation seed). Captain Dorsey (institutional tether). The gentrification \u2014 coffee shops next to closing corner stores. Dom Cruz texting about 'the Marcus Cole situation.' The photograph of Maya \u2014 the threat that changes everything.",
+   fix:""},
+  {pct:"~10%",ep:"E1",act:"act1",name:"Catalyst",
+   def:"The event that knocks the protagonist out of their comfort zone. Life will never be the same.",
+   map:"<strong>The photograph of Maya on Marcus's kitchen table.</strong> Someone has been in his apartment. They photographed his daughter leaving school. Today. No note. No demand. The message: we can reach anything, anyone. This isn't a case anymore. It's personal. Marcus Cole has never been truly afraid before this moment. Now he is. The catalyst isn't the bust going wrong \u2014 it's the realization that his daughter is leverage.",
+   fix:""},
+  {pct:"10-20%",ep:"E2",act:"act1",name:"Debate",
+   def:"The hero hesitates. Should I go forward? What will I lose? This is the last chance to turn back.",
+   map:"<strong>E2 is pure Debate.</strong> Marcus and KD investigate the Port at night but get shut down \u2014 'federal jurisdiction.' Dorsey says don't dig deeper. The system is telling Marcus to walk away. Jax is nervous: 'This is the kind of bigger that gets people disappeared.' KD's Army friend Kline offers the private sector escape. The Debate isn't will-they-won't-they \u2014 it's the institutional pressure to accept that some crimes are protected. Marcus debates with himself, with KD, with the system.",
+   fix:"<strong>STRENGTHEN:</strong> Add a scene where Marcus visits Maya's school and sits in the parking lot, watching her through the window. He's debating whether pursuing this case puts her at more risk than walking away. This deepens the personal stakes of the Debate beat and connects the A-story (investigation) to the emotional core (fatherhood)."},
+  {pct:"~20%",ep:"E2-E3",act:"act2a",name:"Break Into Two",
+   def:"The hero commits. They cross the threshold into a new world. No turning back.",
+   map:"<strong>End of E2 / Top of E3:</strong> Marcus realizes someone inside HPD is protecting the operation. He calls Dorsey. Dorsey's response: 'Don't dig any deeper until I find out what's happening upstairs.' But Marcus doesn't stop. He goes into Third Ward history. He starts tracing Dom Cruz. The Break Into Two is the moment Marcus stops being a detective following orders and becomes a detective following truth. The 'new world' isn't a location \u2014 it's operating outside the system while still wearing the badge.",
+   fix:""},
+  {pct:"~22%",ep:"E3",act:"act2a",name:"B Story",
+   def:"A secondary plotline that carries the theme. Often a relationship that teaches the hero the lesson they need.",
+   map:"<strong>Marcus and Dom's history.</strong> E3 reveals they knew each other. Marcus protected Dom once, back in the day. Their meeting at the Montrose restaurant isn't just antagonist-vs-protagonist \u2014 it's two men from the same world who chose different paths. Dom is the B Story because he's the mirror: what Marcus could have become if he'd chosen money over code. The B Story also runs through KD/Kline \u2014 the temptation of the private sector as an escape from institutional rot.",
+   fix:"<strong>STRENGTHEN:</strong> Add a brief flashback or referenced memory in E3 \u2014 Marcus remembering young Dom, maybe a specific moment where Marcus looked the other way. This gives the B Story emotional weight and makes the E7 confrontation land harder. The audience needs to feel that Marcus is partly responsible for who Dom became."},
+  {pct:"20-50%",ep:"E3-E4",act:"act2a",name:"Fun and Games",
+   def:"The 'promise of the premise.' This is why the audience showed up. The hook in action.",
+   map:"<strong>E3-E4 delivers the premise:</strong> Two Houston Vice detectives navigating the intersection of cartel money, old Houston power, and institutional corruption. E3 = Marcus tracing Dom's legitimate business empire (real estate eating Third Ward). KD digging through property records and shell corporations. E4 = The controlled buy in Midtown. Neon. Nightclub. DEA involvement. The shootout. This is the show operating at full voltage \u2014 investigation + action + Houston as character.",
+   fix:""},
+  {pct:"~50%",ep:"E4-E5",act:"act2a",name:"Midpoint",
+   def:"Major twist at the exact center. False victory or false defeat. Stakes raised permanently.",
+   map:"<strong>End of E4 / Top of E5: Dorsey gives them 48 hours.</strong> This is a FALSE VICTORY \u2014 they have a window to work. But it's also a ticking clock that raises stakes permanently. The Midpoint is the moment the investigation goes from 'can we solve this?' to 'can we survive this?' Jax reaches out, terrified: the cartel knows their names. The controlled buy went south because someone INSIDE blew their cover. The stakes are no longer professional \u2014 they're existential.",
+   fix:"<strong>STRENGTHEN:</strong> The Midpoint needs a bigger emotional reversal. Consider having Marcus find a second threat \u2014 not just the 48-hour clock, but evidence that the protected officer is someone he personally trusts. A photo, a document, a name that shakes him. The false victory (48 hours to work) collides with a false defeat (the enemy is closer than he thought). This double-punch makes the Midpoint the true fulcrum."},
+  {pct:"50-75%",ep:"E5-E6",act:"act2b",name:"Bad Guys Close In",
+   def:"External threats and internal doubts collide. The team fractures. Pressure from all directions.",
+   map:"<strong>E5-E6 is relentless pressure.</strong> External: Marcus and KD racing the clock, working every connection. KD following money through shell corps. Torres working federal angles that don't align with local justice. Internal: Marcus's crisis of faith \u2014 'the system isn't broken, it's working as designed.' The partnership strains. Then E6: Jax tries to leave town. Cartel is faster. <strong>Body in the bayou.</strong> Marcus is devastated. Confronts the protected officer. Gets benched. KD sits in the car, torn. The bad guys haven't just closed in \u2014 they've won.",
+   fix:""},
+  {pct:"~75%",ep:"E6",act:"act2b",name:"All Is Lost",
+   def:"Something 'dies' \u2014 literally or figuratively. The lowest point. Hope evaporates.",
+   map:"<strong>Jax is dead. Marcus is benched. The case is closed.</strong> Jax's body in the bayou is the literal death. But the figurative death is bigger: Marcus's belief that being a good cop means something. The system killed his informant, shut down his investigation, and threatened his daughter. Everything he built \u2014 his reputation, his network, his code \u2014 is useless against institutional power. All Is Lost.",
+   fix:""},
+  {pct:"75-80%",ep:"E6-E7",act:"act2b",name:"Dark Night of the Soul",
+   def:"The hero reflects, grieves, and confronts who they must become. The lowest emotional point.",
+   map:"<strong>End of E6:</strong> Marcus walks out of HPD headquarters. KD sits in the car. Neither speaks. The city at night around them \u2014 all those lights, all those crimes that never get solved because someone decided not to see them. Marcus alone in his apartment. Photos of Maya on the wall. The case files spread out. The weight of seeing too much. This is the Dark Night: Marcus must decide if his code means anything in a world that doesn't honor codes.",
+   fix:"<strong>STRENGTHEN:</strong> Add a scene where Marcus visits Jax's family \u2014 maybe his grandmother or a sister in Third Ward. He sees the real cost of his investigation: a real person died because Marcus pulled them into this. This makes the Dark Night deeply personal and gives Marcus the emotional fuel to go off-book in E7. Without this, the transition from benched-cop to rogue-investigator feels like anger. With it, it feels like penance."},
+  {pct:"~80%",ep:"E7",act:"act3",name:"Break Into Three",
+   def:"Epiphany. The hero combines what they learned in the A Story and B Story. Renewed resolve.",
+   map:"<strong>Marcus investigates off-book. KD follows.</strong> The Break Into Three is KD's decision more than Marcus's. Marcus was always going to keep pushing \u2014 that's his flaw and his strength. But KD choosing to follow him \u2014 loyalty over badge, partnership over institution \u2014 is the synthesis. The A Story (the investigation) and the B Story (the meaning of partnership/loyalty) merge. They're no longer working the case. They're choosing what kind of men they are.",
+   fix:""},
+  {pct:"80-99%",ep:"E7-E8",act:"act3",name:"Finale",
+   def:"The climax. The hero applies everything they've learned to confront the central conflict. Five-point finale.",
+   map:"<strong>STC Five-Point Finale:</strong><br><strong>1. Gathering the Team:</strong> Marcus and KD, working alone. No badge, no backup, no institution. Just partnership.<br><strong>2. Executing the Plan:</strong> They get close to Dom. Confrontation at the Third Ward development site. The old neighborhood being demolished for the new one.<br><strong>3. High Tower Surprise:</strong> Dom's perspective \u2014 'The neighborhood was dying. I'm building the new one.' Dom reveals the protected officer is a willing partner, not a puppet. The enemy is the system itself.<br><strong>4. Dig Deep Down:</strong> KD shoots first. Tactical decision. They escape but they've crossed every line. Then E8: Torres arrives with federal prosecution. The choice \u2014 cooperate or refuse.<br><strong>5. Execution of New Plan:</strong> Marcus visits Maya. 'I might not keep my promise.' KD in the boxing gym. Kline repeats the offer. Neither man answers the question \u2014 because the answer IS the question. What kind of men do they want to be?",
+   fix:""},
+  {pct:"99-100%",ep:"E8",act:"act3",name:"Final Image",
+   def:"Mirrors the Opening Image. Shows how the hero has transformed. The 'after' snapshot.",
+   map:"<strong>Marcus and KD driving through Third Ward at dusk.</strong> The Opening Image: two men moving through shadows at the Port, silent, tactical, following orders. The Final Image: two men driving through their city, silent, uncertain, having broken every rule they swore to follow. Cranes in the distance. Old buildings coming down. New ones going up. The swangas and slabs are still rolling, but it feels like a last stand. The city hasn't changed. But they have. The system is the same. But they can't unsee what they've seen.",
+   fix:""}
+];
+
+function renderSTC(){
+  const tl=document.getElementById('stcTimeline');
+  let currentAct='';
+  const actLabels={act1:'ACT 1 \u2014 THE THESIS (0-25%)',act2a:'ACT 2A \u2014 FUN & GAMES (25-50%)',act2b:'ACT 2B \u2014 BAD GUYS CLOSE IN (50-75%)',act3:'ACT 3 \u2014 THE SYNTHESIS (75-100%)'};
+  let html='';
+  stcBeats.forEach((b,i)=>{
+    if(b.act!==currentAct){
+      currentAct=b.act;
+      html+=`<div class="stc-section-label">${actLabels[b.act]}</div>`;
+    }
+    html+=`
+      <div class="stc-beat glass glass-sm ${b.act} ${b.fix?'has-fix':''} anim-slide" style="animation-delay:${i*0.04}s" onclick="this.classList.toggle('expanded')">
+        <div class="stc-beat-pct">${b.pct}</div>
+        <div class="stc-beat-ep">${b.ep}</div>
+        <div>
+          <div class="stc-beat-name">${b.name}</div>
+          <div class="stc-beat-def">${b.def}</div>
+          <div class="stc-beat-map">${b.map}</div>
+          ${b.fix?`<div class="stc-beat-fix">${b.fix}</div>`:''}
+        </div>
+      </div>`;
+  });
+  tl.innerHTML=html;
+}
+
+function renderSTCSummary(){
+  document.getElementById('stcSummary').innerHTML=`
+    <div class="stc-sum-card glass glass-sm">
+      <h3>Beat Sheet <span>Health Check</span></h3>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>Opening Image / Final Image mirror:</strong> Port shadows (before) \u2192 Third Ward dusk drive (after). Perfect bookend. Silent partnership in both \u2014 but the meaning has inverted.</div></div>
+      <div class="stc-check"><span class="stc-check-icon fix">\u26A0</span><div><strong>Theme Stated needs strengthening.</strong> The Port Authority officer's line works but it's too subtle. Add KD's direct theme statement in E1 car ride: 'Maybe the system isn't broken. Maybe it's working the way it was built.'</div></div>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>Catalyst is devastating.</strong> Maya's photograph on the kitchen table. Personal stakes locked in at exactly the right moment. No turning back.</div></div>
+      <div class="stc-check"><span class="stc-check-icon fix">\u26A0</span><div><strong>Debate needs one more personal beat.</strong> Marcus at Maya's school, watching through the window. Debating risk vs. duty as a father, not just as a cop.</div></div>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>Break Into Two works.</strong> Marcus crosses from following orders to following truth. The new world is operating outside the system while wearing the badge.</div></div>
+      <div class="stc-check"><span class="stc-check-icon fix">\u26A0</span><div><strong>B Story needs a flashback.</strong> Marcus/Dom history needs one concrete memory \u2014 a moment where Marcus looked the other way. This makes E7 confrontation land harder.</div></div>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>Fun and Games delivers the premise.</strong> E3-E4 is the show at full voltage. Investigation + action + Houston as character. The controlled buy shootout is exactly what the audience came for.</div></div>
+      <div class="stc-check"><span class="stc-check-icon fix">\u26A0</span><div><strong>Midpoint needs a bigger emotional reversal.</strong> Add evidence that the protected officer is someone Marcus trusts. Double-punch: false victory (48 hours) + false defeat (enemy is closer than expected).</div></div>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>All Is Lost is perfect.</strong> Jax dead. Marcus benched. Case closed. Literal death + figurative death of Marcus's belief system. Textbook.</div></div>
+      <div class="stc-check"><span class="stc-check-icon fix">\u26A0</span><div><strong>Dark Night needs Jax's family scene.</strong> Marcus visiting Jax's grandmother/sister. Seeing the real cost. This transforms his motivation from anger to penance.</div></div>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>Break Into Three is KD's choice.</strong> The synthesis is partnership over institution. A Story + B Story merge perfectly.</div></div>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>Five-Point Finale is complete.</strong> Gathering \u2192 Plan \u2192 High Tower Surprise (Dom's perspective) \u2192 Dig Deep (KD shoots) \u2192 New Plan (the open question). All five points hit.</div></div>
+    </div>
+    <div class="stc-sum-card glass glass-sm">
+      <h3>STC Genre <span>Analysis</span></h3>
+      <div style="font-size:11px;color:var(--text2);line-height:1.7;margin-bottom:16px">
+        <strong style="color:var(--green)">PRIMARY: Whydunit</strong><br>
+        The audience is investigating alongside Marcus. The crime isn't a mystery \u2014 we know trafficking and corruption exist. The Whydunit is about the WHY: why does the system protect this? Why does Houston's power structure enable it? The dark truth at the center: the system isn't broken. It's working as designed to protect money and power. Dom Cruz is the visible answer. The invisible answer is the entire city.<br><br>
+
+        <strong style="color:var(--blue)">SECONDARY: Buddy Love</strong><br>
+        Marcus and KD aren't opposites who learn to work together \u2014 they're partners whose bond is tested to destruction. The Buddy Love genre asks: what is this relationship worth? The answer: everything. KD choosing to follow Marcus off-book is the genre's resolution. Their love isn't romantic \u2014 it's the love between two men who've agreed to die for each other's code. Season 2 tests whether that code survives.<br><br>
+
+        <strong style="color:var(--orange)">TERTIARY: Institutionalized</strong><br>
+        HPD is the institution. Marcus is the character who believes in it, discovers it's corrupt, and must decide whether to reform it from inside or burn it down. Dorsey is the institutional voice: 'I can't protect you.' The institution always wins \u2014 until it doesn't. The show's long-game question is whether Marcus stays inside the institution or leaves it entirely. Season 1 puts him right on the line.
+      </div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:10px">Structural Scorecard</div>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>10 of 15 beats</strong> are fully locked and land where they should.</div></div>
+      <div class="stc-check"><span class="stc-check-icon fix">\u26A0</span><div><strong>5 beats need strengthening</strong> (Theme Stated, Debate, B Story, Midpoint, Dark Night). Fixes identified for all 5.</div></div>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>Three-genre blend</strong> is unique and creates layered engagement. Crime audience gets Whydunit. Character audience gets Buddy Love. Institutional drama audience gets Institutionalized.</div></div>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>Opening/Final Image mirror</strong> is the strongest structural element. Both images show the same partnership in radically different emotional states.</div></div>
+      <div class="stc-check"><span class="stc-check-icon pass">\u2713</span><div><strong>Five-Point Finale</strong> is complete and the open ending sets up Season 2 without feeling unresolved.</div></div>
+    </div>
+  `;
+}
+
+// ========== STORY ARC & DIRECTOR VISION ==========
+
+// Emotional arc data per episode: tension, action, emotion, investigation (0-100 scale)
+const arcData=[
+  {ep:1,tension:45,action:55,emotion:40,investigation:30,label:"Third Ward",beats:["Opening Image","Theme Stated","Set-Up","Catalyst"]},
+  {ep:2,tension:55,action:25,emotion:30,investigation:65,label:"Point of Entry",beats:["Debate"]},
+  {ep:3,tension:50,action:15,emotion:45,investigation:70,label:"Old Money",beats:["Break Into Two","B Story"]},
+  {ep:4,tension:75,action:80,emotion:25,investigation:40,label:"Midtown",beats:["Fun & Games","Midpoint"]},
+  {ep:5,tension:70,action:20,emotion:50,investigation:85,label:"The Network",beats:["Bad Guys Close In"]},
+  {ep:6,tension:90,action:35,emotion:90,investigation:20,label:"Third Ward (Reprise)",beats:["All Is Lost","Dark Night"]},
+  {ep:7,tension:95,action:85,emotion:60,investigation:15,label:"Point Break",beats:["Break Into Three","Finale"]},
+  {ep:8,tension:60,action:20,emotion:95,investigation:30,label:"The Slab",beats:["Finale","Final Image"]}
+];
+
+function renderArcGraph(){
+  const svg=document.getElementById('arcSvg');
+  const W=900,H=300,padL=50,padR=20,padT=20,padB=40;
+  const plotW=W-padL-padR,plotH=H-padT-padB;
+  const stepX=plotW/(arcData.length-1);
+  let svgHTML='';
+
+  // Grid lines
+  for(let i=0;i<=4;i++){
+    const y=padT+(plotH/4)*i;
+    svgHTML+=`<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" class="arc-gridline"/>`;
+    svgHTML+=`<text x="${padL-8}" y="${y+3}" class="arc-label" text-anchor="end">${100-i*25}%</text>`;
+  }
+
+  // Episode zones
+  arcData.forEach((d,i)=>{
+    const x=padL+i*stepX;
+    svgHTML+=`<text x="${x}" y="${H-5}" class="arc-ep-label" text-anchor="middle">E${d.ep}</text>`;
+    if(i<arcData.length-1){
+      svgHTML+=`<line x1="${x+stepX/2}" y1="${padT}" x2="${x+stepX/2}" y2="${H-padB}" stroke="var(--border)" stroke-dasharray="2 4" stroke-width="0.5"/>`;
+    }
+  });
+
+  // Act break markers
+  const actBreaks=[{after:1,label:"ACT 1 END"},{after:3,label:"ACT 2A → 2B"},{after:5,label:"ACT 3 BEGIN"}];
+  actBreaks.forEach(ab=>{
+    const x=padL+ab.after*stepX+stepX/2;
+    svgHTML+=`<line x1="${x}" y1="${padT}" x2="${x}" y2="${H-padB}" stroke="rgba(255,45,120,0.25)" stroke-width="1.5" stroke-dasharray="6 3"/>`;
+    svgHTML+=`<text x="${x}" y="${padT-5}" class="arc-label" text-anchor="middle" fill="var(--pink)" style="font-size:7px">${ab.label}</text>`;
+  });
+
+  // Draw line for each metric
+  const metrics=[
+    {key:'tension',color:'var(--pink)',opacity:1},
+    {key:'action',color:'var(--orange)',opacity:0.8},
+    {key:'emotion',color:'var(--blue)',opacity:0.8},
+    {key:'investigation',color:'var(--green)',opacity:0.6}
+  ];
+
+  metrics.forEach(m=>{
+    const points=arcData.map((d,i)=>{
+      const x=padL+i*stepX;
+      const y=padT+plotH*(1-d[m.key]/100);
+      return{x,y};
+    });
+    // Area fill
+    const areaPath=`M${points[0].x},${padT+plotH} ${points.map(p=>`L${p.x},${p.y}`).join(' ')} L${points[points.length-1].x},${padT+plotH} Z`;
+    svgHTML+=`<path d="${areaPath}" fill="${m.color}" opacity="0.04"/>`;
+    // Line
+    const linePath=points.map((p,i)=>i===0?`M${p.x},${p.y}`:`L${p.x},${p.y}`).join(' ');
+    svgHTML+=`<path d="${linePath}" fill="none" stroke="${m.color}" stroke-width="2.5" opacity="${m.opacity}" stroke-linejoin="round" stroke-linecap="round"/>`;
+    // Dots
+    points.forEach((p,i)=>{
+      svgHTML+=`<circle cx="${p.x}" cy="${p.y}" class="arc-beat-dot" fill="${m.color}" data-ep="${i}" data-metric="${m.key}" opacity="${m.opacity}"/>`;
+    });
+  });
+
+  // STC beat markers (small diamonds along top)
+  const beatPositions=[
+    {name:"Opening Image",ep:0,pct:0},{name:"Theme Stated",ep:0,pct:5},{name:"Set-Up",ep:0,pct:8},{name:"Catalyst",ep:0,pct:10},
+    {name:"Debate",ep:1,pct:15},{name:"Break Into Two",ep:1.5,pct:20},{name:"B Story",ep:2,pct:22},
+    {name:"Fun & Games",ep:2.5,pct:35},{name:"Midpoint",ep:3.5,pct:50},
+    {name:"Bad Guys Close In",ep:4.5,pct:62},{name:"All Is Lost",ep:5,pct:75},{name:"Dark Night",ep:5.5,pct:78},
+    {name:"Break Into Three",ep:6,pct:80},{name:"Finale",ep:6.5,pct:90},{name:"Final Image",ep:7,pct:99}
+  ];
+
+  beatPositions.forEach(bp=>{
+    const x=padL+(bp.ep/(arcData.length-1))*plotW;
+    const y=padT+6;
+    svgHTML+=`<polygon points="${x},${y-5} ${x+4},${y} ${x},${y+5} ${x-4},${y}" fill="var(--yellow)" opacity="0.7"/>`;
+    svgHTML+=`<text x="${x}" y="${y+16}" class="arc-label" text-anchor="middle" fill="var(--yellow)" style="font-size:6px" transform="rotate(-35 ${x} ${y+16})">${bp.name}</text>`;
+  });
+
+  svg.innerHTML=svgHTML;
+
+  // Hover tooltip
+  const tooltip=document.getElementById('arcTooltip');
+  const canvas=document.getElementById('arcCanvas');
+  svg.querySelectorAll('.arc-beat-dot').forEach(dot=>{
+    dot.addEventListener('mouseenter',e=>{
+      const ep=parseInt(dot.dataset.ep);
+      const d=arcData[ep];
+      tooltip.innerHTML=`
+        <div class="tt-name">E${d.ep}: "${d.label}"</div>
+        <div class="tt-ep">Beats: ${d.beats.join(', ')}</div>
+        <div style="margin-top:4px;font-size:10px;color:var(--text2);line-height:1.5">
+          <span style="color:var(--pink)">Tension: ${d.tension}%</span> &bull;
+          <span style="color:var(--orange)">Action: ${d.action}%</span><br>
+          <span style="color:var(--blue)">Emotion: ${d.emotion}%</span> &bull;
+          <span style="color:var(--green)">Investigation: ${d.investigation}%</span>
+        </div>`;
+      tooltip.style.display='block';
+      const rect=canvas.getBoundingClientRect();
+      const svgRect=svg.getBoundingClientRect();
+      const dotRect=dot.getBoundingClientRect();
+      tooltip.style.left=(dotRect.left-rect.left+12)+'px';
+      tooltip.style.top=(dotRect.top-rect.top-10)+'px';
+    });
+    dot.addEventListener('mouseleave',()=>{tooltip.style.display='none';});
+  });
+}
+
+function renderDirectorVision(){
+  const directors=[
+    {cls:'fuqua',name:'Antoine Fuqua',sub:'Street-Level Authenticity Director',
+     techniques:[
+       {label:'Philosophy',val:'<strong>"I don\'t make movies about places. I make movies IN places."</strong> Fuqua would insist on shooting HOUSTON VICE in actual Third Ward houses, real taqueria interiors, and working Port facilities. No studio recreations.'},
+       {label:'Lenses',val:'<strong>Wide lenses (24mm, 28mm)</strong> for street work — makes the audience feel surrounded by Third Ward. <strong>Long lenses (85mm, 135mm)</strong> for surveillance and isolating Marcus in crowd scenes. Same approach used in Training Day.'},
+       {label:'Casting',val:'<strong>Real Houston residents as extras.</strong> Actual Third Ward community members, real dock workers at the Port. Fuqua cast real Bloods and Crips in Training Day. For HOUSTON VICE: real HPD consultants, actual taqueria workers, neighborhood regulars.'},
+       {label:'Violence',val:'<strong>Sudden, ugly, consequence-laden.</strong> No choreographed action. The E4 nightclub shootout would be chaotic — smoke, screaming, glass. Fuqua\'s violence always shows the aftermath: the ringing ears, the shaking hands, the blood on shirts that doesn\'t wash out.'},
+       {label:'Color',val:'<strong>Desaturated amber days, high-contrast neon nights.</strong> DI pushed toward amber/gold in sunlight (Third Ward heat), then shifts to cool blue-pink at night. Fuqua uses color to mark emotional territory.'},
+       {label:'Sound',val:'<strong>Layered ambient sound.</strong> Street noise never stops — cicadas, bass from passing cars, distant sirens, Spanish from open windows. Houston\'s soundscape is a character. Fuqua would use it to keep the audience inside the world even during dialogue.'}
+     ],
+     scene:{title:'How Fuqua shoots the E7 confrontation',desc:'<strong>Third Ward development site. Dusk.</strong> Handheld, wide lens. Marcus walks through half-demolished houses — camera stays behind him, audience is following, not observing. Dom appears in silhouette against construction lights. Fuqua would shoot their conversation in unbroken two-shots — no traditional shot-reverse-shot. Both men in frame, the demolished neighborhood behind them. When KD shoots, Fuqua would cut to <strong>one take:</strong> the muzzle flash, Dom going down, Marcus flinching, KD\'s face — all in a single handheld pan. Then silence. Ambient sound floods back in: distant highway, a dog barking, construction equipment still running. The city doesn\'t stop.'}
+    },
+    {cls:'mann',name:'Michael Mann',sub:'Digital Nocturnal Poet',
+     techniques:[
+       {label:'Philosophy',val:'<strong>"I\'m interested in how people experience fear."</strong> Mann would turn HOUSTON VICE into a study of how Houston looks at 3 AM through digital sensors. Night is not the absence of light — it\'s a different kind of light. Every scene would feel like it\'s happening on the edge of perception.'},
+       {label:'Camera',val:'<strong>Sony Venice 2 or ARRI ALEXA Mini LF</strong> in high-ISO night mode. Mann pioneered digital nighttime photography on Collateral (2004). For HOUSTON VICE: available light only where possible. Security cameras, sodium vapor, neon signage, car headlights. The camera captures what the eye actually sees in darkness.'},
+       {label:'Research',val:'<strong>9-month immersion.</strong> Mann did ride-alongs with LAPD for 9 months before Heat. For HOUSTON VICE: Mann would embed with actual HPD Vice detectives, tour Port of Houston at night, meet with DEA corridor agents on I-10, and interview Third Ward residents about gentrification. Every detail verified.'},
+       {label:'Actors',val:'<strong>Weapons training with live ammunition.</strong> Real tactical movement courses. Mann made De Niro and Kilmer train with ex-SAS operators for Heat. For HOUSTON VICE: Billy and the KD actor would spend weeks at a tactical range, learn HPD radio procedures, drive pursuit courses. The audience sees the difference — muscle memory reads on camera.'},
+       {label:'No Boards',val:'<strong>No storyboards — only blocking.</strong> Mann doesn\'t pre-plan shots. He blocks actors in space and lets the camera discover the scene. "I don\'t know what I\'m going to shoot until I see what the actors do." This creates the feeling that HOUSTON VICE is happening in real time.'},
+       {label:'Music',val:'<strong>Music as emotional research tool.</strong> Mann creates character playlists before production — what does Marcus listen to driving at night? Chopped & screwed? Gospel? Silence? The music tells you who the character is when nobody\'s watching.'}
+     ],
+     scene:{title:'How Mann shoots the E1 cold open',desc:'<strong>Port of Houston. 2:47 AM.</strong> No score. Only the hum of massive container ship generators, the clank of loading cranes, the whisper of water against dock pilings. Camera is <strong>100 yards behind</strong> Marcus and KD — telephoto compression makes the container stacks feel infinite. They move like ghosts. Mann would shoot the pry bar moment in <strong>extreme close-up:</strong> hands, metal on metal, the lock giving way. Then the container interior — pitch black, camera adjusting to darkness like a human eye. The cocaine bricks. Then the girl. Mann wouldn\'t show her face immediately. He\'d show Marcus\'s face SEEING her face. The horror is in the reaction. When security arrives, Mann shoots the standoff with <strong>both parties in focus</strong> simultaneously — deep depth of field, no one is blurred, no one is secondary. Everyone is equally real.'}
+    },
+    {cls:'bruck',name:'Jerry Bruckheimer',sub:'Blockbuster Producer for Vertical',
+     techniques:[
+       {label:'Philosophy',val:'<strong>"Give them movie-quality on every platform."</strong> Bruckheimer brought film production values to television with CSI, creating what the industry called "movie television." For HOUSTON VICE in 9:16 vertical: the same instinct. Every frame should feel like it cost 10x what it did.'},
+       {label:'Production',val:'<strong>High-octane visual dynamic on a micro-budget.</strong> Bruckheimer would insist on production design punching above its weight — practical neon, real rain machines for night shoots, smoke and haze in every interior. The show should FEEL expensive without being expensive. That\'s the Bruckheimer formula.'},
+       {label:'Procedure',val:'<strong>CSI-level procedural realism.</strong> Every evidence bag labeled correctly. Radio calls use actual HPD codes. The Vice bullpen has real case files on the whiteboards. Bruckheimer understands that procedural accuracy creates audience trust — and trust creates investment. The boring stuff done right makes the exciting stuff land harder.'},
+       {label:'Pacing',val:'<strong>"Edgy triumphalism."</strong> A Bruckheimer phrase for his signature tone: things go wrong, but the heroes push through with style. For HOUSTON VICE: the E4 nightclub shootout wouldn\'t just be chaos — it would be chaos with a RHYTHM. Cuts synced to music. Marcus and KD moving in tandem. The audience should feel the adrenaline, not just the danger.'},
+       {label:'Casting',val:'<strong>Star-building machinery.</strong> Bruckheimer turns unknowns into stars (Johnny Depp in Pirates). For HOUSTON VICE: Billy as Marcus Cole isn\'t "a comedian trying drama" — it\'s a STAR TURN. Bruckheimer would market it that way. The show is the vehicle. Marcus is the franchise.'},
+       {label:'IP Thinking',val:'<strong>Franchise architecture from Day 1.</strong> Bruckheimer built CSI into CSI: Miami, CSI: NY, CSI: Cyber, CSI: Vegas. For HOUSTON VICE: Season 1 is proof of concept. Season 2 is the expansion. The world-building (cartel structure, HPD corruption, Houston neighborhoods) is designed to sustain 5+ seasons. Every character introduction is a potential spinoff seed.'}
+     ],
+     scene:{title:'How Bruckheimer produces the E8 finale',desc:'<strong>Multiple locations, parallel editing, building score.</strong> Bruckheimer would produce E8 as a mini-movie. Three timelines cutting between each other: (1) Torres arriving at HPD with federal warrants — <strong>wide establishing shots, American flags, authority</strong>; (2) Marcus driving to Sunnyside to see Maya — <strong>intimate, handheld, no score, just the engine and his breathing</strong>; (3) KD in the boxing gym, Kline\'s offer hanging in the air — <strong>rhythmic, heavy bag impacts synced to music</strong>. The Bruckheimer touch: all three timelines converge in the FINAL IMAGE. Marcus and KD, back in the car, driving through Third Ward at dusk. Cranes in the distance. Slabs still rolling. <strong>Score builds to a single note — then cuts to black.</strong> No resolution. Just the question. That\'s how you sell Season 2.'}
+    }
+  ];
+
+  document.getElementById('dvGrid').innerHTML=directors.map(d=>`
+    <div class="dv-card glass glass-sm ${d.cls} anim-up">
+      <h3>${d.name}</h3>
+      <div class="dv-sub">${d.sub}</div>
+      <div class="dv-tech">
+        ${d.techniques.map(t=>`
+          <div class="dv-tech-row">
+            <div class="dv-tech-label">${t.label}</div>
+            <div class="dv-tech-val">${t.val}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="dv-scene">
+        <div class="dv-scene-title">${d.scene.title}</div>
+        <div class="dv-scene-desc">${d.scene.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderDirectorCompare(){
+  const rows=[
+    {label:'Camera Move',fuqua:'Handheld, following',mann:'Locked off + telephoto',bruck:'Steadicam, sweeping'},
+    {label:'Night Approach',fuqua:'High-contrast, shadows',mann:'Available light only',bruck:'Stylized neon + haze'},
+    {label:'Violence Style',fuqua:'Sudden, ugly, real',mann:'Hyper-real, aftermath',bruck:'Choreographed rhythm'},
+    {label:'Actor Prep',fuqua:'Location immersion',mann:'Tactical bootcamp',bruck:'Star-building coaching'},
+    {label:'Research',fuqua:'Community embedding',mann:'9-month ride-alongs',bruck:'Expert consultants'},
+    {label:'Sound Design',fuqua:'Layered ambient',mann:'Minimal score, real',bruck:'Score-driven, impact'},
+    {label:'Color Grade',fuqua:'Amber days, cold nights',mann:'Digital blue-silver',bruck:'Saturated, punchy'},
+    {label:'Editing Pace',fuqua:'Long takes, patient',mann:'Real-time blocking',bruck:'Fast cuts, rhythmic'},
+    {label:'Best For',fuqua:'E6 (Jax death), E3',mann:'E1 (cold open), E7',bruck:'E4 (nightclub), E8'}
+  ];
+
+  document.getElementById('dvCompare').innerHTML=`
+    <div class="dv-compare-col">
+      <div class="dv-compare-head" style="color:var(--orange)">Fuqua</div>
+      ${rows.map(r=>`<div class="dv-compare-row"><span class="cl">${r.label}</span><span class="cv">${r.fuqua}</span></div>`).join('')}
+    </div>
+    <div class="dv-compare-col">
+      <div class="dv-compare-head" style="color:var(--blue)">Mann</div>
+      ${rows.map(r=>`<div class="dv-compare-row"><span class="cl">${r.label}</span><span class="cv">${r.mann}</span></div>`).join('')}
+    </div>
+    <div class="dv-compare-col">
+      <div class="dv-compare-head" style="color:var(--yellow)">Bruckheimer</div>
+      ${rows.map(r=>`<div class="dv-compare-row"><span class="cl">${r.label}</span><span class="cv">${r.bruck}</span></div>`).join('')}
+    </div>
+  `;
+}
+
+// Init
+renderChars();
+renderSTC();
+renderSTCSummary();
+renderRealLocs();
+renderVillainPyramid();
+renderVillainProfiles();
+renderVillainReal();
+renderArcGraph();
+renderDirectorVision();
+renderDirectorCompare();
+
+// ========== WRITING STYLE BIBLE ==========
+function renderWriteStyle(){
+  const techniques=[
+    {cls:'sheridan',title:'Economical Action Lines',sub:'Sheridan Core Principle',
+     rule:'One sentence. One image. No elaboration. If the reader can see it in their mind, stop writing. Sheridan never uses two sentences where one will do.',
+     example:'"Water the color of gun oil."\n"The entire house is a tomb."\n"The apartment is empty. But not abandoned."'},
+    {cls:'sheridan',title:'"Beat." As Pacing Device',sub:'Sheridan Rhythm Control',
+     rule:'The word "Beat." on its own line creates a tactical pause. Use it before revelations, after questions that won\'t be answered, and when silence says more than dialogue. Maximum 5-6 per episode.',
+     example:'DORSEY\nDid you access the federal immigration database?\n\n<em>Beat.</em>\n\nMARCUS\nI made inquiries through appropriate channels.'},
+    {cls:'sheridan',title:'Dialogue Through Omission',sub:'Sheridan Character Method',
+     rule:'Characters reveal themselves by what they don\'t say. The most important information is never spoken directly. If a character explains their motivation, rewrite the scene.',
+     example:'DORSEY\nAnd the dead man?\n\nMARCUS looks at him.\n\nDORSEY\n<em>What dead man?</em>\n\n// The silence IS the scene.'},
+    {cls:'sheridan',title:'Information Withheld',sub:'Sheridan Tension Architecture',
+     rule:'The protagonist discovers alongside the audience. Never give Marcus information the audience doesn\'t have. Let confusion be the engine. Just like Macy in Sicario — she never knows the full plan.',
+     example:'Marcus calls a number. A woman answers.\nShe doesn\'t speak. Just breathing.\nIn the background: machinery. Industrial.\nA truck backing up. Beeping.\n<em>She hangs up.</em>\n// We know as much as Marcus. No more.'},
+    {cls:'sheridan',title:'Violence As Consequence',sub:'Sheridan Action Philosophy',
+     rule:'Show the result, not the act. The bayou body. The photograph of a dead man. The aftermath. Let the audience imagine the violence — what they imagine is always worse than what you show. When violence IS shown, make it sudden and over fast.',
+     example:'A body face-down in mud. Male. Hispanic.\nGunshot to the back of the head. Close range.\n<em>No wallet, no phone, no jewelry.</em>\nSomebody cleaned him before they dumped him.'},
+    {cls:'sheridan',title:'The System As Antagonist',sub:'Sheridan Thematic Engine',
+     rule:'The real enemy is never one person — it\'s the machine. Dorsey isn\'t corrupt; he\'s squeezed. The task force isn\'t help; it\'s a mechanism of control. Power doesn\'t need to threaten when it can simply reclassify.',
+     example:'DORSEY\nThere\'s a task force being assembled. Federal.\nThe whole thing is being handled at a level\nabove this office.\n\nMARCUS\nBy who?\n\nDORSEY\n<em>By people who don\'t answer to me\nand definitely don\'t answer to you.</em>'},
+    {cls:'fuqua-s',title:'Street-Level Camera',sub:'Fuqua Visual Language',
+     rule:'Handheld. Close. Sweating. The camera should feel like it\'s standing next to Marcus in the Gulfton apartment. We smell the hot plate. We feel the humid stairwell. Fuqua\'s Training Day approach: the city is a character with skin.',
+     example:'Locations: Gulfton apartments. Bayou crime scene.\nHarrisburg stakeout. Third Ward taqueria.\n<em>The camera is always at eye level.\nNever above. Never omniscient.</em>'},
+    {cls:'mann-s',title:'Digital Nocturnal',sub:'Mann Visual Language',
+     rule:'Night scenes shot with available light + LED accents. The city at night is all glass and reflection. Mann\'s Collateral/Heat approach: neon on wet asphalt, fluorescent spill through warehouse doors, the Houston skyline catching pink dawn.',
+     example:'The warehouse fluorescent spills out —\n<em>blue-white, industrial.</em>\nMarcus in shadow. The light on the people\nstepping out of the van.\nReflection of red and blue across bayou water.'},
+    {cls:'bruck-s',title:'Scale As Context',sub:'Bruckheimer Production Value',
+     rule:'Establish the economic geography. Aerial shots connecting Gulfton to River Oaks. The Port of Houston at scale. Dom\'s residence vs. Marcus\'s apartment. The gap between wealth and poverty IS the story — show it in the frame.',
+     example:'Three Houston neighborhoods intercut:\n<em>Gulfton: satellite dishes, laundry on balconies.\nThird Ward: gentrification cranes, corner stores closing.\nRiver Oaks: gates, whispered wealth, linen.</em>\nThree economies about to collide.'}
+  ];
+
+  let html='<div class="ws-grid">';
+  techniques.forEach(t=>{
+    html+=`<div class="ws-card glass glass-sm ${t.cls}">
+      <h4>${t.title}</h4>
+      <div class="ws-sub">${t.sub}</div>
+      <div class="ws-rule">${t.rule}</div>
+      <div class="ws-example">${t.example.replace(/\n/g,'<br>')}</div>
+    </div>`;
+  });
+  html+='</div>';
+  document.getElementById('wsCards').innerHTML=html;
+
+  // BEFORE/AFTER COMPARISON
+  const comparisons=[
+    {bad:'Marcus drove through the neighborhood, thinking about how much it had changed over the years and feeling nostalgic for the way things used to be.',
+     good:'Marcus drives through Third Ward. New construction. Coffee shops. For lease signs on old corner stores.'},
+    {bad:'KD was tempted by the offer. He knew he shouldn\'t take it, but sixty thousand dollars was a lot of money and the work sounded simple enough.',
+     good:'His phone buzzes. "The offer stands. 48 hours. — MK"<br>He deletes the message. Goes back to the bag.<br>But his rhythm is different now.'},
+    {bad:'"I\'m really scared about what\'s happening with this case," Marcus said to KD. "I think there are people in the department who are protecting the cartel."',
+     good:'MARCUS<br>Something\'s wrong with the department. That was coordinated. That was too clean.<br><br>// Let the audience connect the dots.'},
+    {bad:'The warehouse was being used for human trafficking. Three women and one man were forced out of a van at gunpoint and marched inside by armed guards.',
+     good:'People step out. Three women. One man. They move with the stiffness of people who\'ve been inside a vehicle too long. Or people who\'ve learned that moving too fast gets you hit.'},
+    {bad:'Rosa was afraid to tell Marcus what she knew, but she could see he was desperate and she decided to help him despite the danger.',
+     good:'Rosa\'s hand stops. Just for a moment. Long enough.'}
+  ];
+
+  let chtml='<div class="ws-compare glass">';
+  chtml+='<div class="ws-compare-col"><div class="ws-compare-head bad">CONVENTIONAL (Avoid)</div>';
+  comparisons.forEach(c=>{chtml+=`<div class="ws-compare-line">${c.bad}</div>`;});
+  chtml+='</div><div class="ws-compare-col"><div class="ws-compare-head good">SHERIDAN STYLE (Use)</div>';
+  comparisons.forEach(c=>{chtml+=`<div class="ws-compare-line">${c.good}</div>`;});
+  chtml+='</div></div>';
+  document.getElementById('wsCompare').innerHTML=chtml;
+
+  // EPISODE STYLE MAP
+  const epMap=[
+    {num:'EP 01',title:'Third Ward',style:'<strong>Sheridan:</strong> Cold open into action. Withhold context. "Beat." before the container opens. Violence is the discovery, not the act.<br><strong>Fuqua:</strong> Handheld port sequence. Night sweat. Industrial shadows.<br><strong>Mann:</strong> Marcus driving dawn streets — neon turning off, glass catching first light.'},
+    {num:'EP 02',title:'Point of Entry',style:'<strong>Sheridan:</strong> Bayou body as consequence. Illegal database search as procedural tension. "What dead man?" as the fulcrum line.<br><strong>Mann:</strong> Warehouse stakeout — fluorescent spill, digital night. The 11:42 PM surveillance sequence.<br><strong>Bruckheimer:</strong> Three-neighborhood montage establishing economic geography.'},
+    {num:'EP 03',title:'Old Money',style:'<strong>Sheridan:</strong> Dom/Marcus history through omission. Montrose restaurant — two men who know each other talking around the thing they both know.<br><strong>Bruckheimer:</strong> River Oaks opulence contrasted with Third Ward demolition sites.<br><strong>Mann:</strong> Digital surveillance of real estate records. Screen glow on KD\'s face.'},
+    {num:'EP 04',title:'Midtown',style:'<strong>Sheridan:</strong> Controlled buy gone wrong. Sudden violence. The cover blown — by who? Information withheld.<br><strong>Fuqua:</strong> Nightclub chaos. Handheld gunfight. Close-quarters. The Training Day energy.<br><strong>Mann:</strong> Midtown neon. The shootout through reflective glass. Miami Vice DNA.'},
+    {num:'EP 05',title:'The Network',style:'<strong>Sheridan:</strong> Investigation montage — but procedural, not cinematic. Real police work. Following paper. Dead ends.<br><strong>All three directors:</strong> Triptych structure — Marcus (streets/Fuqua), KD (money trail/Mann), Torres (federal/Bruckheimer).'},
+    {num:'EP 06',title:'Third Ward (Reprise)',style:'<strong>Sheridan:</strong> Jax dies offscreen. Body discovered. Violence as absence — we never see the murder, only the aftermath.<br><strong>Fuqua:</strong> Bayou recovery. Rain. Marcus standing over the body of someone he was supposed to protect.<br><strong>Mann:</strong> KD alone in the car. Windshield reflections. The silence of a decision being made.'},
+    {num:'EP 07',title:'Point Break',style:'<strong>Sheridan:</strong> Dom\'s monologue — the villain makes sense. "Old Houston was dead." Moral ambiguity. Like Alejandro: sympathetic AND monstrous.<br><strong>Fuqua:</strong> Third Ward development site confrontation. Dust. Cranes. Physical threat.<br><strong>Bruckheimer:</strong> The scope of what Dom has built. The aerial pullback showing how much of the city he controls.'},
+    {num:'EP 08',title:'The Slab',style:'<strong>Sheridan:</strong> Open ending. No neat resolution. Like Sicario — the system continues. Marcus and Maya. The choice is made but the consequences haven\'t landed.<br><strong>Mann:</strong> Final image: driving through Third Ward at dusk. The city continues. The slabs still rolling.<br><strong>All three:</strong> The last shot earns every technique used before it.'}
+  ];
+
+  let ehtml='<div class="ws-ep-map glass"><h3>Episode <span>Style Map</span></h3>';
+  epMap.forEach(e=>{
+    ehtml+=`<div class="ws-ep-row"><div class="ws-ep-num">${e.num}<br><span style="font-size:9px;color:var(--text3);letter-spacing:1px">${e.title}</span></div><div class="ws-ep-text">${e.style}</div></div>`;
+  });
+  ehtml+='</div>';
+  document.getElementById('wsEpMap').innerHTML=ehtml;
+}
+renderWriteStyle();
+
+// ========== SCRIPTS TAB ==========
+const scriptMeta=[
+  {ep:1,title:"Third Ward",file:"pilot",pages:"1-20",scenes:13,status:"Complete",
+   acts:"Port bust gone wrong. Trafficking victim. Family threatened.",
+   keyScenes:["Port container search — 30 kilos + trafficking victim","Security stands Marcus & KD down","Jax at the taqueria — someone's talking","Maya pickup — the father/daughter distance","KD at boxing gym — Kline's offer planted","Jax panics at industrial area — body in bayou photo","CLIFFHANGER: Photo of Maya left in Marcus's apartment"],
+   actionBeats:"Cold open raid, armed security standoff, Jax's midnight meeting, apartment invasion",
+   tone:"Establishment. Slow burn to gut punch."},
+  {ep:2,title:"Point of Entry",file:"ep2",pages:"1-25",scenes:13,status:"Complete",
+   acts:"Bayou body. Warehouse discovered. The system closes ranks.",
+   keyScenes:["Buffalo Bayou body discovery — immigration tattoo","Illegal database search — Rafael Ochoa identified","Gulfton apartment — Flores & Associates card found","Dorsey shuts investigation down — 'What dead man?'","KD reveals Kline/Cruz connection","Rosa gives up the Harrisburg warehouse location","Marcus stakeout — witnesses human trafficking live"],
+   actionBeats:"Crime scene tension, database hack, Dorsey confrontation, midnight warehouse surveillance",
+   tone:"Investigation. Procedural dread building."},
+  {ep:3,title:"Old Money",file:"ep3",pages:"1-20",scenes:12,status:"Complete",
+   acts:"Marcus and Dom's history. Car chase. Dead IA detective.",
+   keyScenes:["Property records reveal Dom Cruz connection","Montrose restaurant — Marcus confronts Dom face to face","Dom reveals he knows about Maya — subtle threat","CAR CHASE: Marcus tails Flores truck, run off the road","Nina Vega autopsy reveal — Ochoa was tortured, cartel-level","Dorsey gets a call — leaves HPD shaken","CLIFFHANGER: Second body found — HPD Internal Affairs detective"],
+   actionBeats:"Restaurant confrontation, car chase through East End, car flip, dead cop discovery",
+   tone:"History colliding with present. Velocity increasing."},
+  {ep:4,title:"Midtown",file:"ep4",pages:"1-20",scenes:14,status:"Complete",
+   acts:"THE BIG SHOOTOUT. Cover blown. Mole identified.",
+   keyScenes:["DEA Agent Torres arrives — culture clash with Houston PD","Controlled buy setup at Midtown nightclub","NIGHTCLUB SHOOTOUT — cartel ambush, full firefight","KD saves civilian — military room-clearing on display","Torres discovers Frank Silva as the mole","Dom watches from distance — he orchestrated the test","Jax calls — cartel knows their names, 48-hour clock","CLIFFHANGER: Package for KD — surveillance photos of him with Kline"],
+   actionBeats:"Nightclub shootout (200 people, broken glass, multiple shooters), KD tactical response, cover blown chaos",
+   tone:"MAXIMUM ACTION. The episode that pops."},
+  {ep:5,title:"The Network",file:"ep5",pages:"1-20",scenes:11,status:"Complete",
+   acts:"Racing the clock. Gentrification IS the laundering. Silva exposed.",
+   keyScenes:["Investigation montage — streets, money trail, federal angles","KD discovers gentrification = money laundering operation","Marcus confronts Lt. Silva in HPD parking garage","Silva's defense: 'What do you build, Marcus?'","CHASE: Construction site — scaffolding, rebar, Marcus barely escapes","Torres tries Rosa's taqueria — culture clash comedy","KD's 48-hour deadline from Kline expires","CLIFFHANGER: Jax calls for help. Marcus arrives. Blood. 'THE CLOCK STOPS WHEN WE SAY'"],
+   actionBeats:"Chop shop roughing, informant chase, Silva standoff, construction site pursuit on foot",
+   tone:"Momentum. Every thread tightening."},
+  {ep:6,title:"Third Ward (Reprise)",file:"ep6",pages:"1-20",scenes:12,status:"Complete",
+   acts:"Jax is dead. Marcus breaks. KD goes under.",
+   keyScenes:["Marcus tears through Third Ward — kicking doors, unhinged","JAX FOUND DEAD — bayou parallel to Rafael Ochoa","MARCUS BREAKS — Billy Sorrells dramatic showcase","Badge and gun surrendered — Marcus suspended","KD alone in car — longest silence in the series — calls Kline: 'I'm in'","Dom's men trash Rosa's taqueria — she doesn't flinch","Nina Vega: third body connected to Flores","CLIFFHANGER: Dom calls Marcus directly — 'Come have dinner with me'"],
+   actionBeats:"Door-kicking rampage, body discovery, taqueria attack, Rosa's defiance",
+   tone:"Emotional devastation. The gut punch episode."},
+  {ep:7,title:"Point Break",file:"ep7",pages:"1-22",scenes:14,status:"Complete",
+   acts:"Off-book. Dom's philosophy. KD shoots first.",
+   keyScenes:["Dom's dinner — Sicario-style civilized violence and philosophy","'Old Houston was dying. I built the new one.'","KD inside Dom's operation as double agent","KD VS. THREE — brutal fight, military training unleashed","Hidden floor beneath development site — trafficking victims found","Construction site standoff — Dom, Marcus, armed men","KD shoots Dom's bodyguard — firefight erupts","Dom escapes. Marcus and KD have crossed every line.","CLIFFHANGER: Torres calls — 'Dom walked into federal. He's giving them YOU.'"],
+   actionBeats:"3-on-1 fight sequence, construction site firefight, double agent extraction, Dom escape",
+   tone:"Full rogue. Every line crossed. No going back."},
+  {ep:8,title:"The Slab",file:"ep8",pages:"1-28",scenes:16,status:"Complete",
+   acts:"FINALE. Warehouse assault. Ledger found. Season 2 hook.",
+   keyScenes:["Marcus and KD are fugitives — one night to end it","Dorsey's final loyalty: 'They're coming at dawn'","Harrisburg warehouse — KD cracks Dom's encrypted ledger","The ledger proves EVERYTHING: trafficking, laundering, HPD corruption, state-level","DOM'S MEN ASSAULT THE WAREHOUSE — full firefight","KD shot for real — Marcus carries him out","Torres arrives with federal cavalry — chose the right side","Dom arrested: 'I'm the middle, Marcus. Not the top.'","Marcus visits Maya — emotional truth scene","KD in hospital: 'So... we're fired?' 'The hours sucked anyway.'","FINAL IMAGE: Third Ward at dusk. Cranes. Slabs rolling.","SEASON 2 HOOK: Governor's office calls about the ledger"],
+   actionBeats:"Warehouse assault, full firefight, KD shot, Torres cavalry arrival, Dom takedown",
+   tone:"EVERYTHING COLLIDES. The finale that demands Season 2."}
+];
+
+function renderScriptNav(){
+  const nav=document.getElementById('scrNav');
+  let h='';
+  scriptMeta.forEach((s,i)=>{
+    h+=`<div class="scr-btn" data-ep="${i}" onclick="loadScript(${i})">
+      EP ${s.ep}<span class="scr-ep">${s.title}</span>
+    </div>`;
+  });
+  nav.innerHTML=h;
+}
+
+function loadScript(idx){
+  const s=scriptMeta[idx];
+  document.querySelectorAll('.scr-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.scr-btn[data-ep="${idx}"]`).classList.add('active');
+
+  const viewer=document.getElementById('scrViewer');
+  let h=`<h1>Episode ${s.ep}: ${s.title}</h1>`;
+  h+=`<div style="display:flex;gap:20px;flex-wrap:wrap;margin:12px 0 20px">`;
+  h+=`<div class="scr-stat"><div class="scr-stat-v">${s.scenes}</div><div class="scr-stat-l">Scenes</div></div>`;
+  h+=`<div class="scr-stat"><div class="scr-stat-v">${s.pages}</div><div class="scr-stat-l">Pages</div></div>`;
+  h+=`<div class="scr-stat"><div class="scr-stat-v">8-10 MIN</div><div class="scr-stat-l">Runtime</div></div>`;
+  h+=`</div>`;
+
+  h+=`<div style="font-size:13px;color:var(--text);margin-bottom:16px;font-weight:600">${s.acts}</div>`;
+  h+=`<div style="font-size:11px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:2px;font-weight:700">Tone</div>`;
+  h+=`<div style="font-size:12px;color:var(--text2);margin-bottom:16px">${s.tone}</div>`;
+
+  h+=`<div style="font-size:11px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:2px;font-weight:700">Action Beats</div>`;
+  h+=`<div style="font-size:12px;color:var(--orange);margin-bottom:16px">${s.actionBeats}</div>`;
+
+  h+=`<h2>Key Scenes</h2>`;
+  s.keyScenes.forEach((sc,i)=>{
+    const isAction=sc.includes('SHOOT')||sc.includes('CHASE')||sc.includes('FIGHT')||sc.includes('ASSAULT')||sc.includes('DEAD')||sc.includes('SHOT')||sc.includes('BREAKS')||sc.includes('CLIFFHANGER');
+    const isCliff=sc.includes('CLIFFHANGER');
+    let col=isCliff?'var(--red)':isAction?'var(--orange)':'var(--text2)';
+    h+=`<div style="display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid rgba(34,34,56,0.3)">`;
+    h+=`<div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--pink);min-width:24px">${String(i+1).padStart(2,'0')}</div>`;
+    h+=`<div style="font-size:12px;color:${col};line-height:1.5">${sc}</div>`;
+    h+=`</div>`;
+  });
+
+  // Navigation
+  h+=`<div style="display:flex;justify-content:space-between;margin-top:24px;padding-top:16px;border-top:1px solid var(--border)">`;
+  if(idx>0) h+=`<div class="scr-btn" onclick="loadScript(${idx-1})" style="font-size:12px">&larr; EP ${scriptMeta[idx-1].ep}: ${scriptMeta[idx-1].title}</div>`;
+  else h+=`<div></div>`;
+  if(idx<scriptMeta.length-1) h+=`<div class="scr-btn" onclick="loadScript(${idx+1})" style="font-size:12px">EP ${scriptMeta[idx+1].ep}: ${scriptMeta[idx+1].title} &rarr;</div>`;
+  else h+=`<div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--green);letter-spacing:2px;padding:10px">SEASON 1 COMPLETE</div>`;
+  h+=`</div>`;
+
+  viewer.innerHTML=h;
+  viewer.scrollTop=0;
+}
+
+renderScriptNav();
+
+</script>
+</body>
+</html>
