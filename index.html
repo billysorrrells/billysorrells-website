@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Billy Sorrells — Comedian, Actor, Producer | Official Site</title>
+<meta name="description" content="Billy Sorrells: Comedian, Actor, Writer, Filmmaker, Producer. Wild 'N Out, Black Jesus, Peaches, The Morning Hustle. 17M+ views. Book Billy for your next event.">
+<meta name="keywords" content="Billy Sorrells, comedian, Wild N Out, Black Jesus, Peaches, Houston comedy, stand up, actor, producer">
+<meta property="og:title" content="Billy Sorrells — Official Site">
+<meta property="og:description" content="Comedian, Actor, Producer. Wild 'N Out, Black Jesus, Peaches. 17M+ views.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family:'Compacta';
+  src:url('https://db.onlinewebfonts.com/t/00115af27ba4b5e60e6f94ab4aab72d5.woff2') format('woff2'),
+      url('https://db.onlinewebfonts.com/t/00115af27ba4b5e60e6f94ab4aab72d5.woff') format('woff');
+  font-weight:normal;font-style:normal;font-display:swap;
+}
+
+/* ===== RESET & VARS ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --obsidian:#06060a;--surface:#0a0a10;--elevated:#0f0f18;
+  --primary:#990033;--primary-d:#660022;
+  --gold:#d4af37;--gold-l:#e8d4a8;--gold-d:#9c7f45;--gold-gw:rgba(212,175,55,0.25);
+  --hot:#ff2d55;--maroon:rgba(153,0,51,0.15);
+  --glass:rgba(255,255,255,0.025);--glass-h:rgba(255,255,255,0.055);
+  --bdr:rgba(255,255,255,0.05);--bdr-h:rgba(255,255,255,0.1);
+  --cream:#f5f0e8;--muted:#a09888;--faint:#5e584a;--dim:rgba(255,255,255,0.3);
+  --comp:'Compacta','Impact','Haettenschweiler','Anton',sans-serif;
+  --body:'Outfit',sans-serif;--serif:'Newsreader',serif;--mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--obsidian);color:var(--cream);font-family:var(--body);overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:default}
+::selection{background:rgba(153,0,51,0.3);color:#fff}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--obsidian)}::-webkit-scrollbar-thumb{background:rgba(153,0,51,0.3);border-radius:2px}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ===== PRELOADER ===== */
+#preloader{position:fixed;inset:0;z-index:999;background:var(--obsidian);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s,visibility .6s}
+#preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+.pl-word{font-family:var(--comp);font-size:clamp(60px,12vw,120px);line-height:.9;letter-spacing:.04em;text-transform:uppercase;overflow:hidden}
+.pl-word span{display:inline-block;transform:translateY(110%);opacity:0}
+.pl-word.w1 span{color:var(--cream)}
+.pl-word.w2 span{color:var(--primary)}
+.pl-word.w3 span{color:var(--gold)}
+.pl-bar{width:200px;height:2px;background:rgba(255,255,255,0.06);margin-top:40px;border-radius:1px;overflow:hidden}
+.pl-fill{width:0%;height:100%;background:var(--primary);border-radius:1px}
+
+/* ===== GRAIN ===== */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.18}
+.grain::after{content:'';position:absolute;inset:-100%;width:300%;height:300%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");background-repeat:repeat}
+
+/* ===== ORBS ===== */
+.orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;will-change:transform}
+.o1{width:700px;height:700px;top:-200px;left:-200px;background:radial-gradient(circle,rgba(153,0,51,0.12),transparent);animation:of 22s ease-in-out infinite alternate}
+.o2{width:550px;height:550px;top:800px;right:-150px;background:radial-gradient(circle,rgba(212,175,55,0.1),transparent);animation:of 28s ease-in-out 3s infinite alternate-reverse}
+.o3{width:500px;height:500px;top:2200px;left:-10%;background:radial-gradient(circle,rgba(153,0,51,0.08),transparent);animation:of 24s ease-in-out 5s infinite alternate}
+.o4{width:600px;height:600px;top:3800px;right:-5%;background:radial-gradient(circle,rgba(212,175,55,0.08),transparent);animation:of 26s ease-in-out 2s infinite alternate-reverse}
+.o5{width:480px;height:480px;top:5400px;left:10%;background:radial-gradient(circle,rgba(153,0,51,0.07),transparent);animation:of 20s ease-in-out 4s infinite alternate}
+@keyframes of{0%{transform:translate(0,0) scale(1)}100%{transform:translate(60px,-50px) scale(1.2)}}
+
+/* ===== KEYFRAMES ===== */
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes lightSw{0%,100%{left:-30%}50%{left:100%}}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+
+/* ===== UTILITY ===== */
+.ll{height:1px;position:relative;overflow:hidden;background:rgba(153,0,51,0.08)}.ll::after{content:'';position:absolute;top:0;left:-30%;width:30%;height:100%;background:linear-gradient(90deg,transparent,rgba(153,0,51,0.5),transparent);animation:lightSw 3.5s ease-in-out infinite}
+.sec-pad{padding:clamp(60px,10vw,140px) clamp(24px,5vw,80px)}
+.max-w{max-width:1200px;margin:0 auto}
+.s-lbl{font-family:var(--comp);font-size:11px;color:var(--primary);letter-spacing:.22em;text-transform:uppercase}
+.s-ttl{font-family:var(--comp);font-size:clamp(36px,6vw,64px);line-height:.92;letter-spacing:.02em;text-transform:uppercase}
+
+/* GLOW CARD */
+.gc{position:relative;border-radius:20px;overflow:hidden}
+.gc::before{content:'';position:absolute;inset:-2px;border-radius:22px;z-index:0;background:conic-gradient(from 0deg,transparent,rgba(153,0,51,0.35),transparent,rgba(212,175,55,0.15),transparent);animation:spin 5s linear infinite;opacity:.35;transition:opacity .4s}
+.gc:hover::before{opacity:1}
+.gc-in{position:relative;z-index:1;border-radius:18px;background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--bdr);transition:all .3s}
+.gc:hover .gc-in{background:var(--glass-h);border-color:var(--bdr-h)}
+
+/* SHIMMER BTN */
+.btn-p{position:relative;overflow:hidden;border:none;cursor:pointer;background:linear-gradient(135deg,var(--primary),var(--primary-d));color:#fff;font-family:var(--body);font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:18px 52px;border-radius:10px;transition:all .3s}
+.btn-p:hover{box-shadow:0 0 40px rgba(153,0,51,0.3),0 8px 32px rgba(0,0,0,0.4);transform:translateY(-3px) scale(1.02)}
+.btn-p::after{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);transform:skewX(-20deg);transition:left .6s}.btn-p:hover::after{left:120%}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-d));color:#000}
+.btn-gold:hover{box-shadow:0 0 40px var(--gold-gw),0 8px 32px rgba(0,0,0,0.4)}
+.btn-s{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;border:1px solid var(--bdr);background:transparent;color:var(--muted);font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:10px;cursor:pointer;transition:all .3s}
+.btn-s:hover{border-color:var(--bdr-h);color:var(--cream);background:rgba(255,255,255,0.02)}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:0 clamp(20px,4vw,60px);height:72px;display:flex;align-items:center;justify-content:space-between;transition:all .4s;transform:translateY(-100%)}
+nav.show{transform:translateY(0)}
+nav.solid{background:rgba(6,6,10,0.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--bdr)}
+.n-logo{font-family:var(--comp);font-size:18px;letter-spacing:.05em}.n-logo-first{color:var(--cream)}.n-logo-last{color:var(--primary)}
+.n-links{display:flex;gap:32px}
+.n-links a{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;transition:color .2s;position:relative}
+.n-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--primary);transition:width .3s}
+.n-links a:hover{color:var(--cream)}.n-links a:hover::after{width:100%}
+.n-cta{padding:10px 28px;border:1px solid rgba(153,0,51,0.4);background:transparent;color:var(--primary);font-family:var(--body);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:8px;cursor:pointer;transition:all .3s}
+.n-cta:hover{background:rgba(153,0,51,0.08);border-color:var(--primary);box-shadow:0 0 20px rgba(153,0,51,0.15)}
+
+/* ===== HERO ===== */
+.hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:#111}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 20%;transform:scale(1.1);filter:brightness(.4) contrast(1.05)}
+.hero-ov{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(180deg,rgba(6,6,10,0.3) 0%,rgba(6,6,10,0) 30%,rgba(6,6,10,0.4) 60%,rgba(6,6,10,0.98) 100%),
+  linear-gradient(90deg,rgba(6,6,10,0.7) 0%,transparent 35%,transparent 65%,rgba(6,6,10,0.7) 100%)}
+.hero-c{position:relative;z-index:2;padding:0 clamp(24px,5vw,80px) clamp(60px,8vw,120px);width:100%}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px}
+.hero-kicker span{font-size:10px;font-weight:700;color:var(--primary);letter-spacing:.16em;text-transform:uppercase}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--primary);animation:pulse 1.5s infinite}
+.h-title{overflow:hidden}.h-title div{font-family:var(--comp);font-size:clamp(72px,14vw,180px);line-height:.85;letter-spacing:.02em;text-transform:uppercase;transform:translateY(110%)}
+.h-billy{color:var(--cream)}
+.h-sorrells{color:var(--primary);text-shadow:0 0 60px rgba(153,0,51,0.25)}
+.h-tagline{font-family:var(--comp);font-size:clamp(24px,4vw,48px);background:linear-gradient(135deg,var(--gold),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 40px rgba(212,175,55,0.2));transform:translateY(110%)}
+.hero-sub{font-family:var(--serif);font-size:clamp(14px,1.8vw,19px);font-weight:300;font-style:italic;color:var(--muted);margin-top:20px;max-width:520px;line-height:1.65;opacity:0;transform:translateY(20px)}
+.hero-credits{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;opacity:0;transform:translateY(20px)}
+.hero-credit{padding:8px 20px;border:1px solid rgba(153,0,51,0.3);border-radius:8px;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--faint);letter-spacing:.04em;transition:all .3s}
+.hero-credit:hover{border-color:var(--primary);color:var(--cream);background:rgba(153,0,51,0.05)}
+.hero-btns{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;opacity:0;transform:translateY(20px)}
+.scroll-arrow{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;animation:breathe 2.5s infinite;opacity:.4}
+
+/* ===== MARQUEE ===== */
+.mq{padding:32px 0;overflow:hidden;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+.mq-track{display:flex;width:max-content;animation:marquee 40s linear infinite}
+.mq-i{flex-shrink:0;padding:0 48px;font-family:var(--comp);font-size:22px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:20px;transition:color .3s}
+.mq-i:hover{color:var(--primary)}
+.mq-dot{width:5px;height:5px;border-radius:50%;background:var(--primary);opacity:.5}
+
+/* ===== BIO/MANIFESTO ===== */
+.mani-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.mani-img{border-radius:20px;overflow:hidden;position:relative}
+.mani-img img{width:100%;height:600px;object-fit:cover;object-position:center top;filter:brightness(.85) contrast(1.08)}
+.mani-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(6,6,10,0.5) 100%)}
+.mani-text h3{font-family:var(--comp);font-size:clamp(28px,4vw,44px);line-height:.95;letter-spacing:.02em;text-transform:uppercase;margin-bottom:24px}
+.mani-text p{font-size:15px;line-height:1.9;color:var(--muted);margin-bottom:16px}
+.mani-pull{font-family:var(--serif);font-size:clamp(20px,3vw,32px);font-style:italic;font-weight:300;color:var(--gold-l);line-height:1.35;margin:32px 0;padding-left:24px;border-left:2px solid rgba(153,0,51,0.4)}
+
+/* ===== STATS ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stat-card{padding:40px 20px;border-radius:18px;background:var(--glass);border:1px solid var(--bdr);transition:all .3s}
+.stat-card:hover{background:var(--glass-h);border-color:var(--bdr-h);transform:translateY(-4px)}
+.stat-num{font-family:var(--comp);font-size:clamp(32px,5vw,48px);color:var(--primary);letter-spacing:.02em}
+.stat-lbl{font-size:10px;font-weight:700;color:var(--faint);letter-spacing:.14em;text-transform:uppercase;margin-top:8px}
+
+/* ===== CREDITS ===== */
+.cred-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cred-card{padding:36px 28px;border-radius:18px;background:var(--glass);border:1px solid var(--bdr);transition:all .3s;position:relative;overflow:hidden}
+.cred-card:hover{background:var(--glass-h);border-color:var(--bdr-h);transform:translateY(-4px)}
+.cred-card.featured{background:rgba(153,0,51,0.06);border-color:rgba(153,0,51,0.2)}
+.cred-card.featured:hover{background:rgba(153,0,51,0.1)}
+.cred-net{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.cred-card.featured .cred-net{color:var(--primary)}
+.cred-title{font-family:var(--comp);font-size:26px;letter-spacing:.02em;text-transform:uppercase;margin-bottom:8px}
+.cred-role{font-size:12px;color:var(--muted);line-height:1.5}
+.cred-year{font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:12px;letter-spacing:.06em}
+
+/* ===== VIDEO SHOWCASE ===== */
+.vid-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.vid-card{border-radius:18px;overflow:hidden;position:relative;cursor:pointer;background:var(--glass);border:1px solid var(--bdr);transition:all .3s}
+.vid-card:hover{border-color:var(--bdr-h);transform:translateY(-4px)}
+.vid-thumb{position:relative;padding-top:56.25%;overflow:hidden;background:#111}
+.vid-thumb img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;filter:brightness(.7) contrast(1.05);transition:all .5s}
+.vid-card:hover .vid-thumb img{filter:brightness(.85) contrast(1.1);transform:scale(1.04)}
+.vid-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;border-radius:50%;background:rgba(153,0,51,0.9);display:flex;align-items:center;justify-content:center;transition:all .3s}
+.vid-card:hover .vid-play{background:var(--gold);transform:translate(-50%,-50%) scale(1.1)}
+.vid-info{padding:20px 24px}
+.vid-info h4{font-family:var(--comp);font-size:18px;letter-spacing:.02em;text-transform:uppercase;margin-bottom:4px}
+.vid-info p{font-size:12px;color:var(--muted)}
+
+/* ===== CHARACTERS ===== */
+.char-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.char-card{border-radius:20px;overflow:hidden;position:relative;cursor:default;transition:all .3s}
+.char-card:hover{transform:translateY(-10px);box-shadow:0 32px 64px rgba(0,0,0,0.75)}
+.char-img{height:480px;overflow:hidden;background:#111}
+.char-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.9);transition:all .5s}
+.char-card:hover .char-img img{filter:brightness(1.05) saturate(1.2) contrast(1.05);transform:scale(1.08)}
+.char-ov{position:absolute;bottom:0;left:0;right:0;padding:36px;background:linear-gradient(180deg,transparent 0%,rgba(6,6,10,0.97) 60%)}
+.char-name{font-family:var(--comp);font-size:38px;letter-spacing:.03em;text-transform:uppercase;line-height:1}
+.char-desc{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.6}
+.char-stat{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:12px;letter-spacing:.09em;opacity:.95}
+
+/* ===== TOUR ===== */
+.sch-list{max-width:800px;margin:0 auto}
+.sch-item{display:flex;align-items:center;gap:24px;padding:24px 0;border-bottom:1px solid var(--bdr);transition:all .3s}
+.sch-item:hover{padding-left:8px}
+.sch-date{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--primary);min-width:100px;letter-spacing:.04em}
+.sch-info{flex:1}.sch-name{font-size:15px;font-weight:700;letter-spacing:-.3px}.sch-note{font-size:11px;color:var(--muted);margin-top:3px}
+.sch-time{font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap}
+.sch-badge{padding:5px 14px;border-radius:16px;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:rgba(153,0,51,0.08);border:1px solid rgba(153,0,51,0.25);color:var(--primary);white-space:nowrap}
+
+/* ===== GALLERY ===== */
+.gal-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:200px;gap:12px}
+.g-i{border-radius:16px;overflow:hidden;position:relative;cursor:pointer}
+.g-i img{width:100%;height:100%;object-fit:cover;filter:brightness(.75) contrast(1.05) saturate(.9);transition:all .6s cubic-bezier(.25,.46,.45,.94)}
+.g-i:hover img{filter:brightness(.95) contrast(1.1) saturate(1);transform:scale(1.04)}
+.g-i-ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(6,6,10,0.8) 100%);opacity:0;transition:opacity .4s;display:flex;align-items:flex-end;padding:20px}
+.g-i:hover .g-i-ov{opacity:1}
+.g-i-ov span{font-size:11px;font-weight:600;color:var(--cream);letter-spacing:.04em}
+.g1{grid-column:1/6;grid-row:1/3}.g2{grid-column:6/9;grid-row:1/2}.g3{grid-column:9/13;grid-row:1/3}
+.g4{grid-column:6/9;grid-row:2/3}.g5{grid-column:1/5;grid-row:3/4}.g6{grid-column:5/9;grid-row:3/5}
+.g7{grid-column:9/13;grid-row:3/4}.g8{grid-column:1/5;grid-row:4/5}
+
+/* ===== PRESS ===== */
+.press-row{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;margin-top:40px}
+.press-logo{padding:20px 32px;border-radius:14px;background:var(--glass);border:1px solid var(--bdr);font-family:var(--comp);font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);transition:all .3s;cursor:default}
+.press-logo:hover{background:var(--glass-h);border-color:var(--bdr-h);color:var(--cream);transform:translateY(-3px)}
+
+/* ===== STREAMING ===== */
+.stream-logos{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;margin-top:40px}
+.stream-logo{padding:20px 32px;border-radius:14px;background:var(--glass);border:1px solid var(--bdr);font-family:var(--comp);font-size:18px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);transition:all .3s;cursor:default}
+.stream-logo:hover{background:var(--glass-h);border-color:var(--bdr-h);color:var(--cream);transform:translateY(-3px)}
+
+/* ===== SOCIAL ===== */
+.social-row{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:32px}
+.social-link{width:48px;height:48px;border-radius:50%;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;transition:all .3s;cursor:pointer}
+.social-link:hover{background:var(--primary);border-color:var(--primary);transform:translateY(-3px)}
+.social-link svg{width:18px;height:18px;fill:none;stroke:var(--muted);stroke-width:1.5;transition:stroke .3s}
+.social-link:hover svg{stroke:var(--cream)}
+
+/* ===== CTA ===== */
+.cta-sec{text-align:center}
+.cta-wrap{padding:clamp(48px,8vw,80px) clamp(24px,4vw,56px);position:relative}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(153,0,51,0.04),transparent);pointer-events:none}
+.cta-ttl{font-family:var(--comp);font-size:clamp(48px,9vw,100px);line-height:.88;letter-spacing:.02em;text-transform:uppercase;position:relative}
+.cta-gold{background:linear-gradient(135deg,var(--gold),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cta-sub{font-family:var(--serif);font-size:clamp(14px,1.8vw,18px);font-style:italic;color:var(--muted);margin-top:20px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+/* ===== FOOTER ===== */
+footer{border-top:1px solid var(--bdr);padding:64px clamp(24px,5vw,80px) 40px}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;max-width:1200px;margin:0 auto}
+.ft-brand{font-family:var(--comp);font-size:32px;letter-spacing:.02em;text-transform:uppercase;line-height:.95}
+.ft-brand-first{color:var(--cream)}.ft-brand-last{color:var(--primary)}
+.ft-tagline{font-family:var(--serif);font-size:13px;font-style:italic;color:var(--faint);margin-top:12px;line-height:1.5}
+.ft-col-t{font-size:10px;font-weight:700;color:var(--faint);letter-spacing:.16em;text-transform:uppercase;margin-bottom:18px}
+.ft-col a{display:block;font-size:13px;color:var(--muted);margin-bottom:10px;transition:color .2s}.ft-col a:hover{color:var(--primary)}
+.ft-bottom{max-width:1200px;margin:40px auto 0;padding-top:24px;border-top:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.ft-copy{font-size:10px;color:var(--faint);letter-spacing:.04em}
+.ft-tag{font-family:var(--mono);font-size:8px;color:rgba(94,88,74,0.35);letter-spacing:.1em}
+
+/* ===== CURSOR SPOTLIGHT ===== */
+.cursor-spot{position:fixed;width:350px;height:350px;border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(circle,rgba(153,0,51,0.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .3s}
+
+/* ===== MAGNETIC BUTTON ===== */
+.btn-mag{transition:transform .2s cubic-bezier(.25,.46,.45,.94)}
+
+/* ===== 3D TILT CARDS ===== */
+.tilt-card{transform-style:preserve-3d;transition:transform .15s ease}
+.tilt-card .tilt-inner{transform:translateZ(30px)}
+
+/* ===== SPLIT HERO (Editorial) ===== */
+.hero-split{display:none;position:absolute;right:0;top:0;width:40%;height:100%;z-index:2;overflow:hidden}
+.hero-split img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(.9) contrast(1.05)}
+.hero-split::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--obsidian) 0%,transparent 15%,transparent 100%)}
+.hero-split::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 60%,var(--obsidian) 100%)}
+@media(min-width:1025px){.hero-split{display:block}}
+
+/* ===== TEXT SCRAMBLE ===== */
+.scramble{display:inline-block;cursor:default}
+
+/* ===== HORIZONTAL SCROLL GALLERY ===== */
+.hscroll-wrap{overflow:hidden;position:relative}
+.hscroll-track{display:flex;gap:16px;cursor:grab;user-select:none;padding:0 clamp(24px,5vw,80px);overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.hscroll-track::-webkit-scrollbar{display:none}
+.hscroll-track:active{cursor:grabbing}
+.hscroll-item{flex-shrink:0;width:clamp(280px,30vw,400px);height:clamp(350px,40vw,500px);border-radius:20px;overflow:hidden;position:relative}
+.hscroll-item img{width:100%;height:100%;object-fit:cover;filter:brightness(.75) contrast(1.05) saturate(.9);transition:all .5s}
+.hscroll-item:hover img{filter:brightness(.9) contrast(1.1) saturate(1);transform:scale(1.03)}
+.hscroll-item .h-ov{position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(180deg,transparent 0%,rgba(6,6,10,0.9) 100%);opacity:0;transition:opacity .3s}
+.hscroll-item:hover .h-ov{opacity:1}
+.hscroll-item .h-ov span{font-family:var(--comp);font-size:16px;letter-spacing:.02em;text-transform:uppercase}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .mani-grid{grid-template-columns:1fr;gap:40px}
+  .cred-grid{grid-template-columns:1fr 1fr}
+  .char-grid{grid-template-columns:1fr 1fr}
+  .vid-grid{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:repeat(6,1fr);grid-auto-rows:160px}
+  .g1{grid-column:1/4;grid-row:1/3}.g2{grid-column:4/7;grid-row:1/2}.g3{grid-column:4/7;grid-row:2/3}
+  .g4{grid-column:1/3;grid-row:3/4}.g5{grid-column:3/5;grid-row:3/4}.g6{grid-column:5/7;grid-row:3/5}
+  .g7{grid-column:1/4;grid-row:4/5}.g8{grid-column:4/7;grid-row:4/5}
+}
+@media(max-width:768px){
+  .mani-grid,.cred-grid,.char-grid,.vid-grid,.ft-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .gal-grid{grid-template-columns:1fr 1fr;grid-auto-rows:180px}
+  .g1,.g2,.g3,.g4,.g5,.g6,.g7,.g8{grid-column:auto;grid-row:auto}
+  .hero-c{padding:0 24px 60px}
+  nav{padding:0 16px}.n-links{display:none}
+  .stream-logos,.press-row{gap:16px}
+  .social-row{gap:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pl-word w1"><span>B</span><span>I</span><span>L</span><span>L</span><span>Y</span></div>
+  <div class="pl-word w2"><span>S</span><span>O</span><span>R</span><span>R</span><span>E</span><span>L</span><span>L</span><span>S</span></div>
+  <div class="pl-word w3"><span>C</span><span>O</span><span>M</span><span>E</span><span>D</span><span>Y</span></div>
+  <div class="pl-bar"><div class="pl-fill"></div></div>
+</div>
+
+<div class="grain"></div>
+<div class="cursor-spot" id="cursorSpot"></div>
+<div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="orb o4"></div><div class="orb o5"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="n-logo"><span class="n-logo-first">BILLY</span><span class="n-logo-last">SORRELLS</span></div>
+  <div class="n-links">
+    <a href="#about" class="scramble">About</a><a href="watch.html" class="scramble">Watch</a><a href="#credits" class="scramble">Credits</a><a href="#tour" class="scramble">Tour</a><a href="#gallery" class="scramble">Gallery</a><a href="#contact" class="scramble">Contact</a>
+  </div>
+  <button class="n-cta btn-mag" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book Billy</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img src="images/hero-establishing.jpg" alt="Billy Sorrells — Live Special Taping" loading="eager">
+  </div>
+  <div class="hero-ov"></div>
+  <div class="hero-split"><img src="images/headshot-blue-satin.png" alt="Billy Sorrells — Editorial Portrait" loading="eager"></div>
+  <div class="hero-c">
+    <div class="hero-kicker"><div class="hero-dot"></div><span>Comedian &bull; Actor &bull; Producer</span></div>
+    <div class="h-title"><div class="h-billy">Billy</div></div>
+    <div class="h-title"><div class="h-sorrells">Sorrells</div></div>
+    <div class="h-title"><div class="h-tagline">Making The World Laugh</div></div>
+    <p class="hero-sub">From Houston to Hollywood &mdash; comedian, actor, writer, filmmaker, producer. Wild 'N Out cast member, creator of viral sensation &ldquo;Peaches,&rdquo; and founder of Dirty Sexy Funny.</p>
+    <div class="hero-credits">
+      <div class="hero-credit">Wild 'N Out</div>
+      <div class="hero-credit">Black Jesus</div>
+      <div class="hero-credit">Peaches &bull; 17M+ Views</div>
+      <div class="hero-credit">Morning Hustle</div>
+      <div class="hero-credit">DSF</div>
+    </div>
+    <div class="hero-btns">
+      <a href="watch.html" class="btn-p btn-mag" style="display:inline-flex;align-items:center">Watch Now</a>
+      <a href="#contact" class="btn-s btn-mag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Book Billy</a>
+    </div>
+  </div>
+  <div class="scroll-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1" opacity=".5"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+</section>
+
+<!-- MARQUEE -->
+<section class="mq">
+  <div class="mq-track">
+    <div class="mq-i"><span class="mq-dot"></span>Wild 'N Out</div>
+    <div class="mq-i"><span class="mq-dot"></span>Black Jesus</div>
+    <div class="mq-i"><span class="mq-dot"></span>Peaches</div>
+    <div class="mq-i"><span class="mq-dot"></span>Morning Hustle</div>
+    <div class="mq-i"><span class="mq-dot"></span>Dirty Sexy Funny</div>
+    <div class="mq-i"><span class="mq-dot"></span>Roast Me</div>
+    <div class="mq-i"><span class="mq-dot"></span>Office Code</div>
+    <div class="mq-i"><span class="mq-dot"></span>Raised By Wolves</div>
+    <!-- Duplicate for seamless loop -->
+    <div class="mq-i"><span class="mq-dot"></span>Wild 'N Out</div>
+    <div class="mq-i"><span class="mq-dot"></span>Black Jesus</div>
+    <div class="mq-i"><span class="mq-dot"></span>Peaches</div>
+    <div class="mq-i"><span class="mq-dot"></span>Morning Hustle</div>
+    <div class="mq-i"><span class="mq-dot"></span>Dirty Sexy Funny</div>
+    <div class="mq-i"><span class="mq-dot"></span>Roast Me</div>
+    <div class="mq-i"><span class="mq-dot"></span>Office Code</div>
+    <div class="mq-i"><span class="mq-dot"></span>Raised By Wolves</div>
+  </div>
+</section>
+
+<!-- CHARACTERS / VIRAL -->
+<section class="sec-pad" data-reveal>
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:56px">
+      <div class="s-lbl" data-anim>Comedy Specials &amp; Characters</div>
+      <div class="s-ttl" data-anim style="margin-top:12px">Watch &amp; Stream</div>
+    </div>
+    <div class="char-grid">
+      <a href="https://www.youtube.com/watch?v=fXDpfhehb6I" target="_blank" class="char-card" data-anim>
+        <div class="char-img"><img src="https://img.youtube.com/vi/fXDpfhehb6I/maxresdefault.jpg" alt="Peaches - Billy Sorrells" loading="lazy"></div>
+        <div class="char-ov">
+          <div class="char-name">Peaches</div>
+          <div class="char-desc">Billy's most iconic character. Written by Lena Waithe, directed by Elijah &ldquo;EK&rdquo; Griffin. Southern sass meets viral comedy genius.</div>
+          <div class="char-stat">17M+ Views &bull; Jay Leno &bull; HuffPost &bull; NY Daily News</div>
+        </div>
+      </a>
+      <div class="char-card" data-anim>
+        <div class="char-img"><img src="images/gallery-red-portrait.jpg" alt="Toxic AF Special" loading="lazy" style="filter:brightness(.75) contrast(1.1) saturate(1.05)"></div>
+        <div class="char-ov">
+          <div class="char-name">Toxic AF</div>
+          <div class="char-desc">2024 comedy special. Raw, unfiltered stand-up streaming worldwide on Amazon, Apple TV, and Comedy Dynamics.</div>
+          <div class="char-stat">2024 Special &bull; Streaming Now</div>
+        </div>
+      </div>
+      <div class="char-card" data-anim>
+        <div class="char-img"><img src="images/gallery-commanding.jpg" alt="Love Them & Leave Them" loading="lazy"></div>
+        <div class="char-ov">
+          <div class="char-name">Love Them &amp; Leave Them</div>
+          <div class="char-desc">The next Billy Sorrells comedy special. Currently in production. Houston to the world.</div>
+          <div class="char-stat">Coming 2026 &bull; Special Taping</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- BIO / MANIFESTO -->
+<section class="sec-pad" id="about" data-reveal>
+  <div class="max-w"><div class="mani-grid">
+    <div class="mani-text">
+      <div class="s-lbl" data-anim style="margin-bottom:16px">The Story</div>
+      <h3 data-anim>From Houston<br>To Hollywood</h3>
+      <div class="ll" style="width:120px;margin:24px 0" data-anim></div>
+      <p data-anim>Billy Sorrells is a stand-up comedian, actor, and host. Starting his career in the digital space, Billy produced and starred in sketches with his character <strong>&ldquo;Peaches&rdquo;</strong> which grew to over <strong>17 million views</strong>. He created and starred in <strong>Office Code</strong> for BET, hosted Red Carpet coverage for BET Awards, and appeared in <strong>Black Jesus</strong> (Adult Swim), <strong>Laff Mobb&rsquo;s Laff Tracks</strong> (TruTV), and <strong>Black Card Revoked</strong> (BET).</p>
+      <p data-anim>Cast member on MTV&rsquo;s <strong>Wild &rsquo;N Out</strong> (Seasons 8 &amp; 14), series regular on <strong>Funniest Wins</strong> (TBS), and featured in his own half-hour special for Kevin Hart&rsquo;s LOL Network. He had a cameo in Travis Scott&rsquo;s &ldquo;Sicko Mode&rdquo; video (<strong>448M+ views</strong>) and Yo Gotti&rsquo;s &ldquo;Down in the DM&rdquo; (<strong>136M+ views</strong>).</p>
+      <div class="mani-pull" data-anim>&ldquo;Using the wisdom of his grandfather as a guide, Billy turned Houston comedy into a worldwide movement.&rdquo;</div>
+      <p data-anim>His 2024 comedy special <strong>&ldquo;Toxic AF&rdquo;</strong> streams on Amazon, Apple TV, and Comedy Dynamics. Today, Billy is the founder of <strong>Dirty Sexy Funny</strong>, Houston&rsquo;s premier comedy series streaming on Tubi, Apple TV, and Fox Soul. Represented by <strong>Innovative Artists</strong>, Los Angeles.</p>
+    </div>
+    <div class="gc" data-anim><div class="gc-in mani-img">
+      <img src="images/portrait-closeup.jpg" alt="Billy Sorrells" style="width:100%;height:600px;object-fit:cover;object-position:center top;filter:brightness(.85) contrast(1.08)" loading="lazy">
+    </div></div>
+  </div></div>
+</section>
+
+<!-- STATS -->
+<section class="sec-pad" data-reveal>
+  <div class="max-w"><div class="stats-grid">
+    <div class="stat-card" data-anim><div class="stat-num" data-target="17000000" data-suffix="M+" data-divide="1000000" data-decimals="0">0</div><div class="stat-lbl">YouTube Views</div></div>
+    <div class="stat-card" data-anim><div class="stat-num" data-target="584000000" data-suffix="M+" data-divide="1000000" data-decimals="0">0</div><div class="stat-lbl">Music Video Cameo Views</div></div>
+    <div class="stat-card" data-anim><div class="stat-num" data-target="251" data-suffix="+" data-divide="1" data-decimals="0">0</div><div class="stat-lbl">Podcast Episodes</div></div>
+    <div class="stat-card" data-anim><div class="stat-num" data-target="20" data-suffix="+" data-divide="1" data-decimals="0">0</div><div class="stat-lbl">Years Performing</div></div>
+  </div></div>
+</section>
+
+<!-- VIDEO SHOWCASE -->
+<section class="sec-pad" id="watch" data-reveal>
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:56px">
+      <div class="s-lbl" data-anim>Watch Billy</div>
+      <div class="s-ttl" data-anim style="margin-top:12px">Latest Content</div>
+    </div>
+    <div class="vid-grid">
+      <a href="https://www.youtube.com/watch?v=fXDpfhehb6I" target="_blank" class="vid-card" data-anim>
+        <div class="vid-thumb">
+          <img src="https://img.youtube.com/vi/fXDpfhehb6I/maxresdefault.jpg" alt="Sh*t Black Girls Say - Peaches" loading="lazy">
+          <div class="vid-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--cream)" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="vid-info"><h4>Peaches &mdash; Sh*t Black Girls Say</h4><p>17M+ views &bull; The viral sensation</p></div>
+      </a>
+      <a href="https://www.youtube.com/@billysorrells" target="_blank" class="vid-card" data-anim>
+        <div class="vid-thumb">
+          <img src="images/gallery-purple-beams.jpg" alt="Wild N Out Best Moments" loading="lazy" style="filter:brightness(.75) contrast(1.1) saturate(1.1)">
+          <div class="vid-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--cream)" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="vid-info"><h4>Wild 'N Out Best Moments</h4><p>Seasons 8 &amp; 14 &bull; Battles &amp; roasts</p></div>
+      </a>
+      <a href="https://www.youtube.com/@billysorrells" target="_blank" class="vid-card" data-anim>
+        <div class="vid-thumb">
+          <img src="images/gallery-neon-wide.jpg" alt="Toxic AF Comedy Special" loading="lazy" style="filter:brightness(.65) contrast(1.2) saturate(1.1)">
+          <div class="vid-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--cream)" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="vid-info"><h4>Toxic AF &mdash; Comedy Special</h4><p>2024 &bull; Amazon &bull; Apple TV &bull; Comedy Dynamics</p></div>
+      </a>
+      <a href="https://www.youtube.com/@DidYouMissMe" target="_blank" class="vid-card" data-anim>
+        <div class="vid-thumb">
+          <img src="images/gallery-blue-beams.jpg" alt="Did You Miss Me Podcast" loading="lazy" style="filter:brightness(.6) contrast(1.15) saturate(.9)">
+          <div class="vid-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--cream)" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="vid-info"><h4>Did You Miss Me Podcast</h4><p>251+ episodes &bull; 34.6K subscribers</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CREDITS -->
+<section class="sec-pad" id="credits" data-reveal>
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:56px">
+      <div class="s-lbl" data-anim>Television &bull; Film &bull; Digital</div>
+      <div class="s-ttl" data-anim style="margin-top:12px">Credits</div>
+    </div>
+    <div class="cred-grid">
+      <div class="cred-card featured" data-anim>
+        <div class="cred-net">MTV / VH1</div>
+        <div class="cred-title">Wild 'N Out</div>
+        <div class="cred-role">Cast Member &mdash; Seasons 8, 14+</div>
+        <div class="cred-year">2017 &mdash; Present</div>
+      </div>
+      <div class="cred-card" data-anim>
+        <div class="cred-net">Adult Swim</div>
+        <div class="cred-title">Black Jesus</div>
+        <div class="cred-role">Recurring Cast</div>
+        <div class="cred-year">2014 &mdash; 2019</div>
+      </div>
+      <div class="cred-card" data-anim>
+        <div class="cred-net">Syndicated Radio</div>
+        <div class="cred-title">The Morning Hustle</div>
+        <div class="cred-role">On-Air Personality</div>
+        <div class="cred-year">2019 &mdash; Present</div>
+      </div>
+      <div class="cred-card" data-anim>
+        <div class="cred-net">All Def Digital</div>
+        <div class="cred-title">Roast Me</div>
+        <div class="cred-role">Original Cast Member</div>
+        <div class="cred-year">2016 &mdash; 2018</div>
+      </div>
+      <div class="cred-card" data-anim>
+        <div class="cred-net">BET Digital</div>
+        <div class="cred-title">Office Code</div>
+        <div class="cred-role">Creator &amp; Star</div>
+        <div class="cred-year">2017</div>
+      </div>
+      <div class="cred-card" data-anim>
+        <div class="cred-net">YouTube</div>
+        <div class="cred-title">Did You Miss Me</div>
+        <div class="cred-role">Host &amp; Creator</div>
+        <div class="cred-year">251+ Episodes</div>
+      </div>
+      <div class="cred-card" data-anim>
+        <div class="cred-net">Comedy Dynamics</div>
+        <div class="cred-title">Toxic AF</div>
+        <div class="cred-role">Comedy Special &mdash; Amazon, Apple TV</div>
+        <div class="cred-year">2024</div>
+      </div>
+      <div class="cred-card" data-anim>
+        <div class="cred-net">TBS</div>
+        <div class="cred-title">Funniest Wins</div>
+        <div class="cred-role">Series Regular</div>
+        <div class="cred-year">2017</div>
+      </div>
+      <div class="cred-card" data-anim>
+        <div class="cred-net">Music Videos</div>
+        <div class="cred-title">Sicko Mode &amp; Down in the DM</div>
+        <div class="cred-role">Cameo &mdash; Travis Scott (448M) &bull; Yo Gotti (136M)</div>
+        <div class="cred-year">584M+ Combined Views</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- TOUR / UPCOMING SHOWS -->
+<section class="sec-pad" id="tour" data-reveal>
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:56px">
+      <div class="s-lbl" data-anim>Catch Billy Live</div>
+      <div class="s-ttl" data-anim style="margin-top:12px">Upcoming Shows</div>
+    </div>
+    <div class="sch-list">
+      <div class="sch-item" data-anim style="background:rgba(153,0,51,0.04);border:1px solid rgba(153,0,51,0.15);border-radius:16px;padding:28px 32px;margin-bottom:16px;border-bottom:none">
+        <div class="sch-date" style="font-size:13px;color:var(--gold)">TBA 2026</div>
+        <div class="sch-info"><div class="sch-name" style="color:var(--gold);font-size:18px">Love Them &amp; Leave Them</div><div class="sch-note">Billy Sorrells Comedy Special Taping &bull; The Hive, Houston, TX</div></div>
+        <span class="sch-badge" style="background:rgba(153,0,51,0.12);border-color:rgba(153,0,51,0.3);color:var(--primary)">Special Taping</span>
+        <div class="sch-time">7PM &amp; 9PM</div>
+      </div>
+      <div class="sch-item" data-anim><div class="sch-date">FEB 15</div><div class="sch-info"><div class="sch-name">The Improv</div><div class="sch-note">Houston, TX</div></div><div class="sch-time">8PM</div></div>
+      <div class="sch-item" data-anim><div class="sch-date">FEB 22</div><div class="sch-info"><div class="sch-name">Comedy Store</div><div class="sch-note">Los Angeles, CA</div></div><div class="sch-time">9PM</div></div>
+      <div class="sch-item" data-anim><div class="sch-date">MAR 8</div><div class="sch-info"><div class="sch-name">Punchline</div><div class="sch-note">Atlanta, GA</div></div><div class="sch-time">8PM</div></div>
+      <div class="sch-item" data-anim><div class="sch-date">MAR 20</div><div class="sch-info"><div class="sch-name">DSF Monthly Showcase</div><div class="sch-note">The Hive &bull; Houston, TX</div></div><div class="sch-time">7PM &amp; 9PM</div></div>
+      <div class="sch-item" data-anim><div class="sch-date">APR 17</div><div class="sch-info"><div class="sch-name">DSF Monthly Showcase</div><div class="sch-note">The Hive &bull; Houston, TX</div></div><div class="sch-time">7PM &amp; 9PM</div></div>
+    </div>
+    <div style="text-align:center;margin-top:40px" data-anim>
+      <button class="btn-p">View All Shows</button>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec-pad" id="gallery" data-reveal>
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:56px">
+      <div class="s-lbl" data-anim>Behind The Scenes</div>
+      <div class="s-ttl" data-anim style="margin-top:12px">Gallery</div>
+    </div>
+    <div class="gal-grid">
+      <div class="g-i g1" data-anim><img src="images/gallery-neon-wide.jpg" alt="Billy Sorrells — Neon Stage" loading="lazy"><div class="g-i-ov"><span>Special Taping &bull; Neon Stage</span></div></div>
+      <div class="g-i g2" data-anim><img src="images/gallery-blue-beams.jpg" alt="Billy Sorrells — Blue Light Beams" loading="lazy"><div class="g-i-ov"><span>Blue Light Beams</span></div></div>
+      <div class="g-i g3" data-anim><img src="images/gallery-red-portrait.jpg" alt="Billy Sorrells — Red Backdrop" loading="lazy"><div class="g-i-ov"><span>Dramatic Red &bull; Portrait</span></div></div>
+      <div class="g-i g4" data-anim><img src="images/gallery-seated.jpg" alt="Billy Sorrells — Seated Set" loading="lazy"><div class="g-i-ov"><span>Storytelling Moment</span></div></div>
+      <div class="g-i g5" data-anim><img src="images/gallery-animated.jpg" alt="Billy Sorrells — Animated" loading="lazy"><div class="g-i-ov"><span>Pure Energy</span></div></div>
+      <div class="g-i g6" data-anim><img src="images/gallery-dynamic.jpg" alt="Billy Sorrells — Dynamic Pose" loading="lazy"><div class="g-i-ov"><span>Full Send &bull; Dynamic</span></div></div>
+      <div class="g-i g7" data-anim><img src="images/gallery-purple-beams.jpg" alt="Billy Sorrells — Purple Stage Wash" loading="lazy"><div class="g-i-ov"><span>Purple &amp; Blue Stage Wash</span></div></div>
+      <div class="g-i g8" data-anim><img src="images/gallery-crowd.jpg" alt="Billy Sorrells — With Crowd" loading="lazy"><div class="g-i-ov"><span>Arm Out &bull; Crowd Energy</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HORIZONTAL SCROLL GALLERY -->
+<section class="sec-pad" data-reveal style="padding-bottom:40px">
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:40px">
+      <div class="s-lbl" data-anim>Drag to Explore</div>
+      <div class="s-ttl" data-anim style="margin-top:12px">The Reel</div>
+    </div>
+  </div>
+  <div class="hscroll-wrap">
+    <div class="hscroll-track" id="hscrollTrack">
+      <div class="hscroll-item"><img src="images/headshot-blue-satin.png" alt="Editorial — Blue Satin" loading="lazy"><div class="h-ov"><span>Editorial Portrait</span></div></div>
+      <div class="hscroll-item"><img src="images/gallery-red-portrait.jpg" alt="Red Backdrop" loading="lazy"><div class="h-ov"><span>Dramatic Red</span></div></div>
+      <div class="hscroll-item"><img src="images/gallery-animated.jpg" alt="Pure Energy" loading="lazy"><div class="h-ov"><span>Pure Energy</span></div></div>
+      <div class="hscroll-item"><img src="images/gallery-neon-wide.jpg" alt="Neon Stage" loading="lazy"><div class="h-ov"><span>Neon Script Stage</span></div></div>
+      <div class="hscroll-item"><img src="images/gallery-commanding.jpg" alt="Commanding" loading="lazy"><div class="h-ov"><span>Command The Room</span></div></div>
+      <div class="hscroll-item"><img src="images/gallery-dynamic.jpg" alt="Dynamic" loading="lazy"><div class="h-ov"><span>Full Send</span></div></div>
+      <div class="hscroll-item"><img src="images/gallery-purple-beams.jpg" alt="Purple Beams" loading="lazy"><div class="h-ov"><span>Stage Wash</span></div></div>
+      <div class="hscroll-item"><img src="images/gallery-gesture.jpg" alt="Gesture" loading="lazy"><div class="h-ov"><span>Red Backdrop Gesture</span></div></div>
+      <div class="hscroll-item"><img src="images/gallery-crowd.jpg" alt="Crowd Energy" loading="lazy"><div class="h-ov"><span>Crowd Connection</span></div></div>
+      <div class="hscroll-item"><img src="images/gallery-seated.jpg" alt="Storytelling" loading="lazy"><div class="h-ov"><span>Storytelling</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS / AS SEEN ON -->
+<section class="sec-pad" data-reveal>
+  <div class="max-w" style="text-align:center">
+    <div class="s-lbl" data-anim>As Seen On</div>
+    <div class="s-ttl" data-anim style="margin-top:12px">Press &amp; Media</div>
+    <div class="press-row">
+      <div class="press-logo" data-anim>MTV</div>
+      <div class="press-logo" data-anim>VH1</div>
+      <div class="press-logo" data-anim>Adult Swim</div>
+      <div class="press-logo" data-anim>BET</div>
+      <div class="press-logo" data-anim>HuffPost</div>
+      <div class="press-logo" data-anim>Jay Leno</div>
+      <div class="press-logo" data-anim>NY Daily News</div>
+      <div class="press-logo" data-anim>Complex</div>
+    </div>
+  </div>
+</section>
+
+<!-- STREAMING -->
+<section class="sec-pad" data-reveal>
+  <div class="max-w" style="text-align:center">
+    <div class="s-lbl" data-anim>Watch Everywhere</div>
+    <div class="s-ttl" data-anim style="margin-top:12px">Streaming Platforms</div>
+    <div class="stream-logos">
+      <div class="stream-logo" data-anim>YouTube</div>
+      <div class="stream-logo" data-anim>Tubi</div>
+      <div class="stream-logo" data-anim>Apple TV</div>
+      <div class="stream-logo" data-anim>Fox Soul</div>
+      <div class="stream-logo" data-anim>Roku</div>
+      <div class="stream-logo" data-anim>SiriusXM</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / BOOKING -->
+<section class="cta-sec sec-pad" id="contact" data-reveal>
+  <div class="max-w"><div class="gc"><div class="gc-in cta-wrap">
+    <div class="cta-glow"></div>
+    <div class="s-lbl" data-anim>Booking &amp; Inquiries</div>
+    <div class="cta-ttl" data-anim style="margin-top:12px">Book<br><span class="cta-gold">Billy</span></div>
+    <p class="cta-sub" data-anim>Available for comedy shows, corporate events, film &amp; TV, hosting, podcasts, and brand partnerships. Represented by Innovative Artists, Los Angeles.</p>
+    <div class="ll" style="width:200px;margin:32px auto" data-anim></div>
+    <div class="social-row" data-anim>
+      <a href="https://youtube.com/@billysorrells" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="var(--cream)" stroke="none"/></svg></a>
+      <a href="https://instagram.com/billysorrells" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://tiktok.com/@billysorrells" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg></a>
+      <a href="https://twitter.com/billysorrells" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M20 4l-6.768 6.768"/></svg></a>
+      <a href="https://facebook.com/billy.sorrells" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      <a href="https://imdb.com/name/nm5765934" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/></svg></a>
+    </div>
+    <div style="display:flex;gap:14px;justify-content:center;margin-top:32px;flex-wrap:wrap" data-anim>
+      <a href="mailto:bookbillysorrells@gmail.com" class="btn-p">Email Booking</a>
+      <a href="https://youtube.com/billysorrells" target="_blank" class="btn-s"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>Watch Free</a>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-grid">
+    <div><div class="ft-brand"><span class="ft-brand-first">Billy</span><br><span class="ft-brand-last">Sorrells</span></div><div class="ft-tagline">Comedian, Actor, Writer, Filmmaker, Producer. From Houston to Hollywood. Represented by Innovative Artists, Los Angeles.</div></div>
+    <div class="ft-col"><div class="ft-col-t">Shows</div><a href="#watch">Watch</a><a href="#credits">Credits</a><a href="#tour">Upcoming</a><a href="#gallery">Gallery</a></div>
+    <div class="ft-col"><div class="ft-col-t">Brands</div><a href="#">Dirty Sexy Funny</a><a href="#">RoastU</a><a href="#">Heckler Records</a><a href="https://billysorrells.bigcartel.com" target="_blank">Shop</a></div>
+    <div class="ft-col"><div class="ft-col-t">Contact</div><a href="mailto:bookbillysorrells@gmail.com">Booking</a><a href="mailto:billysorrells@gmail.com">General</a><a href="https://youtube.com/@billysorrells" target="_blank">YouTube</a><a href="https://instagram.com/billysorrells" target="_blank">Instagram</a></div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">&copy; 2026 Billy Sorrells / SMMS, Inc. All Rights Reserved. &bull; Innovative Artists, Los Angeles</div>
+    <div class="ft-tag">IOAS TAHOE 26.3 &bull; BILLY SORRELLS &bull; 40x PREMIUM BUILD</div>
+  </div>
+</footer>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ===== PRELOADER ===== */
+const plTl = gsap.timeline({onComplete:()=>{
+  document.getElementById('preloader').classList.add('done');
+  document.getElementById('nav').classList.add('show');
+  heroReveal();
+}});
+plTl.to('.pl-fill',{width:'100%',duration:1.8,ease:'power2.inOut'})
+  .to('.pl-word.w1 span',{y:0,opacity:1,stagger:.04,duration:.4,ease:'power3.out'},0.2)
+  .to('.pl-word.w2 span',{y:0,opacity:1,stagger:.04,duration:.4,ease:'power3.out'},0.5)
+  .to('.pl-word.w3 span',{y:0,opacity:1,stagger:.04,duration:.4,ease:'power3.out'},0.8)
+  .to('.pl-word span',{y:'-110%',opacity:0,stagger:.02,duration:.3,ease:'power2.in'},2.0)
+  .to('.pl-bar',{opacity:0,duration:.3},2.0);
+
+/* ===== HERO REVEAL ===== */
+function heroReveal(){
+  const tl=gsap.timeline();
+  tl.to('.h-billy',{y:0,duration:.8,ease:'power3.out'},0.2)
+    .to('.h-sorrells',{y:0,duration:.8,ease:'power3.out'},0.35)
+    .to('.h-tagline',{y:0,duration:.8,ease:'power3.out'},0.5)
+    .to('.hero-sub',{opacity:1,y:0,duration:.6,ease:'power2.out'},0.7)
+    .to('.hero-credits',{opacity:1,y:0,duration:.5,ease:'power2.out'},0.85)
+    .to('.hero-btns',{opacity:1,y:0,duration:.5,ease:'power2.out'},0.95);
+}
+
+/* ===== NAV SCROLL ===== */
+let lastScroll=0;
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY;
+  const nav=document.getElementById('nav');
+  if(s>100)nav.classList.add('solid'); else nav.classList.remove('solid');
+  if(s>lastScroll&&s>300)nav.classList.remove('show');
+  else nav.classList.add('show');
+  lastScroll=s;
+});
+
+/* ===== HERO PARALLAX ===== */
+if(document.querySelector('.hero-bg img')){
+  gsap.to('.hero-bg img',{
+    scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:1},
+    y:200,scale:1.15
+  });
+}
+
+/* ===== SECTION REVEALS ===== */
+document.querySelectorAll('[data-reveal]').forEach(sec=>{
+  const els=sec.querySelectorAll('[data-anim]');
+  if(els.length){
+    gsap.from(els,{
+      scrollTrigger:{trigger:sec,start:'top 80%',toggleActions:'play none none none'},
+      y:40,opacity:0,duration:.7,stagger:.06,ease:'power2.out'
+    });
+  }
+});
+
+/* ===== PARALLAX GALLERY IMAGES ===== */
+document.querySelectorAll('.g-i').forEach(item=>{
+  const img=item.querySelector('img');
+  if(img){
+    gsap.to(img,{
+      scrollTrigger:{trigger:item,start:'top bottom',end:'bottom top',scrub:1},
+      y:-30,ease:'none'
+    });
+  }
+});
+
+/* ===== COUNTER ANIMATION ===== */
+document.querySelectorAll('.stat-num').forEach(el=>{
+  const target=parseFloat(el.dataset.target);
+  const divide=parseFloat(el.dataset.divide)||1;
+  const decimals=parseInt(el.dataset.decimals)||0;
+  const suffix=el.dataset.suffix||'';
+  const obj={val:0};
+  gsap.to(obj,{
+    val:target,
+    duration:2,
+    ease:'power2.out',
+    scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'},
+    onUpdate:()=>{
+      const v=obj.val/divide;
+      el.textContent=(decimals>0?v.toFixed(decimals):Math.round(v))+suffix;
+    }
+  });
+});
+
+/* ===== MARQUEE PAUSE ON HOVER ===== */
+const mqTrack=document.querySelector('.mq-track');
+if(mqTrack){
+  mqTrack.addEventListener('mouseenter',()=>mqTrack.style.animationPlayState='paused');
+  mqTrack.addEventListener('mouseleave',()=>mqTrack.style.animationPlayState='running');
+}
+
+/* ===== CURSOR SPOTLIGHT ===== */
+const spot=document.getElementById('cursorSpot');
+if(spot&&window.innerWidth>768){
+  let mx=0,my=0,sx=0,sy=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+  (function animate(){
+    sx+=(mx-sx)*.08;sy+=(my-sy)*.08;
+    spot.style.left=sx+'px';spot.style.top=sy+'px';
+    requestAnimationFrame(animate);
+  })();
+  document.addEventListener('mouseenter',()=>spot.style.opacity='1');
+  document.addEventListener('mouseleave',()=>spot.style.opacity='0');
+}
+
+/* ===== MAGNETIC BUTTONS ===== */
+document.querySelectorAll('.btn-mag').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    const cx=r.left+r.width/2,cy=r.top+r.height/2;
+    const dx=(e.clientX-cx)*.18,dy=(e.clientY-cy)*.18;
+    btn.style.transform=`translate(${dx}px,${dy}px) scale(1.04)`;
+  });
+  btn.addEventListener('mouseleave',()=>{
+    btn.style.transform='translate(0,0) scale(1)';
+  });
+});
+
+/* ===== 3D TILT CARDS ===== */
+document.querySelectorAll('.stat-card, .cred-card, .char-card').forEach(card=>{
+  card.classList.add('tilt-card');
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    card.style.transform=`perspective(600px) rotateY(${x*8}deg) rotateX(${-y*8}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform='perspective(600px) rotateY(0) rotateX(0) translateY(0)';
+  });
+});
+
+/* ===== TEXT SCRAMBLE ON NAV HOVER ===== */
+const scrambleChars='!<>-_\\/[]{}#$%^&*()=+|;:,.?~';
+document.querySelectorAll('.scramble').forEach(el=>{
+  const orig=el.textContent;
+  let interval;
+  el.addEventListener('mouseenter',()=>{
+    let iteration=0;
+    clearInterval(interval);
+    interval=setInterval(()=>{
+      el.textContent=orig.split('').map((c,i)=>{
+        if(i<iteration)return orig[i];
+        return scrambleChars[Math.floor(Math.random()*scrambleChars.length)];
+      }).join('');
+      if(iteration>=orig.length)clearInterval(interval);
+      iteration+=1/2;
+    },30);
+  });
+  el.addEventListener('mouseleave',()=>{
+    clearInterval(interval);
+    el.textContent=orig;
+  });
+});
+
+/* ===== HORIZONTAL SCROLL DRAG ===== */
+const htrack=document.getElementById('hscrollTrack');
+if(htrack){
+  let isDown=false,startX,scrollLeft;
+  htrack.addEventListener('mousedown',e=>{
+    isDown=true;startX=e.pageX-htrack.offsetLeft;scrollLeft=htrack.scrollLeft;
+    htrack.style.cursor='grabbing';
+  });
+  htrack.addEventListener('mouseleave',()=>{isDown=false;htrack.style.cursor='grab'});
+  htrack.addEventListener('mouseup',()=>{isDown=false;htrack.style.cursor='grab'});
+  htrack.addEventListener('mousemove',e=>{
+    if(!isDown)return;
+    e.preventDefault();
+    const x=e.pageX-htrack.offsetLeft;
+    const walk=(x-startX)*2;
+    htrack.scrollLeft=scrollLeft-walk;
+  });
+  // Touch support
+  htrack.addEventListener('touchstart',e=>{startX=e.touches[0].pageX;scrollLeft=htrack.scrollLeft},{passive:true});
+  htrack.addEventListener('touchmove',e=>{
+    const x=e.touches[0].pageX;
+    htrack.scrollLeft=scrollLeft-(x-startX);
+  },{passive:true});
+  // Auto-scroll via GSAP
+  gsap.to(htrack,{
+    scrollTrigger:{trigger:htrack,start:'top 85%',toggleActions:'play none none none'},
+    scrollLeft:200,duration:1.5,ease:'power2.out'
+  });
+}
+
+/* ===== SMOOTH NAV LINKS ===== */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+});
+
+/* ===== VIDEO CARD CLICK (open YouTube) ===== */
+document.querySelectorAll('.vid-card').forEach(card=>{
+  card.style.cursor='pointer';
+});
+
+/* ===== GALLERY LIGHTBOX (simple overlay) ===== */
+(function(){
+  const lb=document.createElement('div');
+  lb.id='lightbox';
+  lb.style.cssText='position:fixed;inset:0;z-index:300;background:rgba(6,6,10,0.96);display:none;align-items:center;justify-content:center;cursor:zoom-out;opacity:0;transition:opacity .3s';
+  lb.innerHTML='<img style="max-width:90vw;max-height:90vh;border-radius:12px;box-shadow:0 0 80px rgba(153,0,51,0.2)" /><div style="position:absolute;top:24px;right:32px;font-family:var(--comp);font-size:24px;color:var(--muted);cursor:pointer">&times;</div>';
+  document.body.appendChild(lb);
+  const lbImg=lb.querySelector('img');
+  document.querySelectorAll('.g-i img, .hscroll-item img').forEach(img=>{
+    img.style.cursor='zoom-in';
+    img.addEventListener('click',()=>{
+      lbImg.src=img.src;lbImg.alt=img.alt;
+      lb.style.display='flex';
+      requestAnimationFrame(()=>lb.style.opacity='1');
+    });
+  });
+  lb.addEventListener('click',()=>{
+    lb.style.opacity='0';
+    setTimeout(()=>lb.style.display='none',300);
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&lb.style.display==='flex'){
+      lb.style.opacity='0';setTimeout(()=>lb.style.display='none',300);
+    }
+  });
+})();
+</script>
+</body>
+</html>
