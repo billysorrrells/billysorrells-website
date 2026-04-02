@@ -178,7 +178,7 @@ nav.solid{background:rgba(6,6,10,0.95);backdrop-filter:blur(24px);border-bottom:
 
 /* ===== CHARACTERS ===== */
 .char-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.char-card{border-radius:20px;overflow:hidden;position:relative;cursor:default;transition:all .3s}
+.char-card{border-radius:20px;overflow:hidden;position:relative;cursor:pointer;transition:all .3s}
 .char-card:hover{transform:translateY(-10px);box-shadow:0 32px 64px rgba(0,0,0,0.75)}
 .char-img{height:480px;overflow:hidden;background:#111}
 .char-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.9);transition:all .5s}
@@ -319,7 +319,7 @@ footer{border-top:1px solid var(--bdr);padding:64px clamp(24px,5vw,80px) 40px}
 <nav id="nav">
   <div class="n-logo"><span class="n-logo-first">BILLY</span><span class="n-logo-last">SORRELLS</span></div>
   <div class="n-links">
-    <a href="#about" class="scramble">About</a><a href="watch.html" class="scramble">Watch</a><a href="#credits" class="scramble">Credits</a><a href="#tour" class="scramble">Tour</a><a href="#gallery" class="scramble">Gallery</a><a href="#contact" class="scramble">Contact</a>
+    <a href="#about" class="scramble">About</a><a href="watch.html" class="scramble">Watch</a><a href="#credits" class="scramble">Credits</a><a href="#tour" class="scramble">Tour</a><a href="#gallery" class="scramble">Gallery</a><a href="#shop" class="scramble">Shop</a><a href="#contact" class="scramble">Contact</a>
   </div>
   <button class="n-cta btn-mag" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book Billy</button>
 </nav>
@@ -391,22 +391,22 @@ footer{border-top:1px solid var(--bdr);padding:64px clamp(24px,5vw,80px) 40px}
           <div class="char-stat">17M+ Views &bull; Jay Leno &bull; HuffPost &bull; NY Daily News</div>
         </div>
       </a>
-      <div class="char-card" data-anim>
+      <a href="https://www.amazon.com/s?k=Billy+Sorrells+Toxic+AF" target="_blank" class="char-card" data-anim>
         <div class="char-img"><img src="images/gallery-red-portrait.jpg" alt="Toxic AF Special" loading="lazy" style="filter:brightness(.75) contrast(1.1) saturate(1.05)"></div>
         <div class="char-ov">
           <div class="char-name">Toxic AF</div>
           <div class="char-desc">2024 comedy special. Raw, unfiltered stand-up streaming worldwide on Amazon, Apple TV, and Comedy Dynamics.</div>
           <div class="char-stat">2024 Special &bull; Streaming Now</div>
         </div>
-      </div>
-      <div class="char-card" data-anim>
+      </a>
+      <a href="#tour" class="char-card" data-anim>
         <div class="char-img"><img src="images/gallery-commanding.jpg" alt="Love Them & Leave Them" loading="lazy"></div>
         <div class="char-ov">
           <div class="char-name">Love Them &amp; Leave Them</div>
           <div class="char-desc">The next Billy Sorrells comedy special. Currently in production. Houston to the world.</div>
           <div class="char-stat">Coming 2026 &bull; Special Taping</div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -567,7 +567,7 @@ footer{border-top:1px solid var(--bdr);padding:64px clamp(24px,5vw,80px) 40px}
       <div class="sch-item" data-anim><div class="sch-date">APR 17</div><div class="sch-info"><div class="sch-name">DSF Monthly Showcase</div><div class="sch-note">The Hive &bull; Houston, TX</div></div><div class="sch-time">7PM &amp; 9PM</div></div>
     </div>
     <div style="text-align:center;margin-top:40px" data-anim>
-      <button class="btn-p">View All Shows</button>
+      <a href="https://www.eventbrite.com/o/billy-sorrells" target="_blank" class="btn-p">View All Shows</a>
     </div>
   </div>
 </section>
@@ -650,6 +650,47 @@ footer{border-top:1px solid var(--bdr);padding:64px clamp(24px,5vw,80px) 40px}
   </div>
 </section>
 
+
+<!-- MERCH / SHOP -->
+<section class="sec-pad" id="shop" data-reveal>
+  <div class="max-w" style="text-align:center">
+    <div class="s-lbl" data-anim>Official Merchandise</div>
+    <div class="s-ttl" data-anim style="margin-top:12px">The Shop</div>
+    <p style="color:var(--muted);max-width:560px;margin:20px auto 48px;font-size:15px;line-height:1.75" data-anim>Rep the brand. Shirts, hoodies, and more — straight from Houston to your doorstep.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:900px;margin:0 auto" data-anim>
+      <a href="https://billysorrells.bigcartel.com" target="_blank" style="display:block;background:var(--elevated);border:1px solid var(--bdr);border-radius:20px;padding:32px 24px;text-align:center;transition:all .3s;text-decoration:none;color:var(--cream)" onmouseover="this.style.borderColor='rgba(153,0,51,0.5)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--bdr)';this.style.transform='translateY(0)'">
+        <div style="width:80px;height:80px;background:rgba(153,0,51,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.86H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.86l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+        </div>
+        <div style="font-family:var(--comp);font-size:22px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px">Shirts</div>
+        <div style="color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px">Billy Sorrells Tees</div>
+        <span style="display:inline-block;background:var(--primary);color:#fff;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 24px;border-radius:8px">Buy Now</span>
+      </a>
+      <a href="https://billysorrells.bigcartel.com" target="_blank" style="display:block;background:var(--elevated);border:1px solid var(--bdr);border-radius:20px;padding:32px 24px;text-align:center;transition:all .3s;text-decoration:none;color:var(--cream)" onmouseover="this.style.borderColor='rgba(212,175,55,0.4)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--bdr)';this.style.transform='translateY(0)'">
+        <div style="width:80px;height:80px;background:rgba(212,175,55,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        </div>
+        <div style="font-family:var(--comp);font-size:22px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px">Hoodies</div>
+        <div style="color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px">Premium Fleece</div>
+        <span style="display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);border:1px solid rgba(212,175,55,0.3);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 24px;border-radius:8px">Buy Now</span>
+      </a>
+      <a href="https://billysorrells.bigcartel.com" target="_blank" style="display:block;background:var(--elevated);border:1px solid var(--bdr);border-radius:20px;padding:32px 24px;text-align:center;transition:all .3s;text-decoration:none;color:var(--cream)" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--bdr)';this.style.transform='translateY(0)'">
+        <div style="width:80px;height:80px;background:rgba(255,255,255,0.04);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--cream)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        </div>
+        <div style="font-family:var(--comp);font-size:22px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px">All Merch</div>
+        <div style="color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px">View Full Store</div>
+        <span style="display:inline-block;background:transparent;color:var(--cream);border:1px solid rgba(255,255,255,0.15);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 24px;border-radius:8px">Shop All ?</span>
+      </a>
+    </div>
+    <div style="margin-top:48px" data-anim>
+      <a href="https://billysorrells.bigcartel.com" target="_blank" class="btn-p btn-mag" style="display:inline-flex;align-items:center;gap:10px;font-size:13px;padding:18px 48px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.99-1.61L23 6H6"/></svg>
+        Shop All Merch at BigCartel
+      </a>
+    </div>
+  </div>
+</section>
 <!-- CTA / BOOKING -->
 <section class="cta-sec sec-pad" id="contact" data-reveal>
   <div class="max-w"><div class="gc"><div class="gc-in cta-wrap">
@@ -678,7 +719,7 @@ footer{border-top:1px solid var(--bdr);padding:64px clamp(24px,5vw,80px) 40px}
   <div class="ft-grid">
     <div><div class="ft-brand"><span class="ft-brand-first">Billy</span><br><span class="ft-brand-last">Sorrells</span></div><div class="ft-tagline">Comedian, Actor, Writer, Filmmaker, Producer. From Houston to Hollywood. Represented by Innovative Artists, Los Angeles.</div></div>
     <div class="ft-col"><div class="ft-col-t">Shows</div><a href="#watch">Watch</a><a href="#credits">Credits</a><a href="#tour">Upcoming</a><a href="#gallery">Gallery</a></div>
-    <div class="ft-col"><div class="ft-col-t">Brands</div><a href="#">Dirty Sexy Funny</a><a href="#">RoastU</a><a href="#">Heckler Records</a><a href="https://billysorrells.bigcartel.com" target="_blank">Shop</a></div>
+    <div class="ft-col"><div class="ft-col-t">Brands</div><a href="https://www.tubi.tv/series/dirty-sexy-funny" target="_blank">Dirty Sexy Funny</a><a href="#shop">RoastU</a><a href="#shop">Heckler Records</a><a href="https://billysorrells.bigcartel.com" target="_blank">Shop</a></div>
     <div class="ft-col"><div class="ft-col-t">Contact</div><a href="mailto:bookbillysorrells@gmail.com">Booking</a><a href="mailto:billysorrells@gmail.com">General</a><a href="https://youtube.com/@billysorrells" target="_blank">YouTube</a><a href="https://instagram.com/billysorrells" target="_blank">Instagram</a></div>
   </div>
   <div class="ft-bottom">
