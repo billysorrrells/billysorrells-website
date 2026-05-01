@@ -1,0 +1,36 @@
+{
+  "show": {
+    "name": "Did You Miss Me Podcast",
+    "host": "Billy Sorrells",
+    "tagline": "Comedy, culture, fatherhood, entertainment, and real conversations from Billy Sorrells.",
+    "youtubeChannelUrl": "https://www.youtube.com/@billysorrells",
+    "websiteUrl": "https://billysorrells.com/did-you-miss-me/"
+  },
+  "episodes": [
+    {
+      "id": "dymm-featured-001",
+      "title": "Featured Episode Placeholder",
+      "slug": "featured-episode-placeholder",
+      "season": 1,
+      "episode": 1,
+      "status": "needs_youtube_id",
+      "youtubeId": "",
+      "thumbnail": "",
+      "runtime": "",
+      "publishedDate": "",
+      "category": "Comedy Conversation",
+      "tags": ["Billy Sorrells", "Did You Miss Me Podcast", "Black comedy", "Houston comedy", "stand-up comedy"],
+      "shortDescription": "Replace this with the actual episode hook pulled from YouTube, transcript, or show notes.",
+      "seoTitle": "Did You Miss Me Podcast with Billy Sorrells | Episode 1",
+      "seoDescription": "Watch Did You Miss Me Podcast hosted by comedian Billy Sorrells. Comedy, culture, fatherhood, entertainment, and real conversations.",
+      "blog": {
+        "headline": "What This Episode Is Really About",
+        "excerpt": "A search-friendly article module should expand the episode subject matter, guest context, cultural relevance, and best quotes.",
+        "body": [
+          "This blog section is designed to turn every podcast episode into a searchable article that can rank on Google and support YouTube discovery.",
+          "Replace this placeholder with a 600-1200 word post generated from the episode transcript, topic, guest, and strongest searchable questions."
+        ]
+      }
+    }
+  ]
+}
