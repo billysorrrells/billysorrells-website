@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Did You Miss Me Podcast | Billy Sorrells</title>
+<meta name="description" content="Watch and read every episode of the Did You Miss Me Podcast with Billy Sorrells. Full episodes, clips, and SEO-optimized articles.">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "PodcastSeries",
+ "name": "Did You Miss Me Podcast",
+ "creator": {
+   "@type": "Person",
+   "name": "Billy Sorrells"
+ }
+}
+</script>
+<style>
+body{background:#000;color:#fff;font-family:Arial;margin:0}
+.header{padding:20px;font-size:28px;font-weight:bold}
+.row{display:flex;overflow-x:auto;padding:20px}
+.card{min-width:300px;margin-right:15px;background:#111;border-radius:10px;overflow:hidden}
+.card img{width:100%}
+.card h3{padding:10px;font-size:16px}
+.blog{padding:20px}
+</style>
+</head>
+<body>
+<div class="header">Did You Miss Me Podcast</div>
+<div id="episodes" class="row"></div>
+<div id="blog" class="blog"></div>
+<script>
+fetch('./data/episodes.json')
+.then(res=>res.json())
+.then(data=>{
+  const container=document.getElementById('episodes');
+  data.episodes.forEach(ep=>{
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`
+      <img src="${ep.thumbnail||'https://via.placeholder.com/300x200'}" />
+      <h3>${ep.title}</h3>
+    `;
+    card.onclick=()=>{
+      document.getElementById('blog').innerHTML=`
+        <h2>${ep.blog.headline}</h2>
+        <p>${ep.blog.excerpt}</p>
+      `;
+    };
+    container.appendChild(card);
+  });
+});
+</script>
+</body>
+</html>
